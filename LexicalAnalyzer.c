@@ -22,7 +22,7 @@ CURRENT PLANNED FLOW:
 int main(){
 
     //Preparation phase
-    StateList *st = loadList("lexStates.txt");
+    StateList *st = loadList("Misc/lexStates.txt");
     FILE *dump = fopen("dump.txt", "w+");
     for(int i = 0; i < st->length; i++) printState(&st->data[i], dump);
     freeList(st);

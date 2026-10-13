@@ -21,8 +21,11 @@ int read(State* s, char symbol){
 }
 
 void printState(State *s, FILE* fpt) {
-    if(!fpt) printf("not found");
-    fprintf(fpt,"State: %d, transition: [", s->stateNumber);
+    if(!fpt) {
+        printf("not found");
+        return;
+    };
+    fprintf(fpt,"State: %d, transition: \n[", s->stateNumber);
     for(int i = 0; i < 256; i++){
         if(i % 25 == 0 && i > 0) fprintf(fpt,"\n");
         fprintf(fpt,"%d%c ", s->transition[i], (i==255)? ']':',');   
@@ -144,9 +147,13 @@ void addTransition(State* s, int transition, char* transitionSymbol){
         }
         else if(strcmp("whitespace", transitionSymbol) == 0) {
             for(int i = 0; i < WHITESPACECOUNT; i++) {
-                printf("\t\tmodified %c:%d\n", WHITESPACES[i] ,i);
+                printf("\t\tmodified %c:%d\n", WHITESPACES[i] ,transition);
                 s->transition[(unsigned char) WHITESPACES[i]] = transition;
             }
+        }
+        else if(strcmp("comma", transitionSymbol) == 0) {
+            printf("\t\tmodified %c:%d\n", ',' , transition);
+            s->transition[(unsigned char) ','] = transition; 
         }
     } else if (strlen(transitionSymbol) == 2 && transitionSymbol[0] == '\\'){
         printf("\t\tmodified %c:%d\n", (transitionSymbol[1]=='n') ? '\n': '\t', transition);

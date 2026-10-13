@@ -29,6 +29,7 @@ typedef enum{
     S_LINE_END, S_LBRACE, S_RBRACE,
     S_LBRACKET, S_RBRACKET,
     S_LPAREN, S_RPAREN,
+    S_COMMA,
     S_T_NULL,
     //yes
     S_NOISE,
@@ -65,6 +66,7 @@ typedef enum{
     LINE_END, LBRACE, RBRACE,
     LBRACKET, RBRACKET,
     LPAREN, RPAREN,
+    COMMA,
     T_NULL,
     //yes
     NOISE,

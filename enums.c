@@ -1,7 +1,7 @@
 #include "enums.h"
 const char SYMBOLS[] = {'-', '+', '/', '*','#', '&', '>', '<', '!', '=', '|',  '%',  '"', '\''};
 const char WHITESPACES[] = {' ', '\n', '\t'};
-const char DELIMETERS[] = {';', '(', ')','{', '}', '[', ']',};
+const char DELIMETERS[] = {';', '(', ')','{', '}', '[', ']', ','};
 const char *stateNames[] = {
     "START",
     "S_IDENTIFIER",
@@ -21,7 +21,7 @@ const char *stateNames[] = {
     "S_LINE_END", "S_LBRACE", "S_RBRACE",
     "S_LBRACKET", "S_RBRACKET",
     "S_LPAREN", "S_RPAREN",
-    
+    "S_COMMA",
     "S_T_NULL",
     //yes
     "S_NOISE",
@@ -57,8 +57,8 @@ const char *tokenNames[] = {
     "LINE_END", "LBRACE", "RBRACE",
     "LBRACKET", "RBRACKET",
     "LPAREN", "RPAREN",
-
-    "T_ NULL"
+    "COMMA"
+    "T_ NULL",
     //yes
     "NOISE",
     //control flow
