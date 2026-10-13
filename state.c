@@ -15,9 +15,11 @@ State* createState(int stateNumber, StateType type){
     s -> type = type;
     return s;
 }
+
 int read(State* s, char symbol){
     return s->transition[(unsigned char)symbol];
 }
+
 void printState(State *s, FILE* fpt) {
     if(!fpt) printf("not found");
     fprintf(fpt,"State: %d, transition: [", s->stateNumber);
@@ -27,6 +29,7 @@ void printState(State *s, FILE* fpt) {
     }
     fprintf(fpt,"StateType: %d\n", s->type);
 }
+
 static void resetState(State* s){
     s->stateNumber = -1;
     for(int i = 0; i < 256; i++){
@@ -34,6 +37,8 @@ static void resetState(State* s){
     }
     s->type = S_INTERMEDIARY;
 }
+
+
 //statelist
 static void expandList(StateList* sl){
     sl -> maxsize *= 2;
@@ -64,7 +69,6 @@ StateList* createList(){
 }
 
 StateList* loadList(char* file){
-
     printf("Loading file...\n\n");
     FILE* f = fopen(file, "r");
     if(f == NULL) return NULL;
@@ -85,6 +89,7 @@ StateList* loadList(char* file){
         while(transitionSplit != NULL && symbolSplit != NULL){
             
             printf("\n\nSymbol: %s, Dest: %d\n\n", symbolSplit, atoi(transitionSplit));
+            //anything beyond a special character, "\n" is "\\n"
             if(strlen(symbolSplit) > 2){
                 char *catSave;
                 char *categorySplit = strtok_r(symbolSplit, "|", &catSave); 
@@ -107,6 +112,8 @@ StateList* loadList(char* file){
     fclose(f);
     return sl;
 }
+
+//decision tree
 void addTransition(State* s, int transition, char* transitionSymbol){
     if(transitionSymbol == NULL) return;
     printf("\tReceived: %s\n\n", transitionSymbol); 

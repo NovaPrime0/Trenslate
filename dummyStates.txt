@@ -1,7 +1,0 @@
-State: 2, Transitions: none, Symbols: none, StateType: S_Op_ADD,
-State: 3, Transitions: none, Symbols: none, StateType: S_Op_SUB,
-State: 4, Transitions: 5:19, Symbols: /:*, StateType: S_Op_DIV,
-State: 5, Transitions: none, Symbols: none, StateType: S_Op_DIV_INT,
-State: 6, Transitions: none, Symbols: none, StateType: S_Op_MULT, 
-State: 7, Transitions: none, Symbols: none, StateType: S_Op_MOD, 
-State: 8, Transitions: 9, Symbols: =, StateType: S_Cond_G,

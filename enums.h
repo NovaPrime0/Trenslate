@@ -2,10 +2,12 @@
 #define ENUMS_H
 #define NO_TRANSITION -1
 #define BAD_SYMBOL -2
-#define SYMBOLCOUNT 21
+#define SYMBOLCOUNT 14
 #define WHITESPACECOUNT 3
+#define DELIMCOUNT 7
 extern const char SYMBOLS[];
 extern const char WHITESPACES[];
+extern const char DELIMETERS[];
 extern const char *tokenNames[];
 extern const char *stateNames[];
 typedef enum{
@@ -37,6 +39,7 @@ typedef enum{
     S_VARIABLE,
     S_PROG_MAIN,
     S_PROG_END,
+    //literals
     S_Lit_STRING,
     S_Lit_CHAR,
     S_Lit_INT,
@@ -72,11 +75,12 @@ typedef enum{
     VARIABLE,
     PROG_MAIN,
     PROG_END,
+    //literals
     Lit_STRING,
     Lit_CHAR,
     Lit_INT,
     Lit_DEC,
     WHITESPACE,
-} TokenType;
+} TokenType; 
 
 #endif
