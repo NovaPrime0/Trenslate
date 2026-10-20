@@ -1,7 +1,7 @@
 #include "enums.h"
 const char SYMBOLS[] = {'-', '+', '/', '*','#', '&', '>', '<', '!', '=', '|',  '%',  '"', '\''};
 const char WHITESPACES[] = {' ', '\n', '\t'};
-const char DELIMETERS[] = {';', '(', ')','{', '}', '[', ']', ','};
+const char DELIMETERS[] = {';', '(', ')','{', '}', '[', ']', ',', '.'};
 const char *stateNames[] = {
     "START",
     "S_IDENTIFIER",

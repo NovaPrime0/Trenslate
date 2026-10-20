@@ -4,7 +4,7 @@
 #define BAD_SYMBOL -2
 #define SYMBOLCOUNT 14
 #define WHITESPACECOUNT 3
-#define DELIMCOUNT 7
+#define DELIMCOUNT 9
 extern const char SYMBOLS[];
 extern const char WHITESPACES[];
 extern const char DELIMETERS[];

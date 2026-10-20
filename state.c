@@ -28,7 +28,7 @@ void printState(State *s, FILE* fpt) {
     fprintf(fpt,"State: %d, transition: \n[", s->stateNumber);
     for(int i = 0; i < 256; i++){
         if(i % 25 == 0 && i > 0) fprintf(fpt,"\n");
-        fprintf(fpt,"%d%c ", s->transition[i], (i==255)? ']':',');   
+        fprintf(fpt,"%c:%d%c ", (char) (i > 32 && i <127) ? i : ' ',  s->transition[i], (i==255)? ']':',');   
     }
     fprintf(fpt,"StateType: %d\n", s->type);
 }

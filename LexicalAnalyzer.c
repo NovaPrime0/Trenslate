@@ -24,7 +24,7 @@ int main(){
     //Preparation phase
     StateList *st = loadList("Misc/lexStates.txt");
     FILE *dump = fopen("dump.txt", "w+");
-    for(int i = 0; i < st->length; i++) printState(&st->data[i], dump);
+    for(int i = 0; i < st->length; i++) printState(&st->data[i], dump); //debug line for dumping state data into dump.txt
     freeList(st);
     return 0;
 }
