@@ -9,8 +9,10 @@
 State* createState(int stateNumber, StateType type){   
     State* s = malloc(sizeof(State));
     s -> stateNumber = stateNumber; 
+    s -> next = malloc(sizeof(State)*256);
     for(int i = 0; i < 256; i++){
         s -> transition[i] = i < 128 ? NO_TRANSITION : BAD_SYMBOL;
+        s -> next[i] = NULL;
     }
     s -> type = type;
     return s;
@@ -21,8 +23,8 @@ int read(State* s, char symbol){
 }
 
 void printState(State *s, FILE* fpt) {
-    if(!fpt) {
-        printf("not found");
+    if(!fpt || !s) {
+        printf("[state.c: %d]: state or fpt not found",__LINE__);
         return;
     };
     fprintf(fpt,"State: %d, transition: \n[", s->stateNumber);
@@ -38,22 +40,29 @@ static void resetState(State* s){
     for(int i = 0; i < 256; i++){
         s->transition[i] = i < 128 ? NO_TRANSITION : BAD_SYMBOL;
     }
-    s->type = S_INTERMEDIARY;
+    s->type = INTERMEDIARY;
 }
-
+static void attachTransition(State* s, StateList* sl){
+    if(!s) return;
+    for (int i = 0; i < 256; i++){
+        if(s->transition[i] >= 0){
+            s->next[i] = &sl->data[s->transition[i]];
+        }
+    }
+}
 
 //statelist
 static void expandList(StateList* sl){
     sl -> maxsize *= 2;
     sl -> data = realloc(sl->data, sizeof(State) * sl -> maxsize);
-    printf("Expanded List to %d\n",sl->maxsize);
+    printf("[state.c: %d]: Expanded List to %d\n",__LINE__,sl->maxsize);
     for(int i = sl -> length; i < sl->maxsize; i++){
         printf("\treset %d\n",i);
         resetState(&sl->data[i]);
     }
 }
 static int resolveType(char* typestring){
-    StateType lim = S_INTERMEDIARY;
+    StateType lim = INTERMEDIARY;
     for(int i = 0; i <= lim; i++){
         if(strcmp(stateNames[i], typestring) == 0) return i;
     }
@@ -72,11 +81,11 @@ StateList* createList(){
 }
 
 StateList* loadList(char* file){
-    printf("Loading file...\n\n");
+    printf("[state.c: %d]: Loading file...\n\n",__LINE__);
     FILE* f = fopen(file, "r");
     if(f == NULL) return NULL;
     printf("===================================\n\n");
-    printf("\tLoaded file\n\n");
+    printf("[state.c: %d]:\tLoaded file\n\n",__LINE__);
     printf("===================================\n\n");
     StateList *sl = createList();
     char transitionbuffer[256];
@@ -84,14 +93,14 @@ StateList* loadList(char* file){
     char typebuffer[64];
     while(fscanf(f,
         "State: %d, Transitions: %255[^,], Symbols: %255[^,], StateType: %63[^,],\n",
-        &sl->data[sl->length].stateNumber, transitionbuffer, symbolsbuffer, typebuffer)==4){
-        printf("%-12s %d\n%-20s %s\n%-20s %s\n","State:", sl->data[sl->length].stateNumber, "Full Symbol List:", symbolsbuffer, "Full Dest list:", transitionbuffer);
+        &sl->data[sl->length].stateNumber, transitionbuffer, symbolsbuffer, typebuffer) == 4){
+        printf("[state.c: %d]: %-12s %d\n\t%-20s %s\n\t%-20s %s\n",__LINE__, "State:", sl->data[sl->length].stateNumber, "Full Symbol List:", symbolsbuffer, "Full Dest list:", transitionbuffer);
         char *symbolsSave;
         char *transitionSplit = strtok(transitionbuffer, ":");
         char *symbolSplit = strtok_r(symbolsbuffer, ":", &symbolsSave);
         while(transitionSplit != NULL && symbolSplit != NULL){
             
-            printf("\n\nSymbol: %s, Dest: %d\n\n", symbolSplit, atoi(transitionSplit));
+            printf("\n\n[state.c: %d]: Symbol: %s, Dest: %d\n\n", __LINE__, symbolSplit, atoi(transitionSplit));
             //anything beyond a special character, "\n" is "\\n"
             if(strlen(symbolSplit) > 2){
                 char *catSave;
@@ -111,7 +120,8 @@ StateList* loadList(char* file){
             expandList(sl);
         }
     }
-    printf("\n\n\n%d:%d\n\n\n", sl->length, sl->maxsize);
+    printf("\n\n[state.c: %d]: list size:maxsize = %d:%d\n\n",__LINE__, sl->length, sl->maxsize);
+    for(int i = 0; i < sl->length; i++)
     fclose(f);
     return sl;
 }
@@ -119,47 +129,47 @@ StateList* loadList(char* file){
 //decision tree
 void addTransition(State* s, int transition, char* transitionSymbol){
     if(transitionSymbol == NULL) return;
-    printf("\tReceived: %s\n\n", transitionSymbol); 
+    printf("\n[state.c: %d]:Received: %s\n",__LINE__, transitionSymbol); 
     if(strlen(transitionSymbol) > 2){
         if(strcmp("ALPHA", transitionSymbol) == 0) {
             for(int i = 'A'; i <= 'Z'; i++) {
-                printf("\t\tmodified %c:%d\n", i, transition);
+                printf("[state.c: %d]:\tmodified %c:%d\n",__LINE__, i, transition);
                 s->transition[i] = transition;
             }
         }
         else if(strcmp("alpha", transitionSymbol) == 0) {
             for(int i = 'a'; i <= 'z'; i++) {
-                printf("\t\tmodified %c:%d\n", i, transition);
+                printf("[state.c: %d]:\tmodified %c:%d\n",__LINE__, i, transition);
                 s->transition[i] = transition;
             }
         }
         else if(strcmp("num", transitionSymbol) == 0) {
             for(int i = '0'; i <= '9'; i++) {
-                printf("\t\tmodified %c:%d\n", i, transition);
+                printf("[state.c: %d]:\tmodified %c:%d\n",__LINE__, i, transition);
                 s->transition[i] = transition;
             }
         }
         else if(strcmp("sym", transitionSymbol) == 0) {
             for(int i = 0; i < SYMBOLCOUNT; i++) {
-                printf("\t\tmodified %c:%d\n", SYMBOLS[i], transition);
+                printf("[state.c: %d]:\tmodified %c:%d\n",__LINE__, SYMBOLS[i], transition);
                 s->transition[(unsigned char) SYMBOLS[i]] = transition;
             }
         }
         else if(strcmp("whitespace", transitionSymbol) == 0) {
             for(int i = 0; i < WHITESPACECOUNT; i++) {
-                printf("\t\tmodified %c:%d\n", WHITESPACES[i] ,transition);
+                printf("[state.c: %d]:\tmodified %c:%d\n",__LINE__, WHITESPACES[i] ,transition);
                 s->transition[(unsigned char) WHITESPACES[i]] = transition;
             }
         }
         else if(strcmp("comma", transitionSymbol) == 0) {
-            printf("\t\tmodified %c:%d\n", ',' , transition);
+            printf("[state.c: %d]:\tmodified %c:%d\n",__LINE__, ',' , transition);
             s->transition[(unsigned char) ','] = transition; 
         }
     } else if (strlen(transitionSymbol) == 2 && transitionSymbol[0] == '\\'){
-        printf("\t\tmodified %c:%d\n", (transitionSymbol[1]=='n') ? '\n': '\t', transition);
+        printf("[state.c: %d]:\tmodified %c:%d\n",__LINE__, (transitionSymbol[1]=='n') ? '\n': '\t', transition);
         s -> transition[(transitionSymbol[1]=='n') ? '\n': '\t'] = transition;
     } else if (strlen(transitionSymbol) == 1) {
-        printf("\t\tmodified %c:%d\n",(unsigned char) *transitionSymbol, transition);
+        printf("[state.c: %d]:\tmodified %c:%d\n",__LINE__, (unsigned char) *transitionSymbol, transition);
         s -> transition[(unsigned char) *transitionSymbol] = transition;
     } else {
         return;

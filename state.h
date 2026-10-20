@@ -1,11 +1,13 @@
 #ifndef STATE
 #define STATE
 #include "enums.h"
-typedef struct{
+typedef struct State State;
+struct State{
     int stateNumber;
     int transition[256];
+    State **next;
     StateType type;
-} State;
+};
 
 typedef struct{
     State *data;
