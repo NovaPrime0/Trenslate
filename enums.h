@@ -2,13 +2,15 @@
 #define ENUMS_H
 #define NO_TRANSITION -1
 #define BAD_SYMBOL -2
-#define SYMBOLCOUNT 14
-#define WHITESPACECOUNT 3
+#define SYMBOLCOUNT 15
+#define WHITESPACECOUNT 4
 #define DELIMCOUNT 9
+#define SIGMACOUNT 28
 #define varname(x) #x
-extern const char SYMBOLS[];
-extern const char WHITESPACES[];
-extern const char DELIMETERS[];
+#define SYMBOLS "_-+/*#&><!=|%\"'"
+#define WHITESPACES " \n\r\t"
+#define DELIMETERS ";(){}[],."
+#define SIGMA SYMBOLS WHITESPACES DELIMETERS
 extern const char *tokenNames[];
 extern const char *stateNames[];
 typedef enum{

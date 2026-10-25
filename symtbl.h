@@ -11,7 +11,7 @@ typedef struct{
     int curIdx;
     int maxSize;
 } SymTBL;
-static SymTBL* createTable();
-static void addSymbol(SymTBL *st, Symbol *s);
-static bool contains(SymTBL *st, Symbol *s);
+SymTBL* createTable();
+void addSymbol(SymTBL *st, Symbol *s);
+bool contains(SymTBL *st, Symbol *s);
 #endif

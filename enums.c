@@ -1,7 +1,7 @@
 #include "enums.h"
-const char SYMBOLS[] = {'-', '+', '/', '*','#', '&', '>', '<', '!', '=', '|',  '%',  '"', '\''};
-const char WHITESPACES[] = {' ', '\n', '\t'};
-const char DELIMETERS[] = {';', '(', ')','{', '}', '[', ']', ',', '.'};
+#include "string.h"
+
+
 const char *stateNames[] = {
     "S_IDENTIFIER",
     //Arithmetic Operation Types
@@ -40,7 +40,7 @@ const char *stateNames[] = {
     "S_WHITESPACE",
     "S_CONST",
     "START",
-    "S_INTERMEDIARY"
+    "INTERMEDIARY"
 };
 const char *tokenNames[] = {
     "IDENTIFIER",

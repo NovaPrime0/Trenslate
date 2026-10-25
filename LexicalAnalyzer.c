@@ -25,6 +25,7 @@ int main(){
     StateList *st = loadList("Misc/newStates.txt");
     FILE *dump = fopen("Test/dump.txt", "w+");
     //debug line for dumping state data into dump.txt
+    printf("[LexicalAnalyzer.c: %d]: PrintStatement", __LINE__);
     for(int i = 0; i < st->length; i++) printState(&st->data[i], dump); 
     freeList(st);
 
