@@ -13,84 +13,66 @@
 #define SIGMA SYMBOLS WHITESPACES DELIMETERS
 extern const char *tokenNames[];
 extern const char *stateNames[];
+//arranged by priority
 typedef enum{
-    S_IDENTIFIER,
-    //Arithmetic Operation Types
-    S_Op_ADD, S_Op_SUB, S_Op_DIV, S_Op_EXP,
-    S_Op_DIV_INT, S_Op_MULT, S_Op_MOD,
-    //Relational operators
-    S_Rel_G, S_Rel_GEQ, S_Rel_EQ,
-    S_Rel_L, S_Rel_LEQ, S_Rel_NEQ,
-    //Boolean Operators
+    //1
+    S_FOR, S_FOREACH, S_RETURN,
+    S_ELSE, S_IF, S_WHILE,
+    S_FUNCTION, S_BREAK, S_CONTINUE, S_INVALID,
+    S_VARIABLE, S_PROG_MAIN, S_PROG_END,
+    S_For_LIM, S_T_NULL, S_IMPORT,
+    //2
+    S_Op_DIV_INT, S_Rel_GEQ, S_Rel_EQ,
+    S_Rel_LEQ, S_Rel_NEQ,
     S_Cond_AND, S_Cond_OR, S_Cond_NOT,
-    //Assignment Operators
-    S_ASSIGN,
-    //Comments
-    S_C_LINE, S_C_BLOCK,
-    //delimiters
+    //3
     S_LINE_END, S_LBRACE, S_RBRACE,
     S_LBRACKET, S_RBRACKET,
     S_LPAREN, S_RPAREN,
     S_COMMA, S_DOT,
-    S_For_LIM,
-    S_T_NULL,
-    //yes
-    S_NOISE,
-    S_IMPORT,
-    //control flow
-    S_FOR, S_FOREACH, S_RETURN,
-    S_ELSE, S_IF, S_WHILE,
-    S_FUNCTION, S_BREAK,
-    S_VARIABLE,
-    S_PROG_MAIN,
-    S_PROG_END,
-    //literals
+    S_Op_ADD, S_Op_SUB, S_Op_DIV, S_Op_EXP,
+    S_Op_MULT, S_Op_MOD, S_ASSIGN,
+    S_Rel_G, S_Rel_L, 
+    //4
     S_Lit_STRING, S_Lit_CHAR,
     S_Lit_INT, S_Lit_DEC,
     S_TRUE, S_FALSE,
-    S_WHITESPACE,
     S_CONST,
-    //state-exclusive types
-    START,
-    INTERMEDIARY
+    //5
+    S_WHITESPACE, S_NOISE, S_C_BLOCK, S_C_LINE,
+    S_IDENTIFIER,
+    //state exclusives: 6
+    START, INTERMEDIARY
 } StateType;
+//arranged by priority
 typedef enum{
-    IDENTIFIER,
-    //Arithmetic Operation Types
-    Op_ADD, Op_SUB, Op_DIV, Op_EXP,
-    Op_DIV_INT, Op_MULT, Op_MOD,
-    //Relational operators
-    Rel_G, Rel_GEQ, Rel_EQ,
-    Rel_L, Rel_LEQ, Rel_NEQ,
-    //Boolean Operators
+    //1
+    FOR, FOREACH, RETURN,
+    ELSE, IF, WHILE,
+    FUNCTION, BREAK, CONTINUE, INVALID,
+    VARIABLE, PROG_MAIN, PROG_END,
+    For_LIM, T_NULL, IMPORT,
+    //2
+    Op_DIV_INT, Rel_GEQ, Rel_EQ,
+    Rel_LEQ, Rel_NEQ,
     Cond_AND, Cond_OR, Cond_NOT,
-    //Assignment Operators
-    ASSIGN,
-    //Comments
-    C_LINE, C_BLOCK,
-    //delimiters
+    //3
     LINE_END, LBRACE, RBRACE,
     LBRACKET, RBRACKET,
     LPAREN, RPAREN,
     COMMA, DOT,
-    For_LIM,
-    T_NULL,
-    //yes
-    NOISE,
-    IMPORT,
-    //control flow
-    FOR, FOREACH, RETURN,
-    ELSE, IF, WHILE,
-    FUNCTION, BREAK,
-    VARIABLE,
-    PROG_MAIN,
-    PROG_END,
-    //literals
+    Op_ADD, Op_SUB, Op_DIV, Op_EXP,
+    Op_MULT, Op_MOD, ASSIGN,
+    Rel_G, Rel_L, 
+    //4
     Lit_STRING, Lit_CHAR,
     Lit_INT, Lit_DEC,
     TRUE, FALSE,
-    WHITESPACE,
     CONST,
+    //5
+    WHITESPACE, NOISE, C_BLOCK, C_LINE,
+    IDENTIFIER,
 } TokenType;
+
 
 #endif

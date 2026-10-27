@@ -23,6 +23,7 @@ int main(){
     //Preparation phase
     //change print format to make it more understandable
     StateList *st = loadList("Misc/newStates.txt");
+    DFAStateList *dst = subsetConstruction("");
     FILE *dump = fopen("Test/dump.txt", "w+");
     //debug line for dumping state data into dump.txt
     printf("[LexicalAnalyzer.c: %d]: PrintStatement", __LINE__);

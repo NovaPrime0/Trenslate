@@ -4,14 +4,14 @@
 #include "set.h"
 typedef struct {
     int stateNumber;
-    char symbol[30];
+    char symbol[64];
 } Transition;
 typedef struct{
     Transition *data;
     int length;
     int maxSize;
 } TransitionList;
-typedef struct State{
+typedef struct {
     int stateNumber;
     TransitionList* transitionList;
     StateType type;
@@ -23,6 +23,7 @@ struct DFAState{
     Set *transitionNumbers[256]; 
     DFAState *next[256];
     StateType type;
+    Set* typeSet;
 };
 
 typedef struct {
@@ -45,4 +46,5 @@ void freeList(StateList* sl);
 //state
 State* createState(int stateNumber, StateType type);
 void printState(State* s, FILE* fpt);
+DFAStateList* subsetConstruction(StateList *s);
 #endif

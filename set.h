@@ -1,5 +1,6 @@
 #ifndef SET_H
 #define SET_H
+#include <stdbool.h>
 typedef struct{
     int* data;
     int length;
@@ -18,13 +19,15 @@ typedef struct{
 
 Set* createSet();
 void freeSet(Set* s);
-void addToSet(Set* s, int x);
+bool addToSet(Set* s, int x);
+Set* cloneSet(Set* s);
 
 Sets* createSets();
 void freeSets(Sets* s);
-void addToSets(Sets* s, Set* x);
+bool addToSets(Sets* s, Set* x);
 int compare(const void* x, const void* y);
 int isEqSets(Set* x, Set* Y);
+
 // DFASet* createDFASet();
 // void freeDFASet(DFASet* s);
 // void addtoDFASet(DFASet* s, DFAState* x);
