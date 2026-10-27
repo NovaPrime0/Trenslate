@@ -273,9 +273,9 @@ StateList* loadList(char* file){
 }
 
 int inSigma(int x){
-    if(x >= 'A' && x <= 'Z' || 
-        x >= 'a' && x <= 'z' ||
-        x >= '0' && x <= '9') {
+    if((x >= 'A' && x <= 'Z') || 
+        (x >= 'a' && x <= 'z') ||
+        (x >= '0' && x <= '9')) {
             return 1;
         }
     else return x != 0 && strchr(SIGMA, x) != NULL;
@@ -370,6 +370,94 @@ static StateType resolveTypePriority(Set* s){
     return (StateType) s->data[highestPriorityIDX];
 }
 
+
+// decision tree, repurpose to finalize DFAState later
+bool addTransition(DFAState* s, Transition* t){
+    if(!s || !t) return false;
+    printf("\n[state.c: %d]:Received: %s\n",__LINE__, t->symbol);
+    char *tokSave;
+    char symbolCpy[65                       ];
+    strncpy(symbolCpy, t->symbol, sizeof symbolCpy -1);
+    symbolCpy[sizeof symbolCpy -1] = '\0';
+    symbolCpy[strcspn(symbolCpy,"\n")] = '\0';
+    char *tokBuff = strtok_r(symbolCpy, "|", &tokSave);
+    while(tokBuff){
+        if(strlen(tokBuff) > 2){
+            if(strcmp("ALPHA", tokBuff) == 0) {
+                for(int i = 'A'; i <= 'Z'; i++){
+                    if(!bindChar(s, i, t->stateNumber))return false;
+                    printf("[state.c: %d]: bound transition to %c\n", __LINE__, (char)i);
+                }
+            }
+            else if(strcmp("alpha", tokBuff) == 0) {
+                for(int i = 'a'; i <= 'z'; i++) {
+                    if(!bindChar(s, i, t->stateNumber)) return false;
+                    printf("[state.c: %d]: bound transition to %c\n", __LINE__, (char)i);
+                }
+            }
+            else if(strcmp("num", tokBuff) == 0) {
+                for(int i = '0'; i <= '9'; i++) {
+                    if(!bindChar(s, i, t->stateNumber))return false;
+                    printf("[state.c: %d]: bound transition to %c\n", __LINE__, (char)i);
+                }
+            }
+            else if(strcmp("sym", tokBuff) == 0) {
+                for(int i = 0; i < SYMBOLCOUNT; i++) {
+                    if(!bindChar(s, SYMBOLS[i], t->stateNumber))return false;
+                    printf("[state.c: %d]: bound transition to %c\n", __LINE__, SYMBOLS[i]);
+                }
+            }
+            else if(strcmp("whitespace", tokBuff) == 0) {
+                for(int i = 0; i < WHITESPACECOUNT; i++) {
+                    if(!bindChar(s, WHITESPACES[i], t->stateNumber))return false;
+                    printf("[state.c: %d]: bound transition to %c\n", __LINE__, WHITESPACES[i]);
+                }
+            }
+            else if(strcmp("comma", tokBuff) == 0) {
+                if(!bindChar(s, ',', t->stateNumber))return false;
+                printf("[state.c: %d]: bound transition to %c\n", __LINE__, ',');
+            }
+            else if(strcmp("pipe", tokBuff) == 0) {
+                if(!bindChar(s, '|', t->stateNumber)) return false;
+                printf("[state.c: %d]: bound transition to %c\n", __LINE__, '|');
+            }
+            else if(strcmp("invalid", tokBuff) == 0) {
+                for(int i = 0; i < 256; i++){
+                    if(inSigma(i)) continue; 
+                    if(!bindChar(s, i, t->stateNumber)) return false;
+                    printf("[state.c: %d]: bound transition to %d\n", __LINE__, i);
+                }
+            } else {
+                return false;
+            }
+        } else if (strlen(tokBuff) == 2 && tokBuff[0] == '\\'){
+            int c;
+            switch(tokBuff[1]){
+                case 'n':
+                    c = '\n';
+                    break;
+                case 'r':
+                    c = '\r';
+                    break;
+                case 't':
+                    c = '\t';
+                    break;
+                default:
+                    c = -1;
+                    printf("[state.c: %d]: Unknown special character \\%c\n", __LINE__, tokBuff[1]);
+                    return false;
+                    break;
+            }
+            if(c != -1 && !bindChar(s, c, t->stateNumber)) return false;
+            printf("[state.c: %d]:\tmodified %c:%s\n",__LINE__, (tokBuff[1]=='n') ? '\n': '\t', tokBuff);
+        } else if (strlen(tokBuff) == 1) {
+            if(!bindChar(s, tokBuff[0], t->stateNumber)) return false;
+            printf("[state.c: %d]:\tmodified %c:%s\n",__LINE__, (unsigned char) *tokBuff, tokBuff);
+        }
+        tokBuff = strtok_r(NULL, "|", &tokSave);
+    }
+    return true;
+}
 bool NToD(State* s, DFAState* d){
     if(!s || !d || !s->transitionList || !d->typeSet || !addToSet(d->typeSet, (int) s->type)) return false;
     for(int i = 0; i < s->transitionList->length; i++){
@@ -400,93 +488,6 @@ bool SetToD(StateList* sl, DFAState* d, Set* set){
                 return false;
             }
         } else return false;
-    }
-    return true;
-}
-// decision tree, repurpose to finalize DFAState later
-bool addTransition(DFAState* s, Transition* t){
-    if(!s || !t) return false;
-    printf("\n[state.c: %d]:Received: %s\n",__LINE__, t->symbol);
-    char *tokSave;
-    char symbolCpy[65                       ];
-    strncpy(symbolCpy, t->symbol, sizeof symbolCpy -1);
-    symbolCpy[sizeof symbolCpy -1] = '\0';
-    symbolCpy[strcspn(symbolCpy,"\n")] = '\0';
-    char *tokBuff = strtok_r(symbolCpy, "|", &tokSave);
-    while(tokBuff){
-        if(strlen(tokBuff) > 2){
-            if(strcmp("ALPHA", tokBuff) == 0) {
-                for(int i = 'A'; i <= 'Z'; i++){
-                    if(!bindChar(s, i, t->stateNumber))return false;
-                    printf("[state.c: %d]: bound transition to %c", __LINE__, (char)i);
-                }
-            }
-            else if(strcmp("alpha", tokBuff) == 0) {
-                for(int i = 'a'; i <= 'z'; i++) {
-                    if(!bindChar(s, i, t->stateNumber)) return false;
-                    printf("[state.c: %d]: bound transition to %c", __LINE__, (char)i);
-                }
-            }
-            else if(strcmp("num", tokBuff) == 0) {
-                for(int i = '0'; i <= '9'; i++) {
-                    if(!bindChar(s, i, t->stateNumber))return false;
-                    printf("[state.c: %d]: bound transition to %c", __LINE__, (char)i);
-                }
-            }
-            else if(strcmp("sym", tokBuff) == 0) {
-                for(int i = 0; i < SYMBOLCOUNT; i++) {
-                    if(!bindChar(s, SYMBOLS[i], t->stateNumber))return false;
-                    printf("[state.c: %d]: bound transition to %c", __LINE__, SYMBOLS[i]);
-                }
-            }
-            else if(strcmp("whitespace", tokBuff) == 0) {
-                for(int i = 0; i < WHITESPACECOUNT; i++) {
-                    if(!bindChar(s, WHITESPACES[i], t->stateNumber))return false;
-                    printf("[state.c: %d]: bound transition to %c", __LINE__, WHITESPACES[i]);
-                }
-            }
-            else if(strcmp("comma", tokBuff) == 0) {
-                if(!bindChar(s, ',', t->stateNumber))return false;
-                printf("[state.c: %d]: bound transition to %c", __LINE__, ',');
-            }
-            else if(strcmp("pipe", tokBuff) == 0) {
-                if(!bindChar(s, '|', t->stateNumber)) return false;
-                printf("[state.c: %d]: bound transition to %c", __LINE__, '|');
-            }
-            else if(strcmp("invalid", tokBuff) == 0) {
-                for(int i = 0; i < 256; i++){
-                    if(inSigma(i)) continue; 
-                    if(!bindChar(s, i, t->stateNumber)) return false;
-                    printf("[state.c: %d]: bound transition to %d", __LINE__, i);
-                }
-            } else {
-                return false;
-            }
-        } else if (strlen(tokBuff) == 2 && tokBuff[0] == '\\'){
-            int c;
-            switch(tokBuff[1]){
-                case 'n':
-                    c = '\n';
-                    break;
-                case 'r':
-                    c = '\r';
-                    break;
-                case 't':
-                    c = '\t';
-                    break;
-                default:
-                    c = -1;
-                    printf("[state.c: %d]: Unknown special character \\%c", __LINE__, tokBuff[1]);
-                    return false;
-                    break;
-            }
-            if(c != -1 && !bindChar(s, c, t->stateNumber)) return false;
-            printf("[state.c: %d]:\tmodified %c:%s\n",__LINE__, (tokBuff[1]=='n') ? '\n': '\t', tokBuff);
-        } else if (strlen(tokBuff) == 1) {
-            if(!bindChar(s, tokBuff[0], t->stateNumber)) return false;
-            printf("[state.c: %d]:\tmodified %c:%s\n",__LINE__, (unsigned char) *tokBuff, tokBuff);
-        }
-        tokBuff = strtok_r(NULL, "|", &tokSave);
     }
     return true;
 }
@@ -575,7 +576,46 @@ DFAStateList* subsetConstruction(StateList *st){
             }
         }
     }
-
+    printf("\nlengths: %d:%d", DFAList->length, DFAList->maxsize);
     freeSets(workingSet);
     return DFAList;
+}
+
+void dumpDFAList(DFAStateList *dsl, FILE *f){
+    if (!dsl || !f) return;
+    
+    for(int i = 0; i < dsl->length; i++){
+        DFAState *printDFA = &dsl->data[i];
+        fprintf(f, "StateNumber: [");
+        for(int j = 0; j < printDFA -> stateNumber -> length; j++){
+            fprintf(f, "%d%s", printDFA->stateNumber->data[j] , j < printDFA->stateNumber->length - 1 ? ", " : "]\n");
+        }
+        fprintf(f, "StateType: %s,\nStateConnections: \n[", stateNames[printDFA->type]);
+        int printed = 0;
+        for(int j = 0; j < 256; j++){
+            DFAState* next = printDFA -> next[j];
+            if(next){
+                if(printed%10 == 0) {
+                    printf("%d", printed);
+                    fprintf(f, "\n\t");
+                    printed = 0;
+                };
+                unsigned char val[2] = {0};
+                unsigned char* c;
+                if(!inSigma(j)){
+                    c = (unsigned char*) "Invalid";
+                }
+                else{
+                    val[0] = (unsigned char) j;
+                    c = val;
+                }
+                fprintf(f, "%s : [", c);
+                for(int k = 0; k < next->stateNumber->length; k ++){
+                    fprintf(f, "%d%s", next->stateNumber->data[k] , k < next->stateNumber->length - 1 ? ", " : "], ");
+                }
+                printed++;
+            }
+        }
+        fprintf(f, "\n]\n\n");
+    }
 }

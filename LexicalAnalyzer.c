@@ -23,11 +23,13 @@ int main(){
     //Preparation phase
     //change print format to make it more understandable
     StateList *st = loadList("Misc/newStates.txt");
-    DFAStateList *dst = subsetConstruction("");
-    FILE *dump = fopen("Test/dump.txt", "w+");
+    DFAStateList *dst = subsetConstruction(st);
+    FILE *NFAdump = fopen("Test/NFAdump.txt", "w+");
+    FILE *DFAdump = fopen("Test/DFAdump.txt", "w+");
     //debug line for dumping state data into dump.txt
     printf("[LexicalAnalyzer.c: %d]: PrintStatement", __LINE__);
-    for(int i = 0; i < st->length; i++) printState(&st->data[i], dump); 
+    for(int i = 0; i < st->length; i++) printState(&st->data[i], NFAdump); 
+    dumpDFAList(dst, DFAdump);
     freeList(st);
 
     //analysis phase

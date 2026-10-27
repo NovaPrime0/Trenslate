@@ -26,7 +26,7 @@ Sets* createSets();
 void freeSets(Sets* s);
 bool addToSets(Sets* s, Set* x);
 int compare(const void* x, const void* y);
-int isEqSets(Set* x, Set* Y);
+bool isEqSets(Set* x, Set* Y);
 
 // DFASet* createDFASet();
 // void freeDFASet(DFASet* s);

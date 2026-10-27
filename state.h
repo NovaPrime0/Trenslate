@@ -44,7 +44,7 @@ StateList* createList();
 StateList* loadList(char* file);
 void freeList(StateList* sl);
 //state
-State* createState(int stateNumber, StateType type);
 void printState(State* s, FILE* fpt);
 DFAStateList* subsetConstruction(StateList *s);
+void dumpDFAList(DFAStateList *dsl, FILE* f);
 #endif
