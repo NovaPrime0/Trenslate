@@ -4,11 +4,11 @@
 #include <stdbool.h>
 #include "state.h"
 #include "symtbl.h"
-
+#include "analysis.h"
 
 /* CURRENT PLANNED FLOW:
     1. Prep phase (Make states list and load all from lexStates.txt)
-    2. Analysis phase (Load source program and traverse states char-by-char, may need to revise state machine to make this work)
+    2. Analysis phase (Load source program and traverse states char-by-char, line-by-line)
         - all states that started with an alphabet (and still match identifier logic) will resolve to an identifier 
         when keyword chain no longer matches
         - something something semi-dfa solution so we dont have to track all possible state transitions for a symbol
@@ -18,7 +18,7 @@
 
 //const indices for important states for reference later
 //structs and prototypes
-int main(){
+int main(int argc, char *argv[]){
 
     //Preparation phase
     //change print format to make it more understandable
@@ -27,15 +27,19 @@ int main(){
     FILE *NFAdump = fopen("Test/NFAdump.txt", "w+");
     FILE *DFAdump = fopen("Test/DFAdump.txt", "w+");
     //debug line for dumping state data into dump.txt
-    printf("[LexicalAnalyzer.c: %d]: PrintStatement", __LINE__);
+    printf("[LexicalAnalyzer.c: %d]: PrintStatement\n", __LINE__);
     for(int i = 0; i < st->length; i++) printState(&st->data[i], NFAdump); 
     dumpDFAList(dst, DFAdump);
+    if (NFAdump) fclose(NFAdump);
+    if (DFAdump) fclose(DFAdump);
     freeList(st);
 
     //analysis phase
+    const char *sourceFile = (argc > 1) ? argv[1] : "sample.trn";
+    SymTBL *symtbl = runAnalysis(dst, sourceFile);
+    if (symtbl) {
+        printSymbolTable(symtbl, stdout);
+    }
 
     return 0;
 }
-
-
-

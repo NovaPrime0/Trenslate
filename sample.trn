@@ -1,0 +1,54 @@
+# Trenslate Sample Program - Inspired by the Filipino Commuter Experience
+# COSC 303 - Principles of Programming Language
+
+daan "istasyon.h";
+
+# Function definition for fare calculation
+route kalkulahin(distansya, mayDiskwento) {
+    bagahe pamasahe = 15;
+    sakali (distansya > 5) {
+        bagahe dagdag = (distansya - 5) * 2;
+        pamasahe = pamasahe + dagdag;
+    }
+    
+    sakali (mayDiskwento == 1) {
+        pamasahe = pamasahe // 2;
+    }
+    
+    baba pamasahe;
+}
+
+# Main program entry point
+byahe {
+    announce ng "Maligayang pagdating sa Trenslate!";
+    
+    /* Deklarasyon ng mga baryabol
+       para sa biyahe sa LRT/MRT */
+    bagahe pasahero = 32;
+    bagahe kabuuan = 0;
+    bagahe rate = 15;
+    laging LIMIT = 100;
+    
+    sakali (pasahero > 35) {
+        announce("It's very crowded!");
+    } liko sakali (pasahero >= 25) {
+        announce("It's comfortably crowded.");
+    } liko {
+        announce("It's a bit lonely.");
+    }
+    
+    # Bilang ng ikot gamit ang habang loop
+    bagahe bilang = 0;
+    habang (bilang < 3) {
+        bilang = bilang + 1;
+        sakali (bilang == 2) {
+            tuloy;
+        }
+    }
+    
+    # Null ticket
+    bagahe ticket = exit;
+    
+    # Wakas ng programa
+    dulo;
+}
