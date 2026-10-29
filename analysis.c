@@ -117,7 +117,7 @@ void addInvalidToken(InvalidTokenTable *table, int line, int col, const char *le
     tok->line = line;
     tok->col = col;
     tok->lexeme = strdup(lexeme);
-    tok->rule = strdup(rule ? rule : "Rule 1 (Unrecognized Token)");
+    tok->rule = strdup(rule ? rule : "Rule 1");
     tok->description = strdup(desc ? desc : "Token does not conform to Trenslate grammar specifications.");
     table->count++;
 }
@@ -140,7 +140,7 @@ static void classifyInvalidRule(StateType stateType, const char *lexeme, char lo
     // Rule 2: Identifier starting with digit
     if (stateType == S_Lit_INT || stateType == S_Lit_DEC) {
         if (isalpha((unsigned char)lookahead) || lookahead == '_') {
-            *ruleOut = "Rule 2 (Identifier Starting with Digit)";
+            *ruleOut = "Rule 2";
             *descOut = "Identifiers must start with a letter (A-Z, a-z) or underscore (_), never a digit (0-9).";
             return;
         }
@@ -149,49 +149,49 @@ static void classifyInvalidRule(StateType stateType, const char *lexeme, char lo
     // Rule 4: Incomplete logical operators (Intermediary states)
     if (stateType == INTERMEDIARY) {
         if (strcmp(lexeme, "|") == 0) {
-            *ruleOut = "Rule 4 (Incomplete Logical OR Operator)";
+            *ruleOut = "Rule 4";
             *descOut = "Single '|' is not a recognized operator in Trenslate. Logical OR requires '||'.";
             return;
         }
         if (strcmp(lexeme, "&") == 0) {
-            *ruleOut = "Rule 4 (Incomplete Logical AND Operator)";
+            *ruleOut = "Rule 4";
             *descOut = "Single '&' is not a recognized operator in Trenslate. Logical AND requires '&&'.";
             return;
         }
         if (lexeme[0] == '"') {
-            *ruleOut = "Rule 6 (Unclosed String Literal)";
+            *ruleOut = "Rule 6";
             *descOut = "String literal was opened with '\"' but reached newline or EOF without closing '\"'.";
             return;
         }
         if (lexeme[0] == '\'') {
-            *ruleOut = "Rule 7 (Unclosed Character Literal)";
+            *ruleOut = "Rule 7";
             *descOut = "Character literal was opened with ''' but reached delimiter/newline/EOF without closing '''.";
             return;
         }
         if (strncmp(lexeme, "/*", 2) == 0) {
-            *ruleOut = "Rule 8 (Unclosed Block Comment)";
+            *ruleOut = "Rule 7";
             *descOut = "Block comment was opened with '/*' but reached EOF without terminating '*/'.";
             return;
         }
         if (strlen(lexeme) > 0 && lexeme[strlen(lexeme) - 1] == '.') {
-            *ruleOut = "Rule 5 (Malformed Decimal Literal)";
+            *ruleOut = "Rule 5";
             *descOut = "Decimal point must be followed by at least one digit (0-9).";
             return;
         }
-        *ruleOut = "Rule 9 (Incomplete Intermediary Token)";
+        *ruleOut = "Rule 4";
         *descOut = "Lexeme halted in a non-accepting intermediary state without completing a valid token.";
         return;
     }
     
     // Rule 1: Unknown character set symbol or special symbol inside identifier
     if (stateType == S_INVALID || stateType == START || strlen(lexeme) == 1) {
-        *ruleOut = "Rule 1 (Invalid Character / Symbol)";
+        *ruleOut = "Rule 1";
         *descOut = "Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.";
         return;
     }
     
     // Default fallback rule
-    *ruleOut = "Rule 1 (Unrecognized Token)";
+    *ruleOut = "Rule 1";
     *descOut = "Lexeme does not match any valid keyword, identifier, literal, operator, or delimiter.";
 }
 
@@ -204,7 +204,7 @@ void printInvalidTable(InvalidTokenTable *table, const char *sourceFile, FILE *o
     fprintf(out, "========================================================================================================================\n\n");
     
     fprintf(out, "------------------------------------------------------------------------------------------------------------------------\n");
-    fprintf(out, " %-5s | %-5s | %-5s | %-20s | %-42s | %s\n",
+    fprintf(out, " %-5s | %-5s | %-5s | %-20s | %-14s | %s\n",
             "Index", "Line", "Col", "Invalid Lexeme", "Violated Rule", "Description");
     fprintf(out, "------------------------------------------------------------------------------------------------------------------------\n");
     
@@ -214,7 +214,7 @@ void printInvalidTable(InvalidTokenTable *table, const char *sourceFile, FILE *o
         for (int i = 0; i < table->count; i++) {
             char escLex[MAX_LEXEME_LEN * 2];
             escapeString(table->data[i].lexeme, escLex, sizeof(escLex));
-            fprintf(out, " %-5d | %-5d | %-5d | %-20s | %-42s | %s\n",
+            fprintf(out, " %-5d | %-5d | %-5d | %-20s | %-14s | %s\n",
                     table->data[i].index,
                     table->data[i].line,
                     table->data[i].col,
@@ -227,41 +227,41 @@ void printInvalidTable(InvalidTokenTable *table, const char *sourceFile, FILE *o
     fprintf(out, " Total Invalid Entries: %d\n", table ? table->count : 0);
     fprintf(out, "========================================================================================================================\n\n");
     
-    // SPECIFICATION RULES REFERENCE GUIDE
+    // Language rules reference summary
     fprintf(out, "========================================================================================================================\n");
     fprintf(out, "                                     TRENSLATE RULES REFERENCE GUIDE                                                    \n");
     fprintf(out, "========================================================================================================================\n");
-    fprintf(out, " Rule 1: Character Set Definition\n");
+    fprintf(out, " Rule 1:\n");
     fprintf(out, "   - Recognized Alphabet: Letters (A-Z, a-z), Digits (0-9), Arithmetic (+, -, *, /, %%, //, **),\n");
     fprintf(out, "     Relational (<, >, =, !, ==, !=, >=, <=), Logical (&&, ||, !), Delimiters (,, ;, ., :), Brackets ((), {}, []),\n");
     fprintf(out, "     and Quotes (\", '). Any other character (@, $, ~, ^, ?, etc.) is strictly INVALID.\n\n");
     
-    fprintf(out, " Rule 2: Identifier Leading Character\n");
+    fprintf(out, " Rule 2:\n");
     fprintf(out, "   - Must start with a letter (A-Z, a-z) or an underscore (_), NEVER a digit (0-9).\n");
     fprintf(out, "   - Valid:   _count, pamasahe, computeArea\n");
     fprintf(out, "   - Invalid: 2count, 9pasahero, 0bilang\n\n");
     
-    fprintf(out, " Rule 3: Special Characters in Identifiers\n");
+    fprintf(out, " Rule 3:\n");
     fprintf(out, "   - After the first character, identifiers may contain letters, digits, and underscores.\n");
     fprintf(out, "   - Special symbols (-, @, #, !, etc.) or whitespace are NOT allowed inside identifier names.\n");
     fprintf(out, "   - Invalid: pasa@hero, sukli#1, pamasahe-rate\n\n");
     
-    fprintf(out, " Rule 4: Logical Operators\n");
+    fprintf(out, " Rule 4:\n");
     fprintf(out, "   - Logical operators are '&&' (AND), '||' (OR), and '!' (NOT).\n");
     fprintf(out, "   - A single '|' or single '&' is an incomplete INTERMEDIARY DFA state.\n");
     fprintf(out, "   - Halting in an intermediary state without completing the multi-character operator is strictly INVALID.\n\n");
     
-    fprintf(out, " Rule 5: Decimal Literals\n");
+    fprintf(out, " Rule 5:\n");
     fprintf(out, "   - Integer literals: one or more digits (0-9).\n");
     fprintf(out, "   - Decimal literals: must have digits on both sides of the decimal point (e.g. 15.50).\n");
     fprintf(out, "   - Trailing decimal points without following digits (e.g. 15.) remain in INTERMEDIARY state and are INVALID.\n\n");
     
-    fprintf(out, " Rule 6: String and Character Literals\n");
+    fprintf(out, " Rule 6:\n");
     fprintf(out, "   - Strings must be enclosed by matching double quotation marks (\"...\").\n");
     fprintf(out, "   - Characters must enclose exactly one character within single quotation marks ('c').\n");
     fprintf(out, "   - Reaching line end or EOF without closing quotation leaves the DFA in INTERMEDIARY state and is INVALID.\n\n");
     
-    fprintf(out, " Rule 7: Block Comment Termination\n");
+    fprintf(out, " Rule 7:\n");
     fprintf(out, "   - Multi-line block comments must open with '/*' and terminate with '*/'.\n");
     fprintf(out, "   - Reaching EOF without the terminating '*/' leaves the DFA in INTERMEDIARY state and is INVALID.\n");
     fprintf(out, "========================================================================================================================\n\n");
@@ -600,7 +600,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                     
                     if (invalidTbl) {
                         addInvalidToken(invalidTbl, lineNum, startCol, lexeme,
-                            "Rule 2 (Identifier Starting with Digit)",
+                            "Rule 2",
                             "Identifiers must start with a letter (A-Z, a-z) or underscore (_), never a digit (0-9).");
                     }
                     
