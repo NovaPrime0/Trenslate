@@ -42,10 +42,18 @@ int main(int argc, char *argv[]){
     validateAllKeywordsDFA(dst, stdout);
 
     //analysis phase
-    const char *sourceFile = (argc > 1) ? argv[1] : "sample.trn";
+    const char *sourceFile = (argc > 1) ? argv[1] : "sample.tren";
     SymTBL *symtbl = runAnalysis(dst, sourceFile);
     if (symtbl) {
         printSymbolTable(symtbl, stdout);
+
+        // Output text file called "Symbol Table.txt" (Rubric Criterion 11)
+        FILE *symFile = fopen("Symbol Table.txt", "w");
+        if (symFile) {
+            printSymbolTable(symtbl, symFile);
+            fclose(symFile);
+            printf("[Output File Generated]: 'Symbol Table.txt'\n\n");
+        }
     }
 
     // Collect and print identifier semantic table

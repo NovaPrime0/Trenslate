@@ -2,14 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "C/C++ Runner: Debug Session",
+      "name": "Debug Trenslate (F5)",
       "type": "cppdbg",
       "request": "launch",
-      "args": [],
+      "args": ["sample.tren"],
       "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "k:/Codez/C/PPL",
-      "program": "k:/Codez/C/PPL/build/Debug/outDebug",
+      "externalConsole": false,
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/main.exe",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

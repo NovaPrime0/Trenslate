@@ -27,7 +27,11 @@ byahe {
     bagahe pasahero = 32;
     bagahe kabuuan = 0;
     bagahe rate = 15;
+    bagahe pamasaheRate = 15.50;
+    bagahe mayDiskwento = TRUE;
+    bagahe linya = 'L';
     laging LIMIT = 100;
+    bagahe @mali = 0;
     
     sakali (pasahero > 35) {
         announce("It's very crowded!");

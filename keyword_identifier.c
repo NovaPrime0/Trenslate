@@ -309,14 +309,19 @@ IdentifierTable* collectIdentifiersDFA(DFAStateList *dsl, const char *sourceFile
                     lexeme[lexLen] = '\0';
                 }
                 col++;
+
+                if (currentState->type == S_C_BLOCK) {
+                    currentState = startState;
+                    lexLen = 0;
+                    lexeme[0] = '\0';
+                }
             } else {
                 // NO_TRANSITION
                 StateType curType = currentState->type;
                 
                 if (currentState != startState &&
                     curType != INTERMEDIARY &&
-                    curType != START &&
-                    curType != S_INVALID) {
+                    curType != START) {
                     
                     // Token recognized based purely on DFA StateType enum (no strcmp)!
                     if (curType == S_VARIABLE) {
@@ -378,6 +383,8 @@ IdentifierTable* collectIdentifiersDFA(DFAStateList *dsl, const char *sourceFile
                     currentState = startState;
                     lexLen = 0;
                     lexeme[0] = '\0';
+                } else if (currentState == startState) {
+                    col++;
                 } else {
                     currentState = startState;
                     lexLen = 0;

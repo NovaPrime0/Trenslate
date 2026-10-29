@@ -6,10 +6,10 @@
 #include "state.h"
 #include "symtbl.h"
 
-#define TRENSLATE_EXT ".trn"
+#define TRENSLATE_EXT ".tren"
 
 /**
- * Validates that the source file has the unique Trenslate file extension (.trn).
+ * Validates that the source file has the unique Trenslate file extension (.tren).
  */
 bool validateExtension(const char *filename, const char *expectedExt);
 

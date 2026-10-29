@@ -113,14 +113,20 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                     lexeme[lexLen] = '\0';
                 }
                 col++;
+                
+                // If block comment completed with '*/', reset to startState
+                if (currentState->type == S_C_BLOCK) {
+                    currentState = startState;
+                    lexLen = 0;
+                    lexeme[0] = '\0';
+                }
             } else {
                 // NO_TRANSITION reached: check if currentState is an accepting state
                 StateType curType = currentState->type;
                 
                 if (currentState != startState &&
                     curType != INTERMEDIARY &&
-                    curType != START &&
-                    curType != S_INVALID) {
+                    curType != START) {
                     
                     // ACCEPTING STATE: Token recognized by DFA
                     if (curType == S_WHITESPACE) {
@@ -150,14 +156,25 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         // General whitespace separator
                         col++;
                     } else {
-                        printf("  [Line %3d, Col %2d] Lexical Warning: Unrecognized symbol '%c' (ASCII %d)\n",
-                               lineNum, col + 1, c, (unsigned char)c);
+                        Symbol sym;
+                        char invStr[2] = { c, '\0' };
+                        sym.identifier = strdup(invStr);
+                        sym.token = "INVALID";
+                        sym.line = lineNum;
+                        addSymbol(symtbl, &sym);
+                        printf("  [Line %3d, Col %2d] Token: %-16s Lexeme: \"%s\"\n",
+                               lineNum, col + 1, "INVALID", sym.identifier);
                         col++;
                     }
                 } else {
                     // Reached NO_TRANSITION while in an INTERMEDIARY state
-                    printf("  [Line %3d, Col %2d] Lexical Error: Incomplete token sequence '%s' before '%c'\n",
-                           lineNum, col + 1, lexeme, c);
+                    Symbol sym;
+                    sym.identifier = strdup(lexeme);
+                    sym.token = "INVALID";
+                    sym.line = lineNum;
+                    addSymbol(symtbl, &sym);
+                    printf("  [Line %3d, Col %2d] Token: %-16s Lexeme: \"%s\"\n",
+                           lineNum, col + 1, "INVALID", sym.identifier);
                     currentState = startState;
                     lexLen = 0;
                     lexeme[0] = '\0';
@@ -177,8 +194,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
     // End of file: flush any remaining accepted token in buffer
     if (currentState != startState &&
         currentState->type != INTERMEDIARY &&
-        currentState->type != START &&
-        currentState->type != S_INVALID) {
+        currentState->type != START) {
         
         if (currentState->type != S_WHITESPACE &&
             currentState->type != S_C_LINE &&
