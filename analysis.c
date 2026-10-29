@@ -116,22 +116,33 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
     fprintf(out, "----------------------------------------------------------------------\n");
     
     size_t len = strlen(inputStr);
-    for (size_t i = 0; i <= len; i++) {
-        char c = (i < len) ? inputStr[i] : ' '; // terminal delimiter space at end to trigger NO_TRANSITION
-        step++;
+    size_t i = 0;
+    while (i <= len) {
+        char c;
+        bool isEof = false;
+        if (i < len) {
+            c = inputStr[i];
+        } else {
+            c = '$'; // Standard end-of-input lookahead marker
+            isEof = true;
+        }
         
-        formatChar(c, charBuf, sizeof(charBuf));
-        formatStateSet(currentState->stateNumber, stateBuf, sizeof(stateBuf));
-        const char *curToken = getTokenNameFromDFA(currentState->type);
+        // Peek at transition for character 'c'
+        DFAState *nextState = isEof ? NULL : currentState->next[(unsigned char)c];
         
-        char escAcc[MAX_LEXEME_LEN * 2];
-        escapeString(lexeme, escAcc, sizeof(escAcc));
-        
-        fprintf(out, " %-6d | %-8s | %-20s | %-16s | \"%s\"\n",
-                step, charBuf, stateBuf, curToken, escAcc);
-        
-        DFAState *nextState = (i < len) ? currentState->next[(unsigned char)c] : NULL;
         if (nextState != NULL) {
+            // Valid transition found! Print input step
+            step++;
+            formatChar(c, charBuf, sizeof(charBuf));
+            formatStateSet(currentState->stateNumber, stateBuf, sizeof(stateBuf));
+            const char *curToken = getTokenNameFromDFA(currentState->type);
+            
+            char escAcc[MAX_LEXEME_LEN * 2];
+            escapeString(lexeme, escAcc, sizeof(escAcc));
+            
+            fprintf(out, " %-6d | %-8s | %-20s | %-16s | \"%s\"\n",
+                    step, charBuf, stateBuf, curToken, escAcc);
+            
             formatStateSet(nextState->stateNumber, nextStateBuf, sizeof(nextStateBuf));
             const char *nextToken = getTokenNameFromDFA(nextState->type);
             bool tokenChanged = (currentState->type != nextState->type);
@@ -151,20 +162,66 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
                 lexeme[lexLen++] = c;
                 lexeme[lexLen] = '\0';
             }
+            i++; // Advance to next input character
         } else {
-            // NO_TRANSITION
-            char escLex[MAX_LEXEME_LEN * 2];
-            escapeString(lexeme, escLex, sizeof(escLex));
+            // NO_TRANSITION on character 'c'!
+            formatChar(c, charBuf, sizeof(charBuf));
+            formatStateSet(currentState->stateNumber, stateBuf, sizeof(stateBuf));
+            const char *curToken = getTokenNameFromDFA(currentState->type);
+            
             if (currentState != startState &&
                 currentState->type != INTERMEDIARY &&
                 currentState->type != START) {
-                fprintf(out, "        ==> [NO_TRANSITION on %s]: ACCEPTED TOKEN [%s] Lexeme: \"%s\"\n",
-                        charBuf, curToken, escLex);
+                
+                // 1. EMIT THE ACCEPTED TOKEN FIRST!
+                char escLex[MAX_LEXEME_LEN * 2];
+                escapeString(lexeme, escLex, sizeof(escLex));
+                fprintf(out, "        --------------------------------------------------------------\n");
+                fprintf(out, "        ==> [LOOKAHEAD on %s]: NO_TRANSITION in State %s\n", charBuf, stateBuf);
+                fprintf(out, "            >>> EMIT TOKEN: [%s] (Lexeme: \"%s\")\n", curToken, escLex);
+                fprintf(out, "            >>> RESET DFA: Return to Start State {0} (START)\n");
+                fprintf(out, "        --------------------------------------------------------------\n");
+                
+                // 2. RESET STATE AND ACCUMULATED LEXEME
+                currentState = startState;
+                lexLen = 0;
+                lexeme[0] = '\0';
+                
+                // 3. Do NOT increment i: re-evaluate 'c' starting from State {0}!
+            } else if (currentState == startState) {
+                // In Start State {0}
+                step++;
+                char escAcc[MAX_LEXEME_LEN * 2];
+                escapeString(lexeme, escAcc, sizeof(escAcc));
+                
+                fprintf(out, " %-6d | %-8s | %-20s | %-16s | \"%s\"\n",
+                        step, charBuf, stateBuf, curToken, escAcc);
+                
+                if (isEof || c == '$') {
+                    fprintf(out, "        ==> [END OF INPUT]: Reached terminal marker %s -> Simulation Complete\n", charBuf);
+                    break;
+                } else if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {
+                    fprintf(out, "        ==> [WHITESPACE]: Skip separator %s\n", charBuf);
+                    i++;
+                } else {
+                    fprintf(out, "        ==> [NO_TRANSITION on %s]: INVALID character %s\n", charBuf, charBuf);
+                    i++;
+                }
             } else {
-                fprintf(out, "        ==> [NO_TRANSITION on %s]: REJECTED / INVALID Lexeme: \"%s\"\n",
+                // INTERMEDIARY state with no transition
+                step++;
+                char escLex[MAX_LEXEME_LEN * 2];
+                escapeString(lexeme, escLex, sizeof(escLex));
+                
+                fprintf(out, " %-6d | %-8s | %-20s | %-16s | \"%s\"\n",
+                        step, charBuf, stateBuf, curToken, escLex);
+                fprintf(out, "        ==> [NO_TRANSITION on %s in INTERMEDIARY]: REJECTED / INVALID (Lexeme: \"%s\")\n",
                         charBuf, escLex);
+                currentState = startState;
+                lexLen = 0;
+                lexeme[0] = '\0';
+                i++;
             }
-            break;
         }
     }
     fprintf(out, "======================================================================\n\n");
@@ -270,20 +327,20 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                 continue;
             }
             
-            // Log character before transition
-            if (histFile) {
-                fprintf(histFile, "  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
-                        stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
-            }
-            printf("  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
-                   stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
-            
             // Traversal using the DFA transition pointer (next) directly:
             // Zero strcmp! The DFA handles all symbol and keyword recognition.
             DFAState *nextState = currentState->next[(unsigned char)c];
             
             if (nextState != NULL) {
                 // Valid transition found in DFA
+                stepCount++;
+                if (histFile) {
+                    fprintf(histFile, "  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                            stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
+                }
+                printf("  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                       stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
+                
                 formatStateSet(nextState->stateNumber, nextStateBuf, sizeof(nextStateBuf));
                 const char *nextToken = getTokenNameFromDFA(nextState->type);
                 bool tokenChanged = (currentState->type != nextState->type);
@@ -324,24 +381,24 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                     lexeme[0] = '\0';
                 }
             } else {
-                // NO_TRANSITION reached: check if currentState is an accepting state
+                // NO_TRANSITION reached on character 'c': check if currentState is an accepting state
                 StateType curType = currentState->type;
                 
                 if (currentState != startState &&
                     curType != INTERMEDIARY &&
                     curType != START) {
                     
-                    // ACCEPTING STATE: Token recognized by DFA
+                    // ACCEPTING STATE: Lookahead on delimiter 'c' triggers token emission FIRST!
                     if (curType == S_WHITESPACE) {
                         if (histFile) {
-                            fprintf(histFile, "             ==> [NO_TRANSITION on %s]: (Whitespace skipped) -> Reset to State {0}\n", charBuf);
+                            fprintf(histFile, "             ==> [LOOKAHEAD on %s]: Whitespace complete -> Reset to State {0}\n", charBuf);
                         }
-                        printf("             ==> [NO_TRANSITION on %s]: (Whitespace skipped) -> Reset to State {0}\n", charBuf);
+                        printf("             ==> [LOOKAHEAD on %s]: Whitespace complete -> Reset to State {0}\n", charBuf);
                     } else if (curType == S_C_LINE || curType == S_C_BLOCK) {
                         if (histFile) {
-                            fprintf(histFile, "             ==> [NO_TRANSITION on %s]: (Comment skipped) -> Reset to State {0}\n", charBuf);
+                            fprintf(histFile, "             ==> [LOOKAHEAD on %s]: Comment complete -> Reset to State {0}\n", charBuf);
                         }
-                        printf("             ==> [NO_TRANSITION on %s]: (Comment skipped) -> Reset to State {0}\n", charBuf);
+                        printf("             ==> [LOOKAHEAD on %s]: Comment complete -> Reset to State {0}\n", charBuf);
                     } else {
                         // Valid language token -> emit to symbol table
                         Symbol sym;
@@ -353,11 +410,17 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         char escLex[MAX_LEXEME_LEN * 2];
                         escapeString(sym.identifier, escLex, sizeof(escLex));
                         if (histFile) {
-                            fprintf(histFile, "             ==> [NO_TRANSITION on %s]: EMIT TOKEN [%s] Lexeme: \"%s\" -> Reset to State {0}\n",
-                                    charBuf, sym.token, escLex);
+                            fprintf(histFile, "             ------------------------------------------------------------------\n");
+                            fprintf(histFile, "             ==> [LOOKAHEAD on %s]: NO_TRANSITION in State %s\n", charBuf, stateBuf);
+                            fprintf(histFile, "                 >>> EMIT TOKEN: [%s] Lexeme: \"%s\"\n", sym.token, escLex);
+                            fprintf(histFile, "                 >>> RESET DFA: Return to Start State {0} (START)\n");
+                            fprintf(histFile, "             ------------------------------------------------------------------\n");
                         }
-                        printf("             ==> [NO_TRANSITION on %s]: EMIT TOKEN [%s] Lexeme: \"%s\" -> Reset to State {0}\n",
-                               charBuf, sym.token, escLex);
+                        printf("             ------------------------------------------------------------------\n");
+                        printf("             ==> [LOOKAHEAD on %s]: NO_TRANSITION in State %s\n", charBuf, stateBuf);
+                        printf("                 >>> EMIT TOKEN: [%s] Lexeme: \"%s\"\n", sym.token, escLex);
+                        printf("                 >>> RESET DFA: Return to Start State {0} (START)\n");
+                        printf("             ------------------------------------------------------------------\n");
                     }
                     
                     // Reset to DFA start state
@@ -372,6 +435,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         // General whitespace separator
                         col++;
                     } else {
+                        stepCount++;
                         Symbol sym;
                         char invStr[2] = { c, '\0' };
                         sym.identifier = strdup(invStr);
@@ -379,12 +443,17 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         sym.line = lineNum;
                         addSymbol(symtbl, &sym);
                         if (histFile) {
+                            fprintf(histFile, "  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                                    stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                             fprintf(histFile, "             ==> [NO_TRANSITION]: INVALID character %s -> Emit INVALID and Reset\n", charBuf);
                         }
+                        printf("  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                               stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                         printf("             ==> [NO_TRANSITION]: INVALID character %s -> Emit INVALID and Reset\n", charBuf);
                         col++;
                     }
                 } else {
+                    stepCount++;
                     // Reached NO_TRANSITION while in an INTERMEDIARY state
                     Symbol sym;
                     sym.identifier = strdup(lexeme);
@@ -394,8 +463,12 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                     char escLex[MAX_LEXEME_LEN * 2];
                     escapeString(lexeme, escLex, sizeof(escLex));
                     if (histFile) {
+                        fprintf(histFile, "  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                                stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                         fprintf(histFile, "             ==> [NO_TRANSITION in INTERMEDIARY]: INVALID lexeme \"%s\" -> Emit INVALID and Reset\n", escLex);
                     }
+                    printf("  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                           stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                     printf("             ==> [NO_TRANSITION in INTERMEDIARY]: INVALID lexeme \"%s\" -> Emit INVALID and Reset\n", escLex);
                     currentState = startState;
                     lexLen = 0;
