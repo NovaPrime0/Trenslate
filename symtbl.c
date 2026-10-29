@@ -18,7 +18,6 @@ void addSymbol(SymTBL *st, Symbol *s){
         st -> data = realloc(st->data, st->maxSize * sizeof(Symbol));
     };
     st->data[st->curIdx++] = *s;
-    printf("Symbol %s added successfully added at index %d", s -> identifier, st ->curIdx);
 }
 
 bool contains(SymTBL *st, Symbol *s){

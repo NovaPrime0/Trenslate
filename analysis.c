@@ -141,7 +141,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         sym.line = lineNum;
                         
                         addSymbol(symtbl, &sym);
-                        printf("  [Line %3d] Token: %-16s Lexeme: \"%s\"\n", lineNum, sym.token, sym.identifier);
+                        printf("  [Line %3d] Token: %-16s Lexeme: %s\n", lineNum, sym.token, sym.identifier);
                     }
                     
                     // Reset to DFA start state
@@ -162,7 +162,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         sym.token = "INVALID";
                         sym.line = lineNum;
                         addSymbol(symtbl, &sym);
-                        printf("  [Line %3d, Col %2d] Token: %-16s Lexeme: \"%s\"\n",
+                        printf("  [Line %3d, Col %2d] Token: %-16s Lexeme: %s\n",
                                lineNum, col + 1, "INVALID", sym.identifier);
                         col++;
                     }
@@ -173,7 +173,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                     sym.token = "INVALID";
                     sym.line = lineNum;
                     addSymbol(symtbl, &sym);
-                    printf("  [Line %3d, Col %2d] Token: %-16s Lexeme: \"%s\"\n",
+                    printf("  [Line %3d, Col %2d] Token: %-16s Lexeme: %s\n",
                            lineNum, col + 1, "INVALID", sym.identifier);
                     currentState = startState;
                     lexLen = 0;
@@ -204,7 +204,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
             sym.token = (char*)getTokenNameFromDFA(currentState->type);
             sym.line = lineNum;
             addSymbol(symtbl, &sym);
-            printf("  [Line %3d] Token: %-16s Lexeme: \"%s\"\n", lineNum, sym.token, sym.identifier);
+            printf("  [Line %3d] Token: %-16s Lexeme: %s\n", lineNum, sym.token, sym.identifier);
         }
     }
     
