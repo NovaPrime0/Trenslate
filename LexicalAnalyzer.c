@@ -58,15 +58,7 @@ int main(int argc, char *argv[]){
         if (symFile) {
             printSymbolTable(symtbl, symFile);
             fclose(symFile);
-            printf("[Output File Generated]: 'Output/Symbol Table.txt'\n");
-        }
-
-        // Also save a copy in the root folder
-        FILE *rootSym = fopen("Symbol Table.txt", "w");
-        if (rootSym) {
-            printSymbolTable(symtbl, rootSym);
-            fclose(rootSym);
-            printf("[Output File Generated]: 'Symbol Table.txt'\n\n");
+            printf("[Output File Generated]: 'Output/Symbol Table.txt'\n\n");
         }
     }
 

@@ -811,18 +811,12 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
         printf("\n[Output File Generated]: 'Test/Transition History.txt'\n");
     }
     
-    // Generate Output/Invalid Tokens.txt and Invalid Tokens.txt
+    // Generate Output/Invalid Tokens.txt
     FILE *invFile = fopen("Output/Invalid Tokens.txt", "w");
     if (invFile) {
         printInvalidTable(invalidTbl, sourceFilename, invFile);
         fclose(invFile);
         printf("[Output File Generated]: 'Output/Invalid Tokens.txt'\n");
-    }
-    FILE *rootInv = fopen("Invalid Tokens.txt", "w");
-    if (rootInv) {
-        printInvalidTable(invalidTbl, sourceFilename, rootInv);
-        fclose(rootInv);
-        printf("[Output File Generated]: 'Invalid Tokens.txt'\n");
     }
     if (invalidTbl) {
         freeInvalidTable(invalidTbl);
