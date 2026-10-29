@@ -376,7 +376,7 @@ bool addTransition(DFAState* s, Transition* t){
     if(!s || !t) return false;
     printf("\n[state.c: %d]:Received: %s\n",__LINE__, t->symbol);
     char *tokSave;
-    char symbolCpy[65                       ];
+    char symbolCpy[64];
     strncpy(symbolCpy, t->symbol, sizeof symbolCpy -1);
     symbolCpy[sizeof symbolCpy -1] = '\0';
     symbolCpy[strcspn(symbolCpy,"\n")] = '\0';
@@ -449,10 +449,10 @@ bool addTransition(DFAState* s, Transition* t){
                     break;
             }
             if(c != -1 && !bindChar(s, c, t->stateNumber)) return false;
-            printf("[state.c: %d]:\tmodified %c:%s\n",__LINE__, (tokBuff[1]=='n') ? '\n': '\t', tokBuff);
+            printf("[state.c: %d]:\tmodified %c:%d\n",__LINE__, (tokBuff[1]=='n') ? '\n': '\t', t->stateNumber);
         } else if (strlen(tokBuff) == 1) {
             if(!bindChar(s, tokBuff[0], t->stateNumber)) return false;
-            printf("[state.c: %d]:\tmodified %c:%s\n",__LINE__, (unsigned char) *tokBuff, tokBuff);
+            printf("[state.c: %d]:\tmodified %c:%d\n",__LINE__, (unsigned char) *tokBuff, t->stateNumber);
         }
         tokBuff = strtok_r(NULL, "|", &tokSave);
     }

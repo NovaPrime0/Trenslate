@@ -123,7 +123,7 @@ State: 121, Transitions: 122, Symbols: u, StateType: INTERMEDIARY,
 State: 122, Transitions: 123, Symbols: e, StateType: INTERMEDIARY,
 State: 123, Transitions: none, Symbols: none, StateType: S_TRUE,
 State: 124, Transitions: 124:125, Symbols: num:., StateType: S_Lit_INT,
-State: 125, Transitions: 126, Symbols: num, StateType: INTERMEDIARY
+State: 125, Transitions: 126, Symbols: num, StateType: INTERMEDIARY,
 State: 126, Transitions: 126, Symbols: num, StateType: S_Lit_DEC,
 State: 127, Transitions: 128:129, Symbols: ALPHA|alpha|num|sym|whitespace:", StateType: INTERMEDIARY,
 State: 128, Transitions: 128:129, Symbols: ALPHA|alpha|num|sym|whitespace:", StateType: INTERMEDIARY,
