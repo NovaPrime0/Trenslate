@@ -93,6 +93,184 @@ static void escapeString(const char *src, char *dst, size_t maxLen) {
     dst[o] = '\0';
 }
 
+/* ========================================================================= */
+/* INVALID TOKEN TRACKING & RULE CLASSIFICATION                              */
+/* Based strictly on the PUP Trenslate Language Specification Document       */
+/* ========================================================================= */
+
+InvalidTokenTable* createInvalidTable(void) {
+    InvalidTokenTable *table = malloc(sizeof(InvalidTokenTable));
+    if (!table) return NULL;
+    table->capacity = 16;
+    table->count = 0;
+    table->data = malloc(sizeof(InvalidToken) * table->capacity);
+    return table;
+}
+
+void addInvalidToken(InvalidTokenTable *table, int line, int col, const char *lexeme, const char *rule, const char *desc) {
+    if (!table || !lexeme) return;
+    if (table->count >= table->capacity) {
+        table->capacity *= 2;
+        InvalidToken *newArr = realloc(table->data, sizeof(InvalidToken) * table->capacity);
+        if (!newArr) return;
+        table->data = newArr;
+    }
+    InvalidToken *tok = &table->data[table->count];
+    tok->index = table->count + 1;
+    tok->line = line;
+    tok->col = col;
+    tok->lexeme = strdup(lexeme);
+    tok->rule = strdup(rule ? rule : "Rule II.A (Unrecognized Token)");
+    tok->description = strdup(desc ? desc : "Token does not conform to Trenslate grammar specifications.");
+    table->count++;
+}
+
+void freeInvalidTable(InvalidTokenTable *table) {
+    if (!table) return;
+    for (int i = 0; i < table->count; i++) {
+        if (table->data[i].lexeme) free(table->data[i].lexeme);
+        if (table->data[i].rule) free(table->data[i].rule);
+        if (table->data[i].description) free(table->data[i].description);
+    }
+    if (table->data) free(table->data);
+    free(table);
+}
+
+// Maps invalid tokens / intermediary halts to the exact rule in the PUP specification document
+static void classifyInvalidRule(StateType stateType, const char *lexeme, char lookahead, const char **ruleOut, const char **descOut) {
+    if (!ruleOut || !descOut) return;
+    
+    // Rule II.B.b.i: Identifier starting with digit
+    if (stateType == S_Lit_INT || stateType == S_Lit_DEC) {
+        if (isalpha((unsigned char)lookahead) || lookahead == '_') {
+            *ruleOut = "Rule II.B.b.i (Identifier Leading Character)";
+            *descOut = "Identifiers must start with a letter (A-Z, a-z) or underscore (_), never a digit (0-9).";
+            return;
+        }
+    }
+    
+    // Rule II.C.c: Incomplete logical operators (Intermediary states)
+    if (stateType == INTERMEDIARY) {
+        if (strcmp(lexeme, "|") == 0) {
+            *ruleOut = "Rule II.C.c (Incomplete Logical OR Operator)";
+            *descOut = "Single '|' is not a recognized operator in Trenslate. Logical OR requires '||'.";
+            return;
+        }
+        if (strcmp(lexeme, "&") == 0) {
+            *ruleOut = "Rule II.C.c (Incomplete Logical AND Operator)";
+            *descOut = "Single '&' is not a recognized operator in Trenslate. Logical AND requires '&&'.";
+            return;
+        }
+        if (lexeme[0] == '"') {
+            *ruleOut = "Rule II.A & II.E (Unclosed String Literal)";
+            *descOut = "String literal was opened with '\"' but reached newline or EOF without closing '\"'.";
+            return;
+        }
+        if (lexeme[0] == '\'') {
+            *ruleOut = "Rule II.A & II.E (Unclosed Character Literal)";
+            *descOut = "Character literal was opened with ''' but reached delimiter/newline/EOF without closing '''.";
+            return;
+        }
+        if (strncmp(lexeme, "/*", 2) == 0) {
+            *ruleOut = "Rule II.G.b (Unclosed Block Comment)";
+            *descOut = "Block comment was opened with '/*' but reached EOF without terminating '*/'.";
+            return;
+        }
+        if (strlen(lexeme) > 0 && lexeme[strlen(lexeme) - 1] == '.') {
+            *ruleOut = "Rule II.A & II.E (Malformed Decimal Literal)";
+            *descOut = "Decimal point must be followed by at least one digit (0-9).";
+            return;
+        }
+        *ruleOut = "Rule II.E (Incomplete Intermediary DFA State)";
+        *descOut = "Lexeme halted in a non-accepting intermediary state without completing a valid token.";
+        return;
+    }
+    
+    // Rule II.A: Unknown character set symbol or special symbol inside identifier
+    if (stateType == S_INVALID || stateType == START || strlen(lexeme) == 1) {
+        *ruleOut = "Rule II.A / II.B.b.iii (Invalid Character / Special Symbol)";
+        *descOut = "Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.";
+        return;
+    }
+    
+    // Default fallback rule
+    *ruleOut = "Rule II.A (Unrecognized Token)";
+    *descOut = "Lexeme does not match any valid keyword, identifier, literal, operator, or delimiter.";
+}
+
+void printInvalidTable(InvalidTokenTable *table, const char *sourceFile, FILE *out) {
+    if (!out) return;
+    
+    fprintf(out, "========================================================================================================================\n");
+    fprintf(out, "                                   TRENSLATE INVALID TOKENS & LEXICAL ERROR REPORT                                      \n");
+    fprintf(out, " Source File: %s\n", sourceFile ? sourceFile : "unknown");
+    fprintf(out, " Reference: PUP College of Computer and Information Sciences - Trenslate Language Specification\n");
+    fprintf(out, "========================================================================================================================\n\n");
+    
+    fprintf(out, "------------------------------------------------------------------------------------------------------------------------\n");
+    fprintf(out, " %-5s | %-5s | %-5s | %-20s | %-45s | %s\n",
+            "Index", "Line", "Col", "Invalid Lexeme", "Violated Rule", "Description");
+    fprintf(out, "------------------------------------------------------------------------------------------------------------------------\n");
+    
+    if (!table || table->count == 0) {
+        fprintf(out, "  (No invalid tokens detected. All source lexemes successfully conformed to Trenslate language rules!)\n");
+    } else {
+        for (int i = 0; i < table->count; i++) {
+            char escLex[MAX_LEXEME_LEN * 2];
+            escapeString(table->data[i].lexeme, escLex, sizeof(escLex));
+            fprintf(out, " %-5d | %-5d | %-5d | %-20s | %-45s | %s\n",
+                    table->data[i].index,
+                    table->data[i].line,
+                    table->data[i].col,
+                    escLex,
+                    table->data[i].rule,
+                    table->data[i].description);
+        }
+    }
+    fprintf(out, "------------------------------------------------------------------------------------------------------------------------\n");
+    fprintf(out, " Total Invalid Entries: %d\n", table ? table->count : 0);
+    fprintf(out, "========================================================================================================================\n\n");
+    
+    // SPECIFICATION RULES DETAILED REFERENCE GUIDE (From PUP Trenslate Specification Document)
+    fprintf(out, "========================================================================================================================\n");
+    fprintf(out, "                          TRENSLATE LANGUAGE SPECIFICATION RULES REFERENCE GUIDE                                        \n");
+    fprintf(out, "========================================================================================================================\n");
+    fprintf(out, " [RULE 1] Section II.A - Character Set Definition (Page 3 & 9):\n");
+    fprintf(out, "   - Recognized Alphabet: Letters (A-Z, a-z), Digits (0-9), Arithmetic (+, -, *, /, %%, //, **),\n");
+    fprintf(out, "     Relational (<, >, =, !, ==, !=, >=, <=), Logical (&&, ||, !), Delimiters (,, ;, ., :), Brackets ((), {}, []),\n");
+    fprintf(out, "     and Quotes (\", '). Any other character (@, $, ~, ^, ?, etc.) is strictly INVALID.\n\n");
+    
+    fprintf(out, " [RULE 2] Section II.B.b.i - Identifier Leading Character (Page 3):\n");
+    fprintf(out, "   - Must start with a letter (A-Z, a-z) or an underscore (_), NEVER a digit (0-9).\n");
+    fprintf(out, "   - Valid:   _count, pamasahe, computeArea\n");
+    fprintf(out, "   - Invalid: 2count, 9pasahero, 0bilang\n\n");
+    
+    fprintf(out, " [RULE 3] Section II.B.b.ii & iii - Identifier Character Body & Special Symbols (Page 3):\n");
+    fprintf(out, "   - After the first character, identifiers may contain letters, digits, and underscores.\n");
+    fprintf(out, "   - Special symbols (-, @, #, !, etc.) or whitespace are NOT allowed inside identifier names.\n");
+    fprintf(out, "   - Invalid: pasa@hero, sukli#1, pamasahe-rate\n\n");
+    
+    fprintf(out, " [RULE 4] Section II.C.c & Section II.E - Logical Operators & Intermediary States (Page 6 & 11):\n");
+    fprintf(out, "   - Logical operators are '&&' (AND), '||' (OR), and '!' (NOT).\n");
+    fprintf(out, "   - A single '|' or single '&' is an incomplete INTERMEDIARY DFA state.\n");
+    fprintf(out, "   - Halting in an intermediary state without completing the multi-character operator is strictly INVALID.\n\n");
+    
+    fprintf(out, " [RULE 5] Section II.A & II.E - Numeric Literal Format (Page 3 & 12):\n");
+    fprintf(out, "   - Integer literals: one or more digits (0-9).\n");
+    fprintf(out, "   - Decimal literals: must have digits on both sides of the decimal point (e.g. 15.50).\n");
+    fprintf(out, "   - Trailing decimal points without following digits (e.g. 15.) remain in INTERMEDIARY state and are INVALID.\n\n");
+    
+    fprintf(out, " [RULE 6] Section II.A & II.E - String and Character Literal Enclosures (Page 3):\n");
+    fprintf(out, "   - Strings must be enclosed by matching double quotation marks (\"...\").\n");
+    fprintf(out, "   - Characters must enclose exactly one character within single quotation marks ('c').\n");
+    fprintf(out, "   - Reaching line end or EOF without closing quotation leaves the DFA in INTERMEDIARY state and is INVALID.\n\n");
+    
+    fprintf(out, " [RULE 7] Section II.G.b - Block Comment Termination (Page 15):\n");
+    fprintf(out, "   - Multi-line block comments must open with '/*' and terminate with '*/'.\n");
+    fprintf(out, "   - Reaching EOF without the terminating '*/' leaves the DFA in INTERMEDIARY state and is INVALID.\n");
+    fprintf(out, "========================================================================================================================\n\n");
+}
+
 // Simulates DFA character-by-character transition for an input word,
 // displaying current state, token, line, accumulated lexeme, and token changes.
 void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
@@ -166,6 +344,30 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
             formatChar(c, charBuf, sizeof(charBuf));
             formatStateSet(currentState->stateNumber, stateBuf, sizeof(stateBuf));
             const char *curToken = getTokenNameFromDFA(currentState->type);
+            
+            if ((currentState->type == S_Lit_INT || currentState->type == S_Lit_DEC) &&
+                (isalpha((unsigned char)c) || c == '_')) {
+                // Malformed identifier starting with digit: e.g. 9pasahero
+                while (i < len && (isalnum((unsigned char)inputStr[i]) || inputStr[i] == '_')) {
+                    if (lexLen < MAX_LEXEME_LEN - 1) {
+                        lexeme[lexLen++] = inputStr[i];
+                        lexeme[lexLen] = '\0';
+                    }
+                    i++;
+                }
+                char escLex[MAX_LEXEME_LEN * 2];
+                escapeString(lexeme, escLex, sizeof(escLex));
+                fprintf(out, "        --------------------------------------------------------------\n");
+                fprintf(out, "        ==> [MALFORMED IDENTIFIER]: Identifier starting with digit\n");
+                fprintf(out, "            >>> EMIT TOKEN: [INVALID] (Lexeme: \"%s\")\n", escLex);
+                fprintf(out, "            >>> RULE: Rule II.B.b.i - Identifiers cannot start with digit\n");
+                fprintf(out, "            >>> RESET DFA: Return to Start State {0} (START)\n");
+                fprintf(out, "        --------------------------------------------------------------\n");
+                currentState = startState;
+                lexLen = 0;
+                lexeme[0] = '\0';
+                continue;
+            }
             
             if (currentState != startState &&
                 currentState->type != INTERMEDIARY &&
@@ -257,6 +459,8 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
         fclose(src);
         return NULL;
     }
+    
+    InvalidTokenTable *invalidTbl = createInvalidTable();
     
     // Step 3: Open Transition History file in Test directory
     FILE *histFile = fopen("Test/Transition History.txt", "w");
@@ -377,6 +581,50 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                 // NO_TRANSITION reached on character 'c': check if currentState is an accepting state
                 StateType curType = currentState->type;
                 
+                // Rule II.B.b.i: Check for malformed identifier starting with digit (e.g., 9pasahero, 2count)
+                if ((curType == S_Lit_INT || curType == S_Lit_DEC) &&
+                    (isalpha((unsigned char)c) || c == '_')) {
+                    int startCol = col - lexLen + 1;
+                    while (col < lineLen && (isalnum((unsigned char)lineBuffer[col]) || lineBuffer[col] == '_')) {
+                        if (lexLen < MAX_LEXEME_LEN - 1) {
+                            lexeme[lexLen++] = lineBuffer[col];
+                            lexeme[lexLen] = '\0';
+                        }
+                        col++;
+                    }
+                    Symbol sym;
+                    sym.identifier = strdup(lexeme);
+                    sym.token = "INVALID";
+                    sym.line = lineNum;
+                    addSymbol(symtbl, &sym);
+                    
+                    if (invalidTbl) {
+                        addInvalidToken(invalidTbl, lineNum, startCol, lexeme,
+                            "Rule II.B.b.i (Identifier Leading Character)",
+                            "Identifiers must start with a letter (A-Z, a-z) or underscore (_), never a digit (0-9).");
+                    }
+                    
+                    char escLex[MAX_LEXEME_LEN * 2];
+                    escapeString(lexeme, escLex, sizeof(escLex));
+                    if (histFile) {
+                        fprintf(histFile, "  Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                                lineNum, startCol, "MALFORM", stateBuf, "INVALID", escLex);
+                        fprintf(histFile, "             ------------------------------------------------------------------\n");
+                        fprintf(histFile, "             ==> [RULE VIOLATION Rule II.B.b.i]: Malformed Identifier \"%s\"\n", escLex);
+                        fprintf(histFile, "                 >>> EMIT TOKEN: [INVALID] Lexeme: \"%s\"\n", escLex);
+                        fprintf(histFile, "                 >>> RESET DFA: Return to Start State {0} (START)\n");
+                        fprintf(histFile, "             ------------------------------------------------------------------\n");
+                    }
+                    printf("  Line %3d, Col %2d | Malformed Identifier: \"%s\" (starts with digit)\n",
+                           lineNum, startCol, escLex);
+                    printf("             ==> [RULE VIOLATION Rule II.B.b.i]: Emit INVALID and Reset\n");
+                    
+                    currentState = startState;
+                    lexLen = 0;
+                    lexeme[0] = '\0';
+                    continue;
+                }
+                
                 if (currentState != startState &&
                     curType != INTERMEDIARY &&
                     curType != START) {
@@ -392,6 +640,34 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                             fprintf(histFile, "             ==> [LOOKAHEAD on %s]: Comment complete -> Reset to State {0}\n", charBuf);
                         }
                         printf("             ==> [LOOKAHEAD on %s]: Comment complete -> Reset to State {0}\n", charBuf);
+                    } else if (curType == S_INVALID) {
+                        Symbol sym;
+                        sym.identifier = strdup(lexeme);
+                        sym.token = "INVALID";
+                        sym.line = lineNum;
+                        
+                        addSymbol(symtbl, &sym);
+                        const char *ruleName = NULL;
+                        const char *ruleDesc = NULL;
+                        classifyInvalidRule(S_INVALID, lexeme, c, &ruleName, &ruleDesc);
+                        if (invalidTbl) {
+                            addInvalidToken(invalidTbl, lineNum, col - lexLen + 1, lexeme, ruleName, ruleDesc);
+                        }
+                        
+                        char escLex[MAX_LEXEME_LEN * 2];
+                        escapeString(sym.identifier, escLex, sizeof(escLex));
+                        if (histFile) {
+                            fprintf(histFile, "             ------------------------------------------------------------------\n");
+                            fprintf(histFile, "             ==> [LOOKAHEAD on %s]: NO_TRANSITION in State %s\n", charBuf, stateBuf);
+                            fprintf(histFile, "                 >>> EMIT TOKEN: [INVALID] Lexeme: \"%s\"\n", escLex);
+                            fprintf(histFile, "                 >>> RESET DFA: Return to Start State {0} (START)\n");
+                            fprintf(histFile, "             ------------------------------------------------------------------\n");
+                        }
+                        printf("             ------------------------------------------------------------------\n");
+                        printf("             ==> [LOOKAHEAD on %s]: NO_TRANSITION in State %s\n", charBuf, stateBuf);
+                        printf("                 >>> EMIT TOKEN: [INVALID] Lexeme: \"%s\"\n", escLex);
+                        printf("                 >>> RESET DFA: Return to Start State {0} (START)\n");
+                        printf("             ------------------------------------------------------------------\n");
                     } else {
                         // Valid language token -> emit to symbol table
                         Symbol sym;
@@ -434,6 +710,14 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         sym.token = "INVALID";
                         sym.line = lineNum;
                         addSymbol(symtbl, &sym);
+                        
+                        const char *ruleName = NULL;
+                        const char *ruleDesc = NULL;
+                        classifyInvalidRule(START, invStr, c, &ruleName, &ruleDesc);
+                        if (invalidTbl) {
+                            addInvalidToken(invalidTbl, lineNum, col + 1, invStr, ruleName, ruleDesc);
+                        }
+                        
                         if (histFile) {
                             fprintf(histFile, "  Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
                                     lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
@@ -451,6 +735,14 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                     sym.token = "INVALID";
                     sym.line = lineNum;
                     addSymbol(symtbl, &sym);
+                    
+                    const char *ruleName = NULL;
+                    const char *ruleDesc = NULL;
+                    classifyInvalidRule(INTERMEDIARY, lexeme, c, &ruleName, &ruleDesc);
+                    if (invalidTbl) {
+                        addInvalidToken(invalidTbl, lineNum, col - lexLen + 1, lexeme, ruleName, ruleDesc);
+                    }
+                    
                     char escLex[MAX_LEXEME_LEN * 2];
                     escapeString(lexeme, escLex, sizeof(escLex));
                     if (histFile) {
@@ -477,14 +769,28 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
         }
     }
     
-    // End of file: flush any remaining accepted token in buffer
-    if (currentState != startState &&
-        currentState->type != INTERMEDIARY &&
-        currentState->type != START) {
-        
-        if (currentState->type != S_WHITESPACE &&
-            currentState->type != S_C_LINE &&
-            currentState->type != S_C_BLOCK) {
+    // End of file: flush any remaining accepted or intermediary token in buffer
+    if (currentState != startState && currentState->type != START) {
+        if (currentState->type == INTERMEDIARY) {
+            Symbol sym;
+            sym.identifier = strdup(lexeme);
+            sym.token = "INVALID";
+            sym.line = lineNum;
+            addSymbol(symtbl, &sym);
+            
+            const char *ruleName = NULL;
+            const char *ruleDesc = NULL;
+            classifyInvalidRule(INTERMEDIARY, lexeme, '$', &ruleName, &ruleDesc);
+            if (invalidTbl) {
+                addInvalidToken(invalidTbl, lineNum, 1, lexeme, ruleName, ruleDesc);
+            }
+            if (histFile) {
+                fprintf(histFile, "  [EOF FLUSH INTERMEDIARY] Token: INVALID Lexeme: %s\n", sym.identifier);
+            }
+            printf("  [EOF FLUSH INTERMEDIARY] Token: INVALID Lexeme: %s\n", sym.identifier);
+        } else if (currentState->type != S_WHITESPACE &&
+                   currentState->type != S_C_LINE &&
+                   currentState->type != S_C_BLOCK) {
             Symbol sym;
             sym.identifier = strdup(lexeme);
             sym.token = (char*)getTokenNameFromDFA(currentState->type);
@@ -505,6 +811,23 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
         printf("\n[Output File Generated]: 'Test/Transition History.txt'\n");
     }
     
+    // Generate Output/Invalid Tokens.txt and Invalid Tokens.txt
+    FILE *invFile = fopen("Output/Invalid Tokens.txt", "w");
+    if (invFile) {
+        printInvalidTable(invalidTbl, sourceFilename, invFile);
+        fclose(invFile);
+        printf("[Output File Generated]: 'Output/Invalid Tokens.txt'\n");
+    }
+    FILE *rootInv = fopen("Invalid Tokens.txt", "w");
+    if (rootInv) {
+        printInvalidTable(invalidTbl, sourceFilename, rootInv);
+        fclose(rootInv);
+        printf("[Output File Generated]: 'Invalid Tokens.txt'\n");
+    }
+    if (invalidTbl) {
+        freeInvalidTable(invalidTbl);
+    }
+    
     fclose(src);
     printf("----------------------------------------------------------------------\n");
     printf("[4] Analysis Complete! Emitted %d tokens into Symbol Table.\n\n", symtbl->curIdx);
@@ -515,19 +838,56 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
 void printSymbolTable(SymTBL *st, FILE *out) {
     if (!st || !out) return;
     
+    int validCount = 0;
+    int invalidCount = 0;
+    for (int i = 0; i < st->curIdx; i++) {
+        if (st->data[i].token && strcmp(st->data[i].token, "INVALID") == 0) {
+            invalidCount++;
+        } else {
+            validCount++;
+        }
+    }
+    
+    // SECTION 1: VALID LANGUAGE SYMBOLS
     fprintf(out, "======================================================================\n");
-    fprintf(out, "                         TRENSLATE SYMBOL TABLE                       \n");
+    fprintf(out, "                   TRENSLATE VALID SYMBOL TABLE                       \n");
     fprintf(out, "======================================================================\n");
     fprintf(out, " %-6s | %-6s | %-18s | %s\n", "Index", "Line", "Token Type", "Lexeme");
     fprintf(out, "----------------------------------------------------------------------\n");
+    int vIdx = 1;
     for (int i = 0; i < st->curIdx; i++) {
-        fprintf(out, " %-6d | %-6d | %-18s | %s\n",
-                i + 1,
-                st->data[i].line,
-                st->data[i].token ? st->data[i].token : "",
-                st->data[i].identifier ? st->data[i].identifier : "");
+        if (st->data[i].token && strcmp(st->data[i].token, "INVALID") != 0) {
+            fprintf(out, " %-6d | %-6d | %-18s | %s\n",
+                    vIdx++,
+                    st->data[i].line,
+                    st->data[i].token ? st->data[i].token : "",
+                    st->data[i].identifier ? st->data[i].identifier : "");
+        }
     }
     fprintf(out, "======================================================================\n");
-    fprintf(out, " Total Symbols Recorded: %d\n", st->curIdx);
+    fprintf(out, " Total Valid Symbols Recorded: %d\n", validCount);
     fprintf(out, "======================================================================\n\n");
+    
+    // SECTION 2: SEPARATED INVALID ENTRIES
+    if (invalidCount > 0) {
+        fprintf(out, "======================================================================\n");
+        fprintf(out, "              TRENSLATE SEPARATED INVALID ENTRIES                     \n");
+        fprintf(out, "======================================================================\n");
+        fprintf(out, " %-6s | %-6s | %-18s | %s\n", "Index", "Line", "Token Type", "Lexeme");
+        fprintf(out, "----------------------------------------------------------------------\n");
+        int invIdx = 1;
+        for (int i = 0; i < st->curIdx; i++) {
+            if (st->data[i].token && strcmp(st->data[i].token, "INVALID") == 0) {
+                fprintf(out, " %-6d | %-6d | %-18s | %s\n",
+                        invIdx++,
+                        st->data[i].line,
+                        st->data[i].token ? st->data[i].token : "",
+                        st->data[i].identifier ? st->data[i].identifier : "");
+            }
+        }
+        fprintf(out, "======================================================================\n");
+        fprintf(out, " Total Invalid Entries: %d\n", invalidCount);
+        fprintf(out, " [Note]: Comprehensive rule-by-rule report in: 'Output/Invalid Tokens.txt'\n");
+        fprintf(out, "======================================================================\n\n");
+    }
 }

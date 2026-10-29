@@ -26,7 +26,32 @@ bool validateExtension(const char *filename, const char *expectedExt);
 SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename);
 
 /**
- * Formats and prints the symbol table to the given output stream.
+ * Structure representing an invalid lexical token detected during analysis,
+ * along with the specific language rule from the PUP specification document it violated.
+ */
+typedef struct {
+    int index;
+    int line;
+    int col;
+    char *lexeme;
+    char *rule;
+    char *description;
+} InvalidToken;
+
+typedef struct {
+    InvalidToken *data;
+    int count;
+    int capacity;
+} InvalidTokenTable;
+
+InvalidTokenTable* createInvalidTable(void);
+void addInvalidToken(InvalidTokenTable *table, int line, int col, const char *lexeme, const char *rule, const char *desc);
+void freeInvalidTable(InvalidTokenTable *table);
+void printInvalidTable(InvalidTokenTable *table, const char *sourceFile, FILE *out);
+
+/**
+ * Formats and prints the symbol table to the given output stream,
+ * cleanly separating valid language tokens from invalid lexical entries.
  */
 void printSymbolTable(SymTBL *st, FILE *out);
 
