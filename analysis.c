@@ -231,37 +231,37 @@ void printInvalidTable(InvalidTokenTable *table, const char *sourceFile, FILE *o
     fprintf(out, "========================================================================================================================\n");
     fprintf(out, "                                     TRENSLATE RULES REFERENCE GUIDE                                                    \n");
     fprintf(out, "========================================================================================================================\n");
-    fprintf(out, " [RULE 1] Character Set Definition:\n");
+    fprintf(out, " Rule 1: Character Set Definition\n");
     fprintf(out, "   - Recognized Alphabet: Letters (A-Z, a-z), Digits (0-9), Arithmetic (+, -, *, /, %%, //, **),\n");
     fprintf(out, "     Relational (<, >, =, !, ==, !=, >=, <=), Logical (&&, ||, !), Delimiters (,, ;, ., :), Brackets ((), {}, []),\n");
     fprintf(out, "     and Quotes (\", '). Any other character (@, $, ~, ^, ?, etc.) is strictly INVALID.\n\n");
     
-    fprintf(out, " [RULE 2] Identifier Leading Character:\n");
+    fprintf(out, " Rule 2: Identifier Leading Character\n");
     fprintf(out, "   - Must start with a letter (A-Z, a-z) or an underscore (_), NEVER a digit (0-9).\n");
     fprintf(out, "   - Valid:   _count, pamasahe, computeArea\n");
     fprintf(out, "   - Invalid: 2count, 9pasahero, 0bilang\n\n");
     
-    fprintf(out, " [RULE 3] Identifier Special Symbols:\n");
+    fprintf(out, " Rule 3: Special Characters in Identifiers\n");
     fprintf(out, "   - After the first character, identifiers may contain letters, digits, and underscores.\n");
     fprintf(out, "   - Special symbols (-, @, #, !, etc.) or whitespace are NOT allowed inside identifier names.\n");
     fprintf(out, "   - Invalid: pasa@hero, sukli#1, pamasahe-rate\n\n");
     
-    fprintf(out, " [RULE 4] Incomplete Logical Operators:\n");
+    fprintf(out, " Rule 4: Logical Operators\n");
     fprintf(out, "   - Logical operators are '&&' (AND), '||' (OR), and '!' (NOT).\n");
     fprintf(out, "   - A single '|' or single '&' is an incomplete INTERMEDIARY DFA state.\n");
     fprintf(out, "   - Halting in an intermediary state without completing the multi-character operator is strictly INVALID.\n\n");
     
-    fprintf(out, " [RULE 5] Malformed Decimal Literal:\n");
+    fprintf(out, " Rule 5: Decimal Literals\n");
     fprintf(out, "   - Integer literals: one or more digits (0-9).\n");
     fprintf(out, "   - Decimal literals: must have digits on both sides of the decimal point (e.g. 15.50).\n");
     fprintf(out, "   - Trailing decimal points without following digits (e.g. 15.) remain in INTERMEDIARY state and are INVALID.\n\n");
     
-    fprintf(out, " [RULE 6] Unclosed String and Character Literals:\n");
+    fprintf(out, " Rule 6: String and Character Literals\n");
     fprintf(out, "   - Strings must be enclosed by matching double quotation marks (\"...\").\n");
     fprintf(out, "   - Characters must enclose exactly one character within single quotation marks ('c').\n");
     fprintf(out, "   - Reaching line end or EOF without closing quotation leaves the DFA in INTERMEDIARY state and is INVALID.\n\n");
     
-    fprintf(out, " [RULE 7] Block Comment Termination:\n");
+    fprintf(out, " Rule 7: Block Comment Termination\n");
     fprintf(out, "   - Multi-line block comments must open with '/*' and terminate with '*/'.\n");
     fprintf(out, "   - Reaching EOF without the terminating '*/' leaves the DFA in INTERMEDIARY state and is INVALID.\n");
     fprintf(out, "========================================================================================================================\n\n");
