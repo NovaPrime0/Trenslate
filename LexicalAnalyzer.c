@@ -5,6 +5,7 @@
 #include "state.h"
 #include "symtbl.h"
 #include "analysis.h"
+#include "keyword_identifier.h"
 
 /* CURRENT PLANNED FLOW:
     1. Prep phase (Make states list and load all from lexStates.txt)
@@ -26,19 +27,32 @@ int main(int argc, char *argv[]){
     DFAStateList *dst = subsetConstruction(st);
     FILE *NFAdump = fopen("Test/NFAdump.txt", "w+");
     FILE *DFAdump = fopen("Test/DFAdump.txt", "w+");
-    //debug line for dumping state data into dump.txt
-    printf("[LexicalAnalyzer.c: %d]: PrintStatement\n", __LINE__);
-    for(int i = 0; i < st->length; i++) printState(&st->data[i], NFAdump); 
-    dumpDFAList(dst, DFAdump);
-    if (NFAdump) fclose(NFAdump);
-    if (DFAdump) fclose(DFAdump);
+    
+    if (NFAdump) {
+        for(int i = 0; i < st->length; i++) printState(&st->data[i], NFAdump); 
+        fclose(NFAdump);
+    }
+    if (DFAdump) {
+        dumpDFAList(dst, DFAdump);
+        fclose(DFAdump);
+    }
     freeList(st);
+
+    // Keyword DFA verification suite
+    validateAllKeywordsDFA(dst, stdout);
 
     //analysis phase
     const char *sourceFile = (argc > 1) ? argv[1] : "sample.trn";
     SymTBL *symtbl = runAnalysis(dst, sourceFile);
     if (symtbl) {
         printSymbolTable(symtbl, stdout);
+    }
+
+    // Collect and print identifier semantic table
+    IdentifierTable *idTable = collectIdentifiersDFA(dst, sourceFile);
+    if (idTable) {
+        printIdentifierTable(idTable, stdout);
+        freeIdentifierTable(idTable);
     }
 
     return 0;
