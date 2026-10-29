@@ -6,13 +6,9 @@
 #include "state.h"
 #include "enums.h"
 
-/* ========================================================================= */
-/* 1. KEYWORD VALIDATION (Based strictly on DFA / NFA StateTypes)            */
-/* ========================================================================= */
-
-// Specification tests for all Trenslate keywords mapped to their expected DFA StateType
+// Keyword test list mapped to expected DFA state types
 static const DFAKeywordTest KEYWORD_TEST_SET[] = {
-    // Control flow & program structure (Priority 1 in NFA/DFA)
+    // Control flow and program structure
     { "byahe",    S_PROG_MAIN, "Program entry point" },
     { "bagahe",   S_VARIABLE,  "Variable declaration keyword" },
     { "route",    S_FUNCTION,  "Function declaration keyword" },
@@ -126,11 +122,9 @@ bool validateAllKeywordsDFA(DFAStateList *dsl, FILE *outStream) {
 }
 
 
-/* ========================================================================= */
-/* 2. IDENTIFIER SYMBOL TABLE IMPLEMENTATION                                 */
-/* ========================================================================= */
+// Identifier symbol table implementation
 
-// Implied type inference from value (weakly typed: type implied by value)
+// Simple type inference from value string
 static const char* inferImpliedType(const char *val) {
     if (!val || strlen(val) == 0) return "uninitialized";
     if (val[0] == '"' || val[0] == '\'') return "string";
@@ -249,7 +243,7 @@ void recordIdentifierUsage(IdentifierTable *table, const char *variableName, int
     rec->refCount++;
 }
 
-// Collects identifiers and values directly from DFA transitions without strcmp
+// Traverses source file using the DFA to collect identifiers and their values
 IdentifierTable* collectIdentifiersDFA(DFAStateList *dsl, const char *sourceFilename) {
     if (!dsl || dsl->length <= 0 || !sourceFilename) return NULL;
     

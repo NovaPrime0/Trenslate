@@ -6,51 +6,32 @@
 #include "state.h"
 #include "enums.h"
 
-/* ========================================================================= */
-/* 1. KEYWORD VALIDATION MODULE (Based purely on DFA/NFA state types)        */
-/* ========================================================================= */
-
+// Keyword validation using DFA state types
 typedef struct {
     const char *keyword;
     StateType expectedType;
     const char *description;
 } DFAKeywordTest;
 
-/**
- * Returns true if a StateType belongs to the DFA's Priority 1 Keyword range
- * (S_FOR through S_IMPORT) or S_CONST, purely checking enum values without strcmp.
- */
+// Checks if state type is a keyword (S_FOR to S_IMPORT, or S_CONST)
 bool isDFAKeywordType(StateType type);
 
-/**
- * Traverses a keyword string character-by-character through the loaded DFA
- * (using DFAState->next pointers) and checks if the final state matches expectedType.
- */
+// Validates a single keyword by feeding characters through the DFA
 bool validateKeywordThroughDFA(DFAStateList *dsl, const char *keyword, StateType expectedType);
 
-/**
- * Runs a complete verification suite against all Trenslate keywords using the DFA
- * as the basis, reporting whether each keyword correctly transitions to its
- * designated DFA accepting state.
- */
+// Runs tests on all keywords against the DFA
 bool validateAllKeywordsDFA(DFAStateList *dsl, FILE *outStream);
 
-
-/* ========================================================================= */
-/* 2. IDENTIFIER SYMBOL TABLE MODULE                                         */
-/*    (Specifically for identifiers, with variableName, value, line, scope)  */
-/*    Weakly typed: type is implied by value                                 */
-/* ========================================================================= */
-
+// Identifier tracking (name, value, line, scope, flags)
 typedef struct {
-    char *variableName;   // Name of the identifier/variable
-    char *value;          // String representation of value (implied type, e.g. "15", "Recto", "exit")
-    int line;             // Line number of declaration
-    int lastUsedLine;     // Line number of last reference or update
-    char *scope;          // Scope name ("global", or enclosing function name)
-    bool isConstant;      // True if declared under S_CONST ('laging')
-    bool isFunction;      // True if declared under S_FUNCTION ('route')
-    int refCount;         // Usage count (useful for semantic phase unused-variable checks)
+    char *variableName;   // Variable or function name
+    char *value;          // Assigned value string (implied type, e.g. "15", "Recto")
+    int line;             // Declaration line number
+    int lastUsedLine;     // Line of last reference or update
+    char *scope;          // Scope name ("global" or enclosing function)
+    bool isConstant;      // Declared as constant ('laging')
+    bool isFunction;      // Declared as function ('route')
+    int refCount;         // Reference / usage count
 } IdentifierRecord;
 
 typedef struct {
@@ -59,15 +40,9 @@ typedef struct {
     int capacity;
 } IdentifierTable;
 
-/**
- * Creates and initializes an Identifier Symbol Table.
- */
-IdentifierTable* createIdentifierTable();
+IdentifierTable* createIdentifierTable(void);
 
-/**
- * Inserts an identifier with its assigned value, line, scope, and flags into the table.
- * If already declared in the same scope, returns false.
- */
+// Inserts a new identifier entry into the table
 bool insertIdentifierEntry(IdentifierTable *table,
                            const char *variableName,
                            const char *value,
@@ -76,41 +51,26 @@ bool insertIdentifierEntry(IdentifierTable *table,
                            bool isConstant,
                            bool isFunction);
 
-/**
- * Updates the value and last-used line of an existing identifier.
- * Fails if the identifier is marked as constant.
- */
+// Updates an existing identifier's value and last-used line
 bool updateIdentifierEntry(IdentifierTable *table,
                            const char *variableName,
                            const char *newValue,
                            int line,
                            const char *scope);
 
-/**
- * Looks up an identifier by variableName and scope.
- */
+// Finds an identifier entry by name and scope
 IdentifierRecord* findIdentifierEntry(IdentifierTable *table, const char *variableName, const char *scope);
 
-/**
- * Records a usage/reference of an identifier, incrementing its refCount.
- */
+// Increments refCount for an identifier
 void recordIdentifierUsage(IdentifierTable *table, const char *variableName, int line, const char *scope);
 
-/**
- * Traverses a source file using the loaded DFA (char-by-char) and extracts all identifiers
- * and their assigned values into an IdentifierTable based strictly on DFA StateTypes.
- */
+// Scans source file using DFA to extract identifiers and their values
 IdentifierTable* collectIdentifiersDFA(DFAStateList *dsl, const char *sourceFilename);
 
-/**
- * Prints the formatted Identifier Symbol Table with columns:
- * Index, Variable Name, Value, Implied Type, Line, Scope, Const?, Refs.
- */
+// Prints the formatted identifier table
 void printIdentifierTable(IdentifierTable *table, FILE *stream);
 
-/**
- * Frees memory allocated for the IdentifierTable.
- */
+// Frees memory used by the identifier table
 void freeIdentifierTable(IdentifierTable *table);
 
 #endif

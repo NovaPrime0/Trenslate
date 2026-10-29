@@ -7,22 +7,15 @@
 #include "analysis.h"
 #include "keyword_identifier.h"
 
-/* CURRENT PLANNED FLOW:
-    1. Prep phase (Make states list and load all from lexStates.txt)
-    2. Analysis phase (Load source program and traverse states char-by-char, line-by-line)
-        - all states that started with an alphabet (and still match identifier logic) will resolve to an identifier 
-        when keyword chain no longer matches
-        - something something semi-dfa solution so we dont have to track all possible state transitions for a symbol
-    3. Emit token on NO_TRANSITION (emit to sym tbl)
-    4. Output : symbol table (extension to update later)
-*/
+/*
+ * Trenslate Lexical Analyzer
+ * Main program that loads the state machine, builds the DFA,
+ * and analyzes .tren source files to generate the symbol table and reports.
+ */
 
-//const indices for important states for reference later
-//structs and prototypes
 int main(int argc, char *argv[]){
 
-    //Preparation phase
-    //change print format to make it more understandable
+    // Load states and construct DFA
     StateList *st = loadList("Misc/newStates.txt");
     DFAStateList *dst = subsetConstruction(st);
     FILE *NFAdump = fopen("Test/NFAdump.txt", "w+");
@@ -60,20 +53,12 @@ int main(int argc, char *argv[]){
     if (symtbl) {
         printSymbolTable(symtbl, stdout);
 
-        // Output text file called "Output/Symbol Table.txt"
+        // Save symbol table to Output folder
         FILE *symFile = fopen("Output/Symbol Table.txt", "w");
         if (symFile) {
             printSymbolTable(symtbl, symFile);
             fclose(symFile);
-            printf("[Output File Generated]: 'Output/Symbol Table.txt'\n");
-        }
-
-        // Root copy for rubric verification (Rubric Criterion 11)
-        FILE *rootSym = fopen("Symbol Table.txt", "w");
-        if (rootSym) {
-            printSymbolTable(symtbl, rootSym);
-            fclose(rootSym);
-            printf("[Output File Generated]: 'Symbol Table.txt'\n\n");
+            printf("[Output File Generated]: 'Output/Symbol Table.txt'\n\n");
         }
     }
 

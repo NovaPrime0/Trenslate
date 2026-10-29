@@ -1,0 +1,51 @@
+========================================================================================================================
+                                   TRENSLATE INVALID TOKENS & LEXICAL ERROR REPORT                                      
+ Source File: sample.tren
+========================================================================================================================
+
+------------------------------------------------------------------------------------------------------------------------
+ Index | Line  | Col   | Invalid Lexeme       | Violated Rule  | Description
+------------------------------------------------------------------------------------------------------------------------
+ 1     | 34    | 12    | @                    | Rule 1         | Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.
+------------------------------------------------------------------------------------------------------------------------
+ Total Invalid Entries: 1
+========================================================================================================================
+
+========================================================================================================================
+                                     TRENSLATE RULES REFERENCE GUIDE                                                    
+========================================================================================================================
+ Rule 1:
+   - Recognized Alphabet: Letters (A-Z, a-z), Digits (0-9), Arithmetic (+, -, *, /, %, //, **),
+     Relational (<, >, =, !, ==, !=, >=, <=), Logical (&&, ||, !), Delimiters (,, ;, ., :), Brackets ((), {}, []),
+     and Quotes (", '). Any other character (@, $, ~, ^, ?, etc.) is strictly INVALID.
+
+ Rule 2:
+   - Must start with a letter (A-Z, a-z) or an underscore (_), NEVER a digit (0-9).
+   - Valid:   _count, pamasahe, computeArea
+   - Invalid: 2count, 9pasahero, 0bilang
+
+ Rule 3:
+   - After the first character, identifiers may contain letters, digits, and underscores.
+   - Special symbols (-, @, #, !, etc.) or whitespace are NOT allowed inside identifier names.
+   - Invalid: pasa@hero, sukli#1, pamasahe-rate
+
+ Rule 4:
+   - Logical operators are '&&' (AND), '||' (OR), and '!' (NOT).
+   - A single '|' or single '&' is an incomplete INTERMEDIARY DFA state.
+   - Halting in an intermediary state without completing the multi-character operator is strictly INVALID.
+
+ Rule 5:
+   - Integer literals: one or more digits (0-9).
+   - Decimal literals: must have digits on both sides of the decimal point (e.g. 15.50).
+   - Trailing decimal points without following digits (e.g. 15.) remain in INTERMEDIARY state and are INVALID.
+
+ Rule 6:
+   - Strings must be enclosed by matching double quotation marks ("...").
+   - Characters must enclose exactly one character within single quotation marks ('c').
+   - Reaching line end or EOF without closing quotation leaves the DFA in INTERMEDIARY state and is INVALID.
+
+ Rule 7:
+   - Multi-line block comments must open with '/*' and terminate with '*/'.
+   - Reaching EOF without the terminating '*/' leaves the DFA in INTERMEDIARY state and is INVALID.
+========================================================================================================================
+

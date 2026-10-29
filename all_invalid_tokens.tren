@@ -1,0 +1,35 @@
+# Test cases for invalid tokens and lexical errors
+
+# Rule 1: Unknown symbols that aren't part of Trenslate's character set
+@
+$
+~
+^
+?
+
+# Rule 2: Identifiers can't start with a number
+# 9pasahero, 2count, and 0bilang should be flagged as invalid
+bagahe 9pasahero = 32;
+bagahe 2count = 10;
+bagahe 0bilang = 0;
+
+# Rule 3: Special characters like @ or # can't be used inside variable names
+bagahe pasa@hero = 15;
+bagahe sukli#1 = 20;
+
+# Rule 4: Logical operators need two symbols ('||' and '&&'), so lone '|' or '&' is invalid
+sakali (pasahero > 10 | pasahero < 5) {
+}
+sakali (pasahero > 10 & pasahero < 5) {
+}
+
+# Rule 5: Decimals must have digits after the decimal point (e.g. 15. is invalid)
+bagahe pamasaheRate = 15.;
+
+# Rule 6: String without a closing quote
+announce ng "Unclosed string literal reaching line end;
+
+# Rule 7: Character literal missing closing single quote
+bagahe linya = 'L;
+
+dulo;

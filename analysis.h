@@ -8,32 +8,38 @@
 
 #define TRENSLATE_EXT ".tren"
 
-/**
- * Validates that the source file has the unique Trenslate file extension (.tren).
- */
+// Checks if the source file has the .tren extension
 bool validateExtension(const char *filename, const char *expectedExt);
 
-/**
- * Executes the Analysis Phase:
- * 1. Validates the source program file extension (.trn).
- * 2. Reads the source program line-by-line using a buffer.
- * 3. Traverses the DFA character-by-character purely using DFAState->next pointers.
- * 4. Recognizes tokens when reaching NO_TRANSITION based on DFA accepting states.
- * 5. Emits recognized tokens into the symbol table without using any hardcoded strcmp.
- * 
- * Returns the populated SymTBL pointer, or NULL on error.
- */
+// Runs lexical analysis: reads source file, traverses the DFA char-by-char,
+// and emits recognized tokens into the symbol table.
 SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename);
 
-/**
- * Formats and prints the symbol table to the given output stream.
- */
+// Structure for tracking invalid tokens and the rule they violated
+typedef struct {
+    int index;
+    int line;
+    int col;
+    char *lexeme;
+    char *rule;
+    char *description;
+} InvalidToken;
+
+typedef struct {
+    InvalidToken *data;
+    int count;
+    int capacity;
+} InvalidTokenTable;
+
+InvalidTokenTable* createInvalidTable(void);
+void addInvalidToken(InvalidTokenTable *table, int line, int col, const char *lexeme, const char *rule, const char *desc);
+void freeInvalidTable(InvalidTokenTable *table);
+void printInvalidTable(InvalidTokenTable *table, const char *sourceFile, FILE *out);
+
+// Formats and prints the symbol table, separating valid tokens from invalid ones
 void printSymbolTable(SymTBL *st, FILE *out);
 
-/**
- * Simulates DFA character-by-character transition for an input word,
- * displaying current state, token, line, accumulated lexeme, and token changes.
- */
+// Simulates DFA transitions character-by-character for a single input string
 void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out);
 
 #endif
