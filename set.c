@@ -19,7 +19,7 @@ Set* createSet(){
     }
     s -> length = 0;
     s -> maxSize = 2;
-    printf("[set.c: %d]: Set Created\n", __LINE__);
+    // printf("[set.c: %d]: Set Created\n", __LINE__);
     return s;
 }
 void freeSet(Set* s){
@@ -30,7 +30,6 @@ void freeSet(Set* s){
 
 bool addToSet(Set* s, int x){
     if(!s) {
-        printf("[set.c: %d]: File not Found\n", __LINE__);
         return false;
     }   
     for (int i = 0; i < s->length; i++)
@@ -43,7 +42,7 @@ bool addToSet(Set* s, int x){
         if (!temp) return false;
         s -> data = temp;
         s -> maxSize = newSize;
-        printf("[set.c: %d]: Expanded set to %d\n", __LINE__, s->maxSize);
+        // printf("[set.c: %d]: Expanded set to %d\n", __LINE__, s->maxSize);
     }
     s->data[s->length++] = x;
     return true;
@@ -110,7 +109,7 @@ Sets* createSets(){
     for(int i = s->length; i < s->maxSize; i++){
         s->data[i] = NULL;
     }
-    printf("[set.c: %d]: Set Created\n", __LINE__);
+    // printf("[set.c: %d]: Set Created\n", __LINE__);
     return s;
 }
 void freeSets(Sets* s){
@@ -133,7 +132,7 @@ bool addToSets(Sets* s, Set* x){
     for (int i = 0; i < s->length; i++)
     {
         if(isEqSets(s->data[i], x)) {
-            printf("[set.c: %d]: Set already part of Sets, cleaning...\n", __LINE__);
+            // printf("[set.c: %d]: Set already part of Sets, cleaning...\n", __LINE__);
             freeSet(x);
             return true;
         };
@@ -150,7 +149,7 @@ bool addToSets(Sets* s, Set* x){
             s->data[i] =  NULL;
         }
         s -> maxSize = newSize;
-        printf("[set.c: %d]: Expanded set to %d\n", __LINE__, s->maxSize);
+        // printf("[set.c: %d]: Expanded set to %d\n", __LINE__, s->maxSize);
     }
     s->data[s->length++] = x;
     return true;

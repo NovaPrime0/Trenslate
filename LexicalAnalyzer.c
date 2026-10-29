@@ -41,7 +41,20 @@ int main(int argc, char *argv[]){
     // Keyword DFA verification suite
     validateAllKeywordsDFA(dst, stdout);
 
-    //analysis phase
+    // Optional single-word transition simulation mode: ./main.exe --simulate <word>
+    if (argc > 2 && strcmp(argv[1], "--simulate") == 0) {
+        simulateDFAInput(dst, argv[2], stdout);
+        return 0;
+    }
+
+    // Interactive demonstration: Compare Identifier vs Keyword transition
+    printf("\n======================================================================\n");
+    printf("             DFA TRANSITION DEMONSTRATION: IDENTIFIER vs KEYWORD      \n");
+    printf("======================================================================\n");
+    simulateDFAInput(dst, "bagahe", stdout);   // Turns from IDENTIFIER -> VARIABLE (keyword)
+    simulateDFAInput(dst, "pamasahe", stdout); // Starts with 'p', remains IDENTIFIER throughout
+
+    // Analysis phase
     const char *sourceFile = (argc > 1) ? argv[1] : "sample.tren";
     SymTBL *symtbl = runAnalysis(dst, sourceFile);
     if (symtbl) {

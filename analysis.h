@@ -30,4 +30,11 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename);
  */
 void printSymbolTable(SymTBL *st, FILE *out);
 
+/**
+ * Simulates DFA character-by-character transition for an input word,
+ * displaying current state, token, line, accumulated lexeme, and token changes.
+ */
+void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out);
+
 #endif
+
