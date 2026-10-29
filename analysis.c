@@ -295,13 +295,14 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
     size_t len = strlen(inputStr);
     size_t i = 0;
     while (i <= len) {
-        char c;
+        char c = '\0';
         bool isEof = false;
         if (i < len) {
             c = inputStr[i];
+            formatChar(c, charBuf, sizeof(charBuf));
         } else {
-            c = '$'; // Standard end-of-input lookahead marker
             isEof = true;
+            snprintf(charBuf, sizeof(charBuf), "<EOF>");
         }
         
         // Peek at transition for character 'c'
@@ -309,7 +310,6 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
         
         if (nextState != NULL) {
             // Valid transition found! Print input step
-            formatChar(c, charBuf, sizeof(charBuf));
             formatStateSet(currentState->stateNumber, stateBuf, sizeof(stateBuf));
             const char *curToken = getTokenNameFromDFA(currentState->type);
             
@@ -341,7 +341,11 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
             i++; // Advance to next input character
         } else {
             // NO_TRANSITION on character 'c'!
-            formatChar(c, charBuf, sizeof(charBuf));
+            if (!isEof) {
+                formatChar(c, charBuf, sizeof(charBuf));
+            } else {
+                snprintf(charBuf, sizeof(charBuf), "<EOF>");
+            }
             formatStateSet(currentState->stateNumber, stateBuf, sizeof(stateBuf));
             const char *curToken = getTokenNameFromDFA(currentState->type);
             
@@ -396,8 +400,8 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
                 fprintf(out, " %-8s | %-20s | %-16s | \"%s\"\n",
                         charBuf, stateBuf, curToken, escAcc);
                 
-                if (isEof || c == '$') {
-                    fprintf(out, "        ==> [END OF INPUT]: Reached terminal marker %s -> Simulation Complete\n", charBuf);
+                if (isEof) {
+                    fprintf(out, "        ==> [END OF INPUT]: Reached end of string (<EOF>) -> Simulation Complete\n");
                     break;
                 } else if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {
                     fprintf(out, "        ==> [WHITESPACE]: Skip separator %s\n", charBuf);
@@ -418,7 +422,8 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
                 currentState = startState;
                 lexLen = 0;
                 lexeme[0] = '\0';
-                i++;
+                if (!isEof) i++;
+                else break;
             }
         }
     }
