@@ -1,0 +1,116 @@
+# ==============================================================================
+# Program: Trenslate Comprehensive Language Specification Suite
+# Extension: .tren (Unique Trenslate Source Extension)
+# Features Demonstrated:
+#   1. Keywords & Reserved Words (all 23 keywords & noise words)
+#   2. Identifiers (user-defined functions, variables, parameters)
+#   3. Constant Literals (Integer, Decimal, String, Character, Boolean, Null)
+#   4. Operators (Arithmetic, Relational, Logical, Assignment)
+#   5. Delimiters & Brackets (; , . ( ) { } [ ])
+#   6. Comments (Single-line '#' and Multi-line '/* ... */')
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# SECTION 1: MODULE IMPORT & HEADERS
+# ------------------------------------------------------------------------------
+daan "istasyon.h";
+daan "sistema_tren.h";
+
+# ------------------------------------------------------------------------------
+# SECTION 2: FUNCTION DEFINITIONS & ARITHMETIC OPERATORS
+# ------------------------------------------------------------------------------
+/* Ang sumusunod na tungkulin ay nagkukuwenta ng pamasahe 
+   gamit ang iba't ibang arithmetic operators: +, -, *, /, //, **, % */
+route kwentaPamasahe(distansya, pasaheroCount) {
+    bagahe basePamasahe = 15;
+    bagahe bawasDistansya = distansya - 5;
+    bagahe dagdagBayad = bawasDistansya * 2;
+    bagahe kabuuan = basePamasahe + dagdagBayad;
+    
+    # Integer division (//) at Modulo (%)
+    bagahe grupoPares = pasaheroCount // 2;
+    bagahe sobraPasahero = pasaheroCount % 2;
+    
+    # Exponentiation (**) at Normal division (/)
+    bagahe antasKuryente = 2 ** 3;
+    bagahe hatiRate = kabuuan / 2;
+    
+    # Conditional branch with relational and logical operators
+    sakali (distansya >= 10 && pasaheroCount > 1) {
+        kabuuan = kabuuan + 5;
+    } liko sakali (distansya <= 4 || pasaheroCount == 0) {
+        kabuuan = basePamasahe;
+    } liko {
+        kabuuan = kabuuan;
+    }
+    
+    # Return keyword
+    baba kabuuan;
+}
+
+# ------------------------------------------------------------------------------
+# SECTION 3: MAIN PROGRAM ENTRY POINT
+# ------------------------------------------------------------------------------
+byahe {
+    # Constant declarations (laging keyword)
+    laging MAX_KAPASIDAD = 500;
+    laging MIN_PAMASAHE = 15;
+    laging PANGALAN_TREN = "LRT-Line-1";
+    laging KODIGO_ESTASYON = 'L';
+    
+    # Variable declarations (bagahe keyword) with all constant literal types
+    bagahe kasalukuyangPasahero = 120;             # Lit_INT
+    bagahe porsyentoPuno = 24.50;                   # Lit_DEC
+    bagahe mensaheBati = "Maligayang Pagsakay!";   # Lit_STRING
+    bagahe klaseTicket = 'A';                      # Lit_CHAR
+    bagahe mayDiskwento = TRUE;                    # TRUE literal
+    bagahe punoNaBa = FALSE;                       # FALSE literal
+    bagahe reserbangUpuan = exit;                  # Null literal (exit)
+    
+    # Output display with noise word 'ng'
+    announce ng mensaheBati;
+    
+    # Noise words demonstration: 'ay', 'na', 'ng'
+    bagahe katayuan = "bukas";
+    sakali (kasalukuyangPasahero != MAX_KAPASIDAD && !punoNaBa) {
+        katayuan = "Tumatanggap pa ng pasahero";
+    }
+    
+    # --------------------------------------------------------------------------
+    # SECTION 4: LOOP CONSTRUCTS (hakbang, bawat, habang)
+    # --------------------------------------------------------------------------
+    
+    # 4A. For Loop with noise words 'mula', 'hanggang', 'hakbang'
+    hakbang index mula 1 hanggang 5 {
+        sakali (index == 3) {
+            tuloy; # continue loop
+        }
+    }
+    
+    # 4B. Foreach Loop with noise word 'sa', 'bawat'
+    bagahe rutaListahan = [1, 2, 3, 4, 5];
+    bawat ruta sa rutaListahan {
+        sakali (ruta > 4) {
+            hinto; # break loop
+        }
+    }
+    
+    # 4C. While Loop (habang) with relational operators (<, <=)
+    bagahe metroKomersyal = 0;
+    habang (metroKomersyal < 3) {
+        metroKomersyal = metroKomersyal + 1;
+        sakali (metroKomersyal == 2) {
+            hinto; # early exit
+        }
+    }
+    
+    # --------------------------------------------------------------------------
+    # SECTION 5: DELIMITERS, BRACKETS & EXPRESSIONS
+    # --------------------------------------------------------------------------
+    bagahe resultaHalaga = kwentaPamasahe(12, 3);
+    announce ng "Kabuuang bayad sa biyahe!";
+    announce(resultaHalaga);
+    
+    # Program termination keyword
+    dulo;
+}
