@@ -3,58 +3,58 @@
 ======================================================================
  Index  | Line   | Token Type         | Lexeme
 ----------------------------------------------------------------------
- 1      | 21     | VARIABLE           | bagahe
- 2      | 21     | ASSIGN             | =
- 3      | 21     | Lit_INT            | 32
- 4      | 21     | LINE_END           | ;
- 5      | 22     | VARIABLE           | bagahe
- 6      | 22     | ASSIGN             | =
- 7      | 22     | Lit_INT            | 10
- 8      | 22     | LINE_END           | ;
- 9      | 23     | VARIABLE           | bagahe
- 10     | 23     | ASSIGN             | =
- 11     | 23     | Lit_INT            | 0
- 12     | 23     | LINE_END           | ;
- 13     | 29     | VARIABLE           | bagahe
- 14     | 29     | IDENTIFIER         | pasa
- 15     | 29     | IDENTIFIER         | hero
- 16     | 29     | ASSIGN             | =
- 17     | 29     | Lit_INT            | 15
- 18     | 29     | LINE_END           | ;
- 19     | 30     | VARIABLE           | bagahe
- 20     | 30     | IDENTIFIER         | sukli
- 21     | 36     | IF                 | sakali
- 22     | 36     | LPAREN             | (
- 23     | 36     | IDENTIFIER         | pasahero
- 24     | 36     | Rel_G              | >
- 25     | 36     | Lit_INT            | 10
- 26     | 36     | IDENTIFIER         | pasahero
- 27     | 36     | Rel_L              | <
- 28     | 36     | Lit_INT            | 5
- 29     | 36     | RPAREN             | )
- 30     | 36     | LBRACE             | {
- 31     | 37     | RBRACE             | }
- 32     | 38     | IF                 | sakali
- 33     | 38     | LPAREN             | (
- 34     | 38     | IDENTIFIER         | pasahero
- 35     | 38     | Rel_G              | >
- 36     | 38     | Lit_INT            | 10
- 37     | 38     | IDENTIFIER         | pasahero
- 38     | 38     | Rel_L              | <
- 39     | 38     | Lit_INT            | 5
- 40     | 38     | RPAREN             | )
- 41     | 38     | LBRACE             | {
- 42     | 39     | RBRACE             | }
- 43     | 45     | VARIABLE           | bagahe
- 44     | 45     | IDENTIFIER         | pamasaheRate
- 45     | 45     | ASSIGN             | =
- 46     | 51     | IDENTIFIER         | announce
- 47     | 51     | NOISE              | ng
- 48     | 57     | VARIABLE           | bagahe
- 49     | 57     | IDENTIFIER         | linya
- 50     | 57     | ASSIGN             | =
- 51     | 59     | PROG_END           | dulo
- 52     | 59     | LINE_END           | ;
+ 1      | 12     | VARIABLE           | bagahe
+ 2      | 12     | ASSIGN             | =
+ 3      | 12     | Lit_INT            | 32
+ 4      | 12     | LINE_END           | ;
+ 5      | 13     | VARIABLE           | bagahe
+ 6      | 13     | ASSIGN             | =
+ 7      | 13     | Lit_INT            | 10
+ 8      | 13     | LINE_END           | ;
+ 9      | 14     | VARIABLE           | bagahe
+ 10     | 14     | ASSIGN             | =
+ 11     | 14     | Lit_INT            | 0
+ 12     | 14     | LINE_END           | ;
+ 13     | 17     | VARIABLE           | bagahe
+ 14     | 17     | IDENTIFIER         | pasa
+ 15     | 17     | IDENTIFIER         | hero
+ 16     | 17     | ASSIGN             | =
+ 17     | 17     | Lit_INT            | 15
+ 18     | 17     | LINE_END           | ;
+ 19     | 18     | VARIABLE           | bagahe
+ 20     | 18     | IDENTIFIER         | sukli
+ 21     | 21     | IF                 | sakali
+ 22     | 21     | LPAREN             | (
+ 23     | 21     | IDENTIFIER         | pasahero
+ 24     | 21     | Rel_G              | >
+ 25     | 21     | Lit_INT            | 10
+ 26     | 21     | IDENTIFIER         | pasahero
+ 27     | 21     | Rel_L              | <
+ 28     | 21     | Lit_INT            | 5
+ 29     | 21     | RPAREN             | )
+ 30     | 21     | LBRACE             | {
+ 31     | 22     | RBRACE             | }
+ 32     | 23     | IF                 | sakali
+ 33     | 23     | LPAREN             | (
+ 34     | 23     | IDENTIFIER         | pasahero
+ 35     | 23     | Rel_G              | >
+ 36     | 23     | Lit_INT            | 10
+ 37     | 23     | IDENTIFIER         | pasahero
+ 38     | 23     | Rel_L              | <
+ 39     | 23     | Lit_INT            | 5
+ 40     | 23     | RPAREN             | )
+ 41     | 23     | LBRACE             | {
+ 42     | 24     | RBRACE             | }
+ 43     | 27     | VARIABLE           | bagahe
+ 44     | 27     | IDENTIFIER         | pamasaheRate
+ 45     | 27     | ASSIGN             | =
+ 46     | 30     | IDENTIFIER         | announce
+ 47     | 30     | NOISE              | ng
+ 48     | 33     | VARIABLE           | bagahe
+ 49     | 33     | IDENTIFIER         | linya
+ 50     | 33     | ASSIGN             | =
+ 51     | 35     | PROG_END           | dulo
+ 52     | 35     | LINE_END           | ;
 ======================================================================
  Total Valid Symbols Recorded: 52
 ======================================================================
@@ -64,20 +64,20 @@
 ======================================================================
  Index  | Line   | Token Type         | Lexeme
 ----------------------------------------------------------------------
- 1      | 10     | INVALID            | @
- 2      | 11     | INVALID            | $
- 3      | 12     | INVALID            | ~
- 4      | 13     | INVALID            | ^
- 5      | 14     | INVALID            | ?
- 6      | 21     | INVALID            | 9pasahero
- 7      | 22     | INVALID            | 2count
- 8      | 23     | INVALID            | 0bilang
- 9      | 29     | INVALID            | @
- 10     | 36     | INVALID            | |
- 11     | 38     | INVALID            | &
- 12     | 45     | INVALID            | 15.
- 13     | 51     | INVALID            | "Unclosed string literal reaching line end
- 14     | 57     | INVALID            | 'L
+ 1      | 4      | INVALID            | @
+ 2      | 5      | INVALID            | $
+ 3      | 6      | INVALID            | ~
+ 4      | 7      | INVALID            | ^
+ 5      | 8      | INVALID            | ?
+ 6      | 12     | INVALID            | 9pasahero
+ 7      | 13     | INVALID            | 2count
+ 8      | 14     | INVALID            | 0bilang
+ 9      | 17     | INVALID            | @
+ 10     | 21     | INVALID            | |
+ 11     | 23     | INVALID            | &
+ 12     | 27     | INVALID            | 15.
+ 13     | 30     | INVALID            | "Unclosed string literal reaching line end
+ 14     | 33     | INVALID            | 'L
 ======================================================================
  Total Invalid Entries: 14
  [Note]: Comprehensive rule-by-rule report in: 'Output/Invalid Tokens.txt'

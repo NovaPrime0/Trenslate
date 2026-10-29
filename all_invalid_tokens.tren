@@ -1,59 +1,35 @@
-# ======================================================================
-#            TRENSLATE COMPREHENSIVE INVALID LEXICAL TEST SUITE         
-# ======================================================================
+# Test cases for invalid tokens and lexical errors
 
-# ----------------------------------------------------------------------
-# [RULE 1] Character Set
-# Characters outside the Trenslate alphabet are strictly invalid.
-# Tested Symbols: @, $, ~, ^, ?
-# ----------------------------------------------------------------------
+# Rule 1: Unknown symbols that aren't part of Trenslate's character set
 @
 $
 ~
 ^
 ?
 
-# ----------------------------------------------------------------------
-# [RULE 2] Identifier Leading Character
-# "Must start with a letter or underscore never a digit"
-# Examples: _count (OK), pamasahe (OK), 2count (INVALID), 9pasahero (INVALID)
-# ----------------------------------------------------------------------
+# Rule 2: Identifiers can't start with a number
+# 9pasahero, 2count, and 0bilang should be flagged as invalid
 bagahe 9pasahero = 32;
 bagahe 2count = 10;
 bagahe 0bilang = 0;
 
-# ----------------------------------------------------------------------
-# [RULE 3] Identifier Special Symbols
-# "No spaces or special symbols (-, @, #, !, etc. aren't allowed inside names)"
-# ----------------------------------------------------------------------
+# Rule 3: Special characters like @ or # can't be used inside variable names
 bagahe pasa@hero = 15;
 bagahe sukli#1 = 20;
 
-# ----------------------------------------------------------------------
-# [RULE 4] Incomplete Logical Operators
-# Logical operators are '&&', '||', '!'. Single '|' or '&' is invalid.
-# ----------------------------------------------------------------------
+# Rule 4: Logical operators need two symbols ('||' and '&&'), so lone '|' or '&' is invalid
 sakali (pasahero > 10 | pasahero < 5) {
 }
 sakali (pasahero > 10 & pasahero < 5) {
 }
 
-# ----------------------------------------------------------------------
-# [RULE 5] Malformed Decimal Literal
-# Decimal points must be followed by at least one digit (num).
-# ----------------------------------------------------------------------
+# Rule 5: Decimals must have digits after the decimal point (e.g. 15. is invalid)
 bagahe pamasaheRate = 15.;
 
-# ----------------------------------------------------------------------
-# [RULE 6] Unclosed String Literal
-# Strings must be enclosed by matching double quotes.
-# ----------------------------------------------------------------------
+# Rule 6: String without a closing quote
 announce ng "Unclosed string literal reaching line end;
 
-# ----------------------------------------------------------------------
-# [RULE 7] Unclosed Character Literal
-# Character literals must enclose exactly one character in single quotes.
-# ----------------------------------------------------------------------
+# Rule 7: Character literal missing closing single quote
 bagahe linya = 'L;
 
 dulo;

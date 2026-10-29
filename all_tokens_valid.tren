@@ -1,41 +1,27 @@
-# ==============================================================================
-# Program: Trenslate Comprehensive Language Specification Suite
-# Extension: .tren (Unique Trenslate Source Extension)
-# Features Demonstrated:
-#   1. Keywords & Reserved Words (all 23 keywords & noise words)
-#   2. Identifiers (user-defined functions, variables, parameters)
-#   3. Constant Literals (Integer, Decimal, String, Character, Boolean, Null)
-#   4. Operators (Arithmetic, Relational, Logical, Assignment)
-#   5. Delimiters & Brackets (; , . ( ) { } [ ])
-#   6. Comments (Single-line '#' and Multi-line '/* ... */')
-# ==============================================================================
+# Test program covering all valid tokens in Trenslate
+# Tests keywords, identifiers, constants, operators, comments, and delimiters
 
-# ------------------------------------------------------------------------------
-# SECTION 1: MODULE IMPORT & HEADERS
-# ------------------------------------------------------------------------------
+# Imports
 daan "istasyon.h";
 daan "sistema_tren.h";
 
-# ------------------------------------------------------------------------------
-# SECTION 2: FUNCTION DEFINITIONS & ARITHMETIC OPERATORS
-# ------------------------------------------------------------------------------
-/* Ang sumusunod na tungkulin ay nagkukuwenta ng pamasahe 
-   gamit ang iba't ibang arithmetic operators: +, -, *, /, //, **, % */
+# Function definition and math operators: +, -, *, /, //, **, %
+/* Calculates fare based on distance and passenger count */
 route kwentaPamasahe(distansya, pasaheroCount) {
     bagahe basePamasahe = 15;
     bagahe bawasDistansya = distansya - 5;
     bagahe dagdagBayad = bawasDistansya * 2;
     bagahe kabuuan = basePamasahe + dagdagBayad;
     
-    # Integer division (//) at Modulo (%)
+    # Integer division and modulo
     bagahe grupoPares = pasaheroCount // 2;
     bagahe sobraPasahero = pasaheroCount % 2;
     
-    # Exponentiation (**) at Normal division (/)
+    # Exponentiation and division
     bagahe antasKuryente = 2 ** 3;
     bagahe hatiRate = kabuuan / 2;
     
-    # Conditional branch with relational and logical operators
+    # Conditionals with relational and logical operators
     sakali (distansya >= 10 && pasaheroCount > 1) {
         kabuuan = kabuuan + 5;
     } liko sakali (distansya <= 4 || pasaheroCount == 0) {
@@ -44,50 +30,44 @@ route kwentaPamasahe(distansya, pasaheroCount) {
         kabuuan = kabuuan;
     }
     
-    # Return keyword
+    # Return statement
     baba kabuuan;
 }
 
-# ------------------------------------------------------------------------------
-# SECTION 3: MAIN PROGRAM ENTRY POINT
-# ------------------------------------------------------------------------------
+# Main program entry
 byahe {
-    # Constant declarations (laging keyword)
+    # Constants
     laging MAX_KAPASIDAD = 500;
     laging MIN_PAMASAHE = 15;
     laging PANGALAN_TREN = "LRT-Line-1";
     laging KODIGO_ESTASYON = 'L';
     
-    # Variable declarations (bagahe keyword) with all constant literal types
-    bagahe kasalukuyangPasahero = 120;             # Lit_INT
-    bagahe porsyentoPuno = 24.50;                   # Lit_DEC
-    bagahe mensaheBati = "Maligayang Pagsakay!";   # Lit_STRING
-    bagahe klaseTicket = 'A';                      # Lit_CHAR
-    bagahe mayDiskwento = TRUE;                    # TRUE literal
-    bagahe punoNaBa = FALSE;                       # FALSE literal
-    bagahe reserbangUpuan = exit;                  # Null literal (exit)
+    # Variables with different literal types
+    bagahe kasalukuyangPasahero = 120;             # integer
+    bagahe porsyentoPuno = 24.50;                   # decimal
+    bagahe mensaheBati = "Maligayang Pagsakay!";   # string
+    bagahe klaseTicket = 'A';                      # char
+    bagahe mayDiskwento = TRUE;                    # boolean true
+    bagahe punoNaBa = FALSE;                       # boolean false
+    bagahe reserbangUpuan = exit;                  # null value
     
-    # Output display with noise word 'ng'
+    # Printing with noise word 'ng'
     announce ng mensaheBati;
     
-    # Noise words demonstration: 'ay', 'na', 'ng'
+    # Checking status with logical NOT (!)
     bagahe katayuan = "bukas";
     sakali (kasalukuyangPasahero != MAX_KAPASIDAD && !punoNaBa) {
         katayuan = "Tumatanggap pa ng pasahero";
     }
     
-    # --------------------------------------------------------------------------
-    # SECTION 4: LOOP CONSTRUCTS (hakbang, bawat, habang)
-    # --------------------------------------------------------------------------
-    
-    # 4A. For Loop with noise words 'mula', 'hanggang', 'hakbang'
+    # For loop using 'mula' and 'hanggang'
     hakbang index mula 1 hanggang 5 {
         sakali (index == 3) {
-            tuloy; # continue loop
+            tuloy; # continue to next iteration
         }
     }
     
-    # 4B. Foreach Loop with noise word 'sa', 'bawat'
+    # Foreach loop using 'bawat' and 'sa'
     bagahe rutaListahan = [1, 2, 3, 4, 5];
     bawat ruta sa rutaListahan {
         sakali (ruta > 4) {
@@ -95,22 +75,20 @@ byahe {
         }
     }
     
-    # 4C. While Loop (habang) with relational operators (<, <=)
+    # While loop using 'habang'
     bagahe metroKomersyal = 0;
     habang (metroKomersyal < 3) {
         metroKomersyal = metroKomersyal + 1;
         sakali (metroKomersyal == 2) {
-            hinto; # early exit
+            hinto; # stop loop
         }
     }
     
-    # --------------------------------------------------------------------------
-    # SECTION 5: DELIMITERS, BRACKETS & EXPRESSIONS
-    # --------------------------------------------------------------------------
+    # Function call and output
     bagahe resultaHalaga = kwentaPamasahe(12, 3);
     announce ng "Kabuuang bayad sa biyahe!";
     announce(resultaHalaga);
     
-    # Program termination keyword
+    # End of program
     dulo;
 }

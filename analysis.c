@@ -93,10 +93,7 @@ static void escapeString(const char *src, char *dst, size_t maxLen) {
     dst[o] = '\0';
 }
 
-/* ========================================================================= */
-/* INVALID TOKEN TRACKING & RULE CLASSIFICATION                              */
-/* Based strictly on the PUP Trenslate Language Specification Document       */
-/* ========================================================================= */
+// Invalid token tracking and rule classification
 
 InvalidTokenTable* createInvalidTable(void) {
     InvalidTokenTable *table = malloc(sizeof(InvalidTokenTable));
@@ -120,7 +117,7 @@ void addInvalidToken(InvalidTokenTable *table, int line, int col, const char *le
     tok->line = line;
     tok->col = col;
     tok->lexeme = strdup(lexeme);
-    tok->rule = strdup(rule ? rule : "Rule II.A (Unrecognized Token)");
+    tok->rule = strdup(rule ? rule : "Rule 1 (Unrecognized Token)");
     tok->description = strdup(desc ? desc : "Token does not conform to Trenslate grammar specifications.");
     table->count++;
 }
@@ -136,8 +133,7 @@ void freeInvalidTable(InvalidTokenTable *table) {
     free(table);
 }
 
-// Maps invalid tokens / intermediary halts to the exact rule in the PUP specification document
-// Maps invalid tokens / intermediary halts to standard rules
+// Classifies invalid tokens and intermediary halts into rules 1 to 7
 static void classifyInvalidRule(StateType stateType, const char *lexeme, char lookahead, const char **ruleOut, const char **descOut) {
     if (!ruleOut || !descOut) return;
     
@@ -364,7 +360,7 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
                 fprintf(out, "        --------------------------------------------------------------\n");
                 fprintf(out, "        ==> [MALFORMED IDENTIFIER]: Identifier starting with digit\n");
                 fprintf(out, "            >>> EMIT TOKEN: [INVALID] (Lexeme: \"%s\")\n", escLex);
-                fprintf(out, "            >>> RULE: Rule II.B.b.i - Identifiers cannot start with digit\n");
+                fprintf(out, "            >>> RULE: Rule 2 - Identifiers cannot start with digit\n");
                 fprintf(out, "            >>> RESET DFA: Return to Start State {0} (START)\n");
                 fprintf(out, "        --------------------------------------------------------------\n");
                 currentState = startState;
@@ -530,8 +526,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                 continue;
             }
             
-            // Traversal using the DFA transition pointer (next) directly:
-            // Zero strcmp! The DFA handles all symbol and keyword recognition.
+            // Traverse using the DFA next transition pointer directly
             DFAState *nextState = currentState->next[(unsigned char)c];
             
             if (nextState != NULL) {
@@ -586,7 +581,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                 // NO_TRANSITION reached on character 'c': check if currentState is an accepting state
                 StateType curType = currentState->type;
                 
-                // Rule II.B.b.i: Check for malformed identifier starting with digit (e.g., 9pasahero, 2count)
+                // Rule 2: Check for malformed identifier starting with digit (e.g., 9pasahero, 2count)
                 if ((curType == S_Lit_INT || curType == S_Lit_DEC) &&
                     (isalpha((unsigned char)c) || c == '_')) {
                     int startCol = col - lexLen + 1;
