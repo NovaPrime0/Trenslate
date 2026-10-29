@@ -102,7 +102,6 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
     DFAState *currentState = startState;
     char lexeme[MAX_LEXEME_LEN] = {0};
     int lexLen = 0;
-    int step = 0;
     
     char stateBuf[128];
     char nextStateBuf[128];
@@ -111,8 +110,8 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
     fprintf(out, "\n======================================================================\n");
     fprintf(out, "               DFA SIMULATION: Input String \"%s\"\n", inputStr);
     fprintf(out, "======================================================================\n");
-    fprintf(out, " %-6s | %-8s | %-20s | %-16s | %s\n",
-            "Step", "Input", "Current State", "Current Token", "Accumulated Lexeme");
+    fprintf(out, " %-8s | %-20s | %-16s | %s\n",
+            "Input", "Current State", "Current Token", "Accumulated Lexeme");
     fprintf(out, "----------------------------------------------------------------------\n");
     
     size_t len = strlen(inputStr);
@@ -132,7 +131,6 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
         
         if (nextState != NULL) {
             // Valid transition found! Print input step
-            step++;
             formatChar(c, charBuf, sizeof(charBuf));
             formatStateSet(currentState->stateNumber, stateBuf, sizeof(stateBuf));
             const char *curToken = getTokenNameFromDFA(currentState->type);
@@ -140,8 +138,8 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
             char escAcc[MAX_LEXEME_LEN * 2];
             escapeString(lexeme, escAcc, sizeof(escAcc));
             
-            fprintf(out, " %-6d | %-8s | %-20s | %-16s | \"%s\"\n",
-                    step, charBuf, stateBuf, curToken, escAcc);
+            fprintf(out, " %-8s | %-20s | %-16s | \"%s\"\n",
+                    charBuf, stateBuf, curToken, escAcc);
             
             formatStateSet(nextState->stateNumber, nextStateBuf, sizeof(nextStateBuf));
             const char *nextToken = getTokenNameFromDFA(nextState->type);
@@ -190,12 +188,11 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
                 // 3. Do NOT increment i: re-evaluate 'c' starting from State {0}!
             } else if (currentState == startState) {
                 // In Start State {0}
-                step++;
                 char escAcc[MAX_LEXEME_LEN * 2];
                 escapeString(lexeme, escAcc, sizeof(escAcc));
                 
-                fprintf(out, " %-6d | %-8s | %-20s | %-16s | \"%s\"\n",
-                        step, charBuf, stateBuf, curToken, escAcc);
+                fprintf(out, " %-8s | %-20s | %-16s | \"%s\"\n",
+                        charBuf, stateBuf, curToken, escAcc);
                 
                 if (isEof || c == '$') {
                     fprintf(out, "        ==> [END OF INPUT]: Reached terminal marker %s -> Simulation Complete\n", charBuf);
@@ -209,12 +206,11 @@ void simulateDFAInput(DFAStateList *dsl, const char *inputStr, FILE *out) {
                 }
             } else {
                 // INTERMEDIARY state with no transition
-                step++;
                 char escLex[MAX_LEXEME_LEN * 2];
                 escapeString(lexeme, escLex, sizeof(escLex));
                 
-                fprintf(out, " %-6d | %-8s | %-20s | %-16s | \"%s\"\n",
-                        step, charBuf, stateBuf, curToken, escLex);
+                fprintf(out, " %-8s | %-20s | %-16s | \"%s\"\n",
+                        charBuf, stateBuf, curToken, escLex);
                 fprintf(out, "        ==> [NO_TRANSITION on %s in INTERMEDIARY]: REJECTED / INVALID (Lexeme: \"%s\")\n",
                         charBuf, escLex);
                 currentState = startState;
@@ -262,15 +258,15 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
         return NULL;
     }
     
-    // Step 3: Open Transition History file
-    FILE *histFile = fopen("Transition History.txt", "w");
+    // Step 3: Open Transition History file in Test directory
+    FILE *histFile = fopen("Test/Transition History.txt", "w");
     if (histFile) {
         fprintf(histFile, "========================================================================================================\n");
         fprintf(histFile, "                                  TRENSLATE DFA TRANSITION HISTORY                                      \n");
         fprintf(histFile, " Source File: %s\n", sourceFilename);
         fprintf(histFile, "========================================================================================================\n");
         fprintf(histFile, " FORMAT:\n");
-        fprintf(histFile, "   [Step N] Line L, Col C | Input: 'c' | State: {...} | Token: TOKEN | Acc: \"...\"\n");
+        fprintf(histFile, "   Line L, Col C | Input: 'c' | State: {...} | Token: TOKEN | Acc: \"...\"\n");
         fprintf(histFile, "       --> Transition to State {...} (Token: TOKEN)\n");
         fprintf(histFile, "       >>> [TOKEN TYPE CHANGED]: OLD_TOKEN -> NEW_TOKEN (Lexeme: \"...\")\n");
         fprintf(histFile, "       ==> [NO_TRANSITION on 'c']: EMIT TOKEN [TOKEN] Lexeme: \"...\" -> Reset to State {0}\n");
@@ -288,7 +284,6 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
     char lexeme[MAX_LEXEME_LEN] = {0};
     int lexLen = 0;
     int lineNum = 0;
-    int stepCount = 0;
     
     while (fgets(lineBuffer, sizeof(lineBuffer), src) != NULL) {
         lineNum++;
@@ -297,7 +292,6 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
         
         while (col < lineLen) {
             char c = lineBuffer[col];
-            stepCount++;
             
             char charBuf[16];
             char stateBuf[128];
@@ -312,8 +306,8 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
             // Single-line comment state (S_C_LINE) continues until newline
             if (currentState->type == S_C_LINE) {
                 if (histFile) {
-                    fprintf(histFile, "  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
-                            stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
+                    fprintf(histFile, "  Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                            lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                 }
                 if (c == '\n' || c == '\r') {
                     if (histFile) {
@@ -333,13 +327,12 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
             
             if (nextState != NULL) {
                 // Valid transition found in DFA
-                stepCount++;
                 if (histFile) {
-                    fprintf(histFile, "  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
-                            stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
+                    fprintf(histFile, "  Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                            lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                 }
-                printf("  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
-                       stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
+                printf("  Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                       lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                 
                 formatStateSet(nextState->stateNumber, nextStateBuf, sizeof(nextStateBuf));
                 const char *nextToken = getTokenNameFromDFA(nextState->type);
@@ -435,7 +428,6 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         // General whitespace separator
                         col++;
                     } else {
-                        stepCount++;
                         Symbol sym;
                         char invStr[2] = { c, '\0' };
                         sym.identifier = strdup(invStr);
@@ -443,17 +435,16 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         sym.line = lineNum;
                         addSymbol(symtbl, &sym);
                         if (histFile) {
-                            fprintf(histFile, "  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
-                                    stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
+                            fprintf(histFile, "  Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                                    lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                             fprintf(histFile, "             ==> [NO_TRANSITION]: INVALID character %s -> Emit INVALID and Reset\n", charBuf);
                         }
-                        printf("  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
-                               stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
+                        printf("  Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                               lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                         printf("             ==> [NO_TRANSITION]: INVALID character %s -> Emit INVALID and Reset\n", charBuf);
                         col++;
                     }
                 } else {
-                    stepCount++;
                     // Reached NO_TRANSITION while in an INTERMEDIARY state
                     Symbol sym;
                     sym.identifier = strdup(lexeme);
@@ -463,12 +454,12 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                     char escLex[MAX_LEXEME_LEN * 2];
                     escapeString(lexeme, escLex, sizeof(escLex));
                     if (histFile) {
-                        fprintf(histFile, "  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
-                                stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
+                        fprintf(histFile, "  Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                                lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                         fprintf(histFile, "             ==> [NO_TRANSITION in INTERMEDIARY]: INVALID lexeme \"%s\" -> Emit INVALID and Reset\n", escLex);
                     }
-                    printf("  [Step %5d] Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
-                           stepCount, lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
+                    printf("  Line %3d, Col %2d | Input: %-8s | State: %-20s | Token: %-14s | Acc: \"%s\"\n",
+                           lineNum, col + 1, charBuf, stateBuf, curToken, escAcc);
                     printf("             ==> [NO_TRANSITION in INTERMEDIARY]: INVALID lexeme \"%s\" -> Emit INVALID and Reset\n", escLex);
                     currentState = startState;
                     lexLen = 0;
@@ -508,10 +499,10 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
     
     if (histFile) {
         fprintf(histFile, "\n========================================================================================================\n");
-        fprintf(histFile, " Analysis Complete! Total steps: %d | Emitted %d tokens into Symbol Table.\n", stepCount, symtbl->curIdx);
+        fprintf(histFile, " Analysis Complete! Emitted %d tokens into Symbol Table.\n", symtbl->curIdx);
         fprintf(histFile, "========================================================================================================\n");
         fclose(histFile);
-        printf("\n[Output File Generated]: 'Transition History.txt'\n");
+        printf("\n[Output File Generated]: 'Test/Transition History.txt'\n");
     }
     
     fclose(src);
