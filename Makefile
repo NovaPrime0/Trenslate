@@ -14,7 +14,6 @@ run: main.exe
 clean: 
 	rm -f *.o main
 
-main:
-	make run
+main: main.exe
 	rm -f *.o
 .PHONY: all run clean

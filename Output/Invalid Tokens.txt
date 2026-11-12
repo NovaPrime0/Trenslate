@@ -1,14 +1,16 @@
 ========================================================================================================================
                                    TRENSLATE INVALID TOKENS & LEXICAL ERROR REPORT                                      
- Source File: sample.tren
+ Source File: TokenInputs.tren
 ========================================================================================================================
 
 ------------------------------------------------------------------------------------------------------------------------
  Index | Line  | Col   | Invalid Lexeme       | Violated Rule  | Description
 ------------------------------------------------------------------------------------------------------------------------
- 1     | 34    | 12    | @                    | Rule 1         | Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.
+ 1     | 71    | 1     | &                    | Rule 4         | Single '&' is not a recognized operator in Trenslate. Logical AND requires '&&'.
+ 2     | 72    | 1     | $                    | Rule 1         | Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.
+ 3     | 73    | 1     | 9ello                | Rule 2         | Identifiers must start with a letter (A-Z, a-z) or underscore (_), never a digit (0-9).
 ------------------------------------------------------------------------------------------------------------------------
- Total Invalid Entries: 1
+ Total Invalid Entries: 3
 ========================================================================================================================
 
 ========================================================================================================================

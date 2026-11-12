@@ -73,7 +73,7 @@ void printState(State *s, FILE* fpt) {
         return;
     };
     
-    fprintf(fpt, "State: %d, StateType: %d\nTransitionLength: %d\n", s->stateNumber, s->type, s->transitionList->length);
+    fprintf(fpt, "State: %d, StateType: %s\nTransitionLength: %d\n", s->stateNumber, stateNames[s->type], s->transitionList->length);
     if(s->transitionList->length > 0){
         fprintf(fpt, "{");
         for(int i = 0; i < s->transitionList->length; i++){
@@ -509,6 +509,7 @@ DFAStateList* subsetConstruction(StateList *st){
         freeSet(start);
         return NULL;
     }
+
     //include start state to set
     if(!addToSet(start, st->data[0].stateNumber)){
         perror("failed to add to start set");
@@ -517,6 +518,7 @@ DFAStateList* subsetConstruction(StateList *st){
         freeSet(start);
         return NULL;
     }
+
     if(!addToSets(workingSet, start)){
         perror("failed to add start to workingset");
         freeDFAList(DFAList);
@@ -524,6 +526,7 @@ DFAStateList* subsetConstruction(StateList *st){
         freeSet(start);
         return NULL;
     }
+    
     start = NULL;
     int processed = 0;
     while (processed < workingSet->length)

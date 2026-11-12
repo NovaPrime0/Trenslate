@@ -57,6 +57,6 @@ const char *tokenNames[] = {
     "TRUE", "FALSE",
     "CONST",
     //5
-    "WHITESPACE", "NOISE", "C_BLOCK", "C_LINE"
+    "WHITESPACE", "NOISE", "C_BLOCK", "C_LINE",
     "IDENTIFIER",
 };
