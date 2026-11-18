@@ -25,7 +25,7 @@ bool contains(SymTBL *st, Symbol *s){
     
     for(int i = 0; i <= st->curIdx; i++){
         Symbol cur = st->data[i];
-        if(strcmp(s->identifier, cur.identifier) == 0){
+        if(strcmp(s->lexeme, cur.lexeme) == 0){
             return true;
         }
     };

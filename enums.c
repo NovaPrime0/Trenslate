@@ -24,10 +24,12 @@ const char *stateNames[] = {
     //4
     "S_Lit_STRING", "S_Lit_CHAR",
     "S_Lit_INT", "S_Lit_DEC",
-    "S_TRUE", "S_FALSE",
+    "S_T_TRUE", "S_T_FALSE",
     "S_CONST",
     //5
-    "S_WHITESPACE", "S_NOISE", "S_C_BLOCK", "S_C_LINE",
+    "S_WHITESPACE", 
+    "S_Noise_NA", "S_Noise_NG", "S_Noise_AY", "S_Noise_MULA", "S_Noise_SA",
+    "S_C_BLOCK", "S_C_LINE",
     "S_IDENTIFIER",
     //state exclusives:
     "START", "INTERMEDIARY"
@@ -54,9 +56,11 @@ const char *tokenNames[] = {
     //4
     "Lit_STRING", "Lit_CHAR",
     "Lit_INT", "Lit_DEC",
-    "TRUE", "FALSE",
+    "T_TRUE", "T_FALSE",
     "CONST",
     //5
-    "WHITESPACE", "NOISE", "C_BLOCK", "C_LINE",
+    "WHITESPACE",
+    "Noise_NA", "Noise_NG", "Noise_AY", "Noise_MULA", "Noise_SA",
+    "C_BLOCK", "C_LINE",
     "IDENTIFIER",
 };

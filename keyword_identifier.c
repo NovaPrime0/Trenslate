@@ -31,11 +31,11 @@ static const DFAKeywordTest KEYWORD_TEST_SET[] = {
     { "FALSE",    S_FALSE,     "Boolean literal false" },
     
     // Noise words
-    { "ng",       S_NOISE,     "I/O readability particle" },
-    { "sa",       S_NOISE,     "Preposition in loops" },
-    { "mula",     S_NOISE,     "Starting bound particle" },
-    { "ay",       S_NOISE,     "Assertion sugar particle" },
-    { "na",       S_NOISE,     "Conditional descriptor particle" }
+    { "ng",       S_Noise_NG,     "I/O readability particle" },
+    { "sa",       S_Noise_SA,     "Preposition in loops" },
+    { "mula",     S_Noise_MULA,     "Starting bound particle" },
+    { "ay",       S_Noise_AY,     "Assertion sugar particle" },
+    { "na",       S_Noise_NA,     "Conditional descriptor particle" }
 };
 
 static const int KEYWORD_TEST_COUNT = sizeof(KEYWORD_TEST_SET) / sizeof(KEYWORD_TEST_SET[0]);

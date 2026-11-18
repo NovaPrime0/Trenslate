@@ -1,7 +1,7 @@
 #ifndef SYMTBL
 #define SYMTBL
 typedef struct{
-    char* identifier;
+    char* lexeme;
     char* token;
     int line;
 } Symbol;

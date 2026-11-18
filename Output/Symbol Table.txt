@@ -3,126 +3,60 @@
 ======================================================================
  Index  | Line   | Token Type         | Lexeme
 ----------------------------------------------------------------------
- 1      | 2      | IDENTIFIER         | pasahero
- 2      | 2      | LINE_END           | ;
- 3      | 3      | IDENTIFIER         | bigat
- 4      | 3      | LINE_END           | ;
- 5      | 4      | IDENTIFIER         | _identifier
- 6      | 4      | LINE_END           | ;
- 7      | 5      | IDENTIFIER         | gamit_ko
- 8      | 5      | LINE_END           | ;
- 9      | 6      | IDENTIFIER         | a
- 10     | 6      | LINE_END           | ;
- 11     | 8      | PROG_MAIN          | byahe
- 12     | 8      | LINE_END           | ;
- 13     | 9      | VARIABLE           | bagahe
- 14     | 9      | LINE_END           | ;
- 15     | 10     | FUNCTION           | route
- 16     | 10     | LINE_END           | ;
- 17     | 11     | IF                 | sakali
- 18     | 11     | LINE_END           | ;
- 19     | 12     | ELSE               | liko
- 20     | 12     | LINE_END           | ;
- 21     | 13     | FOR                | hakbang
- 22     | 13     | LINE_END           | ;
- 23     | 14     | FOREACH            | bawat
- 24     | 14     | LINE_END           | ;
- 25     | 15     | WHILE              | habang
- 26     | 15     | LINE_END           | ;
- 27     | 16     | BREAK              | hinto
- 28     | 16     | LINE_END           | ;
- 29     | 17     | RETURN             | baba
- 30     | 17     | LINE_END           | ;
- 31     | 19     | CONST              | laging
- 32     | 19     | LINE_END           | ;
- 33     | 20     | CONTINUE           | tuloy
- 34     | 20     | LINE_END           | ;
- 35     | 21     | For_LIM            | hanggang
- 36     | 21     | LINE_END           | ;
- 37     | 22     | IMPORT             | daan
- 38     | 22     | LINE_END           | ;
- 39     | 23     | PROG_END           | dulo
- 40     | 23     | LINE_END           | ;
- 41     | 24     | T_NULL             | exit
- 42     | 24     | LINE_END           | ;
- 43     | 26     | Lit_STRING         | "hello world"
- 44     | 26     | LINE_END           | ;
- 45     | 27     | Lit_CHAR           | 'b'
- 46     | 27     | LINE_END           | ;
- 47     | 28     | Lit_DEC            | 3.14
- 48     | 28     | LINE_END           | ;
- 49     | 29     | Lit_INT            | 3
- 50     | 29     | LINE_END           | ;
- 51     | 30     | TRUE               | True
- 52     | 30     | LINE_END           | ;
- 53     | 31     | FALSE              | False
- 54     | 31     | LINE_END           | ;
- 55     | 34     | ASSIGN             | =
- 56     | 34     | LINE_END           | ;
- 57     | 35     | Rel_EQ             | ==
- 58     | 35     | LINE_END           | ;
- 59     | 36     | Rel_NEQ            | !=
- 60     | 36     | LINE_END           | ;
- 61     | 37     | Rel_GEQ            | >=
- 62     | 37     | LINE_END           | ;
- 63     | 38     | Rel_G              | >
- 64     | 38     | LINE_END           | ;
- 65     | 39     | Rel_LEQ            | <=
- 66     | 39     | LINE_END           | ;
- 67     | 40     | Rel_L              | <
- 68     | 40     | LINE_END           | ;
- 69     | 41     | Cond_OR            | ||
- 70     | 41     | LINE_END           | ;
- 71     | 42     | Cond_AND           | &&
- 72     | 42     | LINE_END           | ;
- 73     | 43     | Cond_NOT           | !
- 74     | 43     | LINE_END           | ;
- 75     | 45     | Op_ADD             | +
- 76     | 45     | LINE_END           | ;
- 77     | 46     | Op_SUB             | -
- 78     | 46     | LINE_END           | ;
- 79     | 47     | Op_DIV             | /
- 80     | 47     | LINE_END           | ;
- 81     | 48     | Op_MULT            | *
- 82     | 48     | LINE_END           | ;
- 83     | 49     | Op_DIV_INT         | //
- 84     | 49     | LINE_END           | ;
- 85     | 50     | Op_EXP             | **
- 86     | 50     | LINE_END           | ;
- 87     | 51     | Op_MOD             | %
- 88     | 51     | LINE_END           | ;
- 89     | 53     | LPAREN             | (
- 90     | 53     | LINE_END           | ;
- 91     | 54     | RPAREN             | )
- 92     | 54     | LINE_END           | ;
- 93     | 55     | LINE_END           | ;
- 94     | 55     | LINE_END           | ;
- 95     | 56     | LBRACKET           | [
- 96     | 56     | LINE_END           | ;
- 97     | 57     | RBRACKET           | ]
- 98     | 57     | LINE_END           | ;
- 99     | 58     | COMMA              | ,
- 100    | 58     | LINE_END           | ;
- 101    | 59     | DOT                | .
- 102    | 59     | LINE_END           | ;
- 103    | 61     | NOISE              | na
- 104    | 61     | LINE_END           | ;
- 105    | 62     | NOISE              | ng
- 106    | 62     | LINE_END           | ;
- 107    | 63     | NOISE              | sa
- 108    | 63     | LINE_END           | ;
- 109    | 64     | NOISE              | ay
- 110    | 64     | LINE_END           | ;
- 111    | 65     | NOISE              | mula
- 112    | 65     | LINE_END           | ;
- 113    | 69     | Lit_DEC            | 45.908
- 114    | 69     | DOT                | .
- 115    | 69     | Lit_INT            | 9
- 116    | 70     | IDENTIFIER         | h
- 117    | 70     | Op_ADD             | +
- 118    | 70     | IDENTIFIER         | K
+ 1      | 12     | VARIABLE           | bagahe
+ 2      | 12     | ASSIGN             | =
+ 3      | 12     | Lit_INT            | 32
+ 4      | 12     | LINE_END           | ;
+ 5      | 13     | VARIABLE           | bagahe
+ 6      | 13     | ASSIGN             | =
+ 7      | 13     | Lit_INT            | 10
+ 8      | 13     | LINE_END           | ;
+ 9      | 14     | VARIABLE           | bagahe
+ 10     | 14     | ASSIGN             | =
+ 11     | 14     | Lit_INT            | 0
+ 12     | 14     | LINE_END           | ;
+ 13     | 17     | VARIABLE           | bagahe
+ 14     | 17     | IDENTIFIER         | pasa
+ 15     | 17     | IDENTIFIER         | hero
+ 16     | 17     | ASSIGN             | =
+ 17     | 17     | Lit_INT            | 15
+ 18     | 17     | LINE_END           | ;
+ 19     | 18     | VARIABLE           | bagahe
+ 20     | 18     | IDENTIFIER         | sukli
+ 21     | 21     | IF                 | sakali
+ 22     | 21     | LPAREN             | (
+ 23     | 21     | IDENTIFIER         | pasahero
+ 24     | 21     | Rel_G              | >
+ 25     | 21     | Lit_INT            | 10
+ 26     | 21     | IDENTIFIER         | pasahero
+ 27     | 21     | Rel_L              | <
+ 28     | 21     | Lit_INT            | 5
+ 29     | 21     | RPAREN             | )
+ 30     | 21     | LBRACE             | {
+ 31     | 22     | RBRACE             | }
+ 32     | 23     | IF                 | sakali
+ 33     | 23     | LPAREN             | (
+ 34     | 23     | IDENTIFIER         | pasahero
+ 35     | 23     | Rel_G              | >
+ 36     | 23     | Lit_INT            | 10
+ 37     | 23     | IDENTIFIER         | pasahero
+ 38     | 23     | Rel_L              | <
+ 39     | 23     | Lit_INT            | 5
+ 40     | 23     | RPAREN             | )
+ 41     | 23     | LBRACE             | {
+ 42     | 24     | RBRACE             | }
+ 43     | 27     | VARIABLE           | bagahe
+ 44     | 27     | IDENTIFIER         | pamasaheRate
+ 45     | 27     | ASSIGN             | =
+ 46     | 30     | IDENTIFIER         | announce
+ 47     | 30     | Noise_NG           | ng
+ 48     | 33     | VARIABLE           | bagahe
+ 49     | 33     | IDENTIFIER         | linya
+ 50     | 33     | ASSIGN             | =
+ 51     | 35     | PROG_END           | dulo
+ 52     | 35     | LINE_END           | ;
 ======================================================================
- Total Valid Symbols Recorded: 118
+ Total Valid Symbols Recorded: 52
 ======================================================================
 
 ======================================================================
@@ -130,11 +64,22 @@
 ======================================================================
  Index  | Line   | Token Type         | Lexeme
 ----------------------------------------------------------------------
- 1      | 71     | INVALID            | &
- 2      | 72     | INVALID            | $
- 3      | 73     | INVALID            | 9ello
+ 1      | 4      | INVALID            | @
+ 2      | 5      | INVALID            | $
+ 3      | 6      | INVALID            | ~
+ 4      | 7      | INVALID            | ^
+ 5      | 8      | INVALID            | ?
+ 6      | 12     | INVALID            | 9pasahero
+ 7      | 13     | INVALID            | 2count
+ 8      | 14     | INVALID            | 0bilang
+ 9      | 17     | INVALID            | @
+ 10     | 21     | INVALID            | |
+ 11     | 23     | INVALID            | &
+ 12     | 27     | INVALID            | 15.
+ 13     | 30     | INVALID            | "Unclosed string literal reaching line end
+ 14     | 33     | INVALID            | 'L
 ======================================================================
- Total Invalid Entries: 3
+ Total Invalid Entries: 14
  [Note]: Comprehensive rule-by-rule report in: 'Output/Invalid Tokens.txt'
 ======================================================================
 
