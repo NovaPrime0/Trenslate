@@ -88,6 +88,10 @@ bool pop(Stack *st, Entry* w){
     if(st->curSize <= 0) {
         printf("[parserUtils.c | %s: %d]: No entries in stack \n", __func__, __LINE__);
         return false;
+    } else if (!w){
+        printf("[parserUtils.c | %s: %d]: Null entry, resetting top node instead \n", __func__, __LINE__);
+        resetEntry(&st->data[--st->curSize]);
+        return true;
     }
     printf("[parserUtils.c | %s: %d]: Attaching data to passed address \n", __func__, __LINE__);
     
@@ -99,10 +103,11 @@ bool pop(Stack *st, Entry* w){
     // w->children = poppedNode -> children;
     // w->childrenCount = poppedNode -> childrenCount;
     // w->childrenMaxCount = poppedNode -> childrenMaxCount;
-    printf("[parserUtils.c | %s: %d]: Popped Entry: [%s|%s], Rule: %s\n",
+    printf("[parserUtils.c | %s: %d]: Popped Entry: [%s|%s], Rule: %sw\n",
         __func__, __LINE__,
          w->sym->lexeme, 
-         w->rule);
+         tokenNames[w->sym->token],
+         getName(w->rule));
     
     resetEntry(poppedNode);
     return true;
@@ -120,9 +125,9 @@ bool push(Stack *st, Symbol *s, Rule r){
 }
 
 bool recover(){
-    Entry *working;
+    Entry *working = malloc(sizeof(Entry));
     do{
-        if(!pop(tokenNames, &working)) return false;
+        if(!pop(tokenStack, working)) return false;
     } while(working->sym->token != LINE_END || working->rule != RBRACE); 
     pop(tokenStack, NULL);
     return true;

@@ -25,6 +25,9 @@ void initParser(SymTBL* tbl, char* sf){
 static TokenType peekTok(int i){
     return lexxedTable->data[curr+i].token; 
 }
+static Symbol *peekSym(int i){
+    return &lexxedTable->data[curr+i]; 
+}
 
 static int match(TokenType t){
     if(curr > lexxedTable->curIdx) return -1;
@@ -50,12 +53,12 @@ static int matchOffset(TokenType t, int offset){
 
 //attach parserutils methods
 static int expectRule(TokenType target, Rule r){
-    printf("[parser.c | %s: %d]: Expecting %s to attach <> \n", __func__, __LINE__, tokenNames[target], getName(r));
+    printf("[parser.c | %s: %d]: Expecting %s to attach <%s> \n", __func__, __LINE__, tokenNames[target], getName(r));
     if(peekTok(0) == target) {
         printf("[parser.c | %s: %d]: Token matched with current pointer \n", __func__, __LINE__);
         curr++;
     }
-    else syntaxErr(peekTok(0), target);
+    else syntaxErr(peekSym(0), target);
 }
 
 static int expect(TokenType target){
@@ -64,7 +67,7 @@ static int expect(TokenType target){
         printf("[parser.c | %s: %d]: Token matched with current pointer \n", __func__, __LINE__);
         curr++;
     }
-    else syntaxErr(peekTok(0), target);
+    else syntaxErr(peekSym(0), target);
 }
 
 static void parseProgram();
@@ -114,7 +117,7 @@ static void parseProgram(){
         parseImport();
     }
     while(match(FUNCTION)){
-        parseFunction();
+        parseFunctionDecl();
     }
     expect(PROG_MAIN);
     expect(LBRACE);
@@ -127,7 +130,7 @@ static void parseProgram(){
     expect(LINE_END);
     expect(RBRACE);
     while(match(FUNCTION)){
-        parseFunction();
+        parseFunctionDecl();
     }
 }
 
@@ -177,7 +180,7 @@ static void parseConstDecl(){
     } else if(match(Noise_AY)){
         expect(Noise_AY);
         parseValue();
-    } else syntaxErr(peekTok(0), ASSIGN);
+    } else syntaxErr(peekSym(0), ASSIGN);
 }
 
 static void parseImport(){
@@ -313,7 +316,7 @@ static void parseAssignStmt(){
         expect(RBRACKET);
     }
     if(match(ASSIGN)) expect(ASSIGN);
-    else if(matchA(Noise_AY)) expect(Noise_AY);
+    else if(match(Noise_AY)) expect(Noise_AY);
     parseValue();
 }
 

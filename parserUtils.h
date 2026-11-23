@@ -4,7 +4,7 @@
 
 typedef enum {
     PROGRAM = 1, STMT, DECL_STMT,
-    VAR_DECL, CONST_DECL, IMPORT,
+    VAR_DECL, CONST_DECL, IMPORT_STMT,
     VALUE, FUNCTION_DECL, PARAM_LIST,
     BLOCK_STMT, INLINE_STMT, IF_STMT,
     ELSE_CHAIN, WHILE_STMT, FOR_STMT,
@@ -17,6 +17,7 @@ typedef enum {
     ARRAY_LIT, CALL_EXPR, CALL_STMT,
     ARG_LIST, BLOCK, END_RULE
 } Rule;
+
 
 extern const char* ruleNames[];
 

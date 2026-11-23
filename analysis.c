@@ -35,7 +35,10 @@ static const char* getTokenNameFromDFA(StateType type) {
     }
     return "UNKNOWN";
 }
-
+static TokenType stateToTokenType(StateType type) {
+    if (type == INTERMEDIARY || type == START) return INVALID;
+    return (TokenType)type;
+}
 // Formats a Set of NFA state numbers into a human-readable string: e.g. "{0}", "{1, 38, 48}"
 static void formatStateSet(const Set *s, char *buf, size_t maxLen) {
     if (!s || s->length == 0) {
@@ -594,7 +597,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                     }
                     Symbol sym;
                     sym.lexeme = strdup(lexeme);
-                    sym.token = "INVALID";
+                    sym.token = INVALID;
                     sym.line = lineNum;
                     addSymbol(symtbl, &sym);
                     
@@ -643,7 +646,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                     } else if (curType == S_INVALID) {
                         Symbol sym;
                         sym.lexeme = strdup(lexeme);
-                        sym.token = "INVALID";
+                        sym.token = INVALID;
                         sym.line = lineNum;
                         
                         addSymbol(symtbl, &sym);
@@ -672,7 +675,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         // Valid language token -> emit to symbol table
                         Symbol sym;
                         sym.lexeme = strdup(lexeme);
-                        sym.token = (char*)getTokenNameFromDFA(curType);
+                        sym.token = stateToTokenType(currentState->type);
                         sym.line = lineNum;
                         
                         addSymbol(symtbl, &sym);
@@ -681,13 +684,13 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         if (histFile) {
                             fprintf(histFile, "             ------------------------------------------------------------------\n");
                             fprintf(histFile, "             ==> [LOOKAHEAD on %s]: NO_TRANSITION in State %s\n", charBuf, stateBuf);
-                            fprintf(histFile, "                 >>> EMIT TOKEN: [%s] Lexeme: \"%s\"\n", sym.token, escLex);
+                            fprintf(histFile, "                 >>> EMIT TOKEN: [%s] Lexeme: \"%s\"\n", tokenNames[sym.token], escLex);
                             fprintf(histFile, "                 >>> RESET DFA: Return to Start State {0} (START)\n");
                             fprintf(histFile, "             ------------------------------------------------------------------\n");
                         }
                         printf("             ------------------------------------------------------------------\n");
                         printf("             ==> [LOOKAHEAD on %s]: NO_TRANSITION in State %s\n", charBuf, stateBuf);
-                        printf("                 >>> EMIT TOKEN: [%s] Lexeme: \"%s\"\n", sym.token, escLex);
+                        printf("                 >>> EMIT TOKEN: [%s] Lexeme: \"%s\"\n", tokenNames[sym.token], escLex);
                         printf("                 >>> RESET DFA: Return to Start State {0} (START)\n");
                         printf("             ------------------------------------------------------------------\n");
                     }
@@ -707,7 +710,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                         Symbol sym;
                         char invStr[2] = { c, '\0' };
                         sym.lexeme = strdup(invStr);
-                        sym.token = "INVALID";
+                        sym.token = INVALID;
                         sym.line = lineNum;
                         addSymbol(symtbl, &sym);
                         
@@ -732,7 +735,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                     // Reached NO_TRANSITION while in an INTERMEDIARY state
                     Symbol sym;
                     sym.lexeme = strdup(lexeme);
-                    sym.token = "INVALID";
+                    sym.token = INVALID;
                     sym.line = lineNum;
                     addSymbol(symtbl, &sym);
                     
@@ -774,7 +777,7 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
         if (currentState->type == INTERMEDIARY) {
             Symbol sym;
             sym.lexeme = strdup(lexeme);
-            sym.token = "INVALID";
+            sym.token = INVALID;
             sym.line = lineNum;
             addSymbol(symtbl, &sym);
             
@@ -793,13 +796,13 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
                    currentState->type != S_C_BLOCK) {
             Symbol sym;
             sym.lexeme = strdup(lexeme);
-            sym.token = (char*)getTokenNameFromDFA(currentState->type);
+            sym.token = stateToTokenType(currentState->type);
             sym.line = lineNum;
             addSymbol(symtbl, &sym);
             if (histFile) {
-                fprintf(histFile, "  [EOF FLUSH] Token: %-16s Lexeme: %s\n", sym.token, sym.lexeme);
+                fprintf(histFile, "  [EOF FLUSH] Token: %-16s Lexeme: %s\n", tokenNames[sym.token], sym.lexeme);
             }
-            printf("  [EOF FLUSH] Token: %-16s Lexeme: %s\n", sym.token, sym.lexeme);
+            printf("  [EOF FLUSH] Token: %-16s Lexeme: %s\n", tokenNames[sym.token], sym.lexeme);
         }
     }
     
@@ -835,7 +838,7 @@ void printSymbolTable(SymTBL *st, FILE *out) {
     int validCount = 0;
     int invalidCount = 0;
     for (int i = 0; i < st->curIdx; i++) {
-        if (st->data[i].token && strcmp(st->data[i].token, "INVALID") == 0) {
+        if (st->data[i].token == INVALID) {
             invalidCount++;
         } else {
             validCount++;
@@ -850,11 +853,11 @@ void printSymbolTable(SymTBL *st, FILE *out) {
     fprintf(out, "----------------------------------------------------------------------\n");
     int vIdx = 1;
     for (int i = 0; i < st->curIdx; i++) {
-        if (st->data[i].token && strcmp(st->data[i].token, "INVALID") != 0) {
+        if (st->data[i].token != INVALID) {
             fprintf(out, " %-6d | %-6d | %-18s | %s\n",
                     vIdx++,
                     st->data[i].line,
-                    st->data[i].token ? st->data[i].token : "",
+                    tokenNames[st->data[i].token],
                     st->data[i].lexeme ? st->data[i].lexeme : "");
         }
     }
@@ -871,11 +874,11 @@ void printSymbolTable(SymTBL *st, FILE *out) {
         fprintf(out, "----------------------------------------------------------------------\n");
         int invIdx = 1;
         for (int i = 0; i < st->curIdx; i++) {
-            if (st->data[i].token && strcmp(st->data[i].token, "INVALID") == 0) {
+            if (st->data[i].token == INVALID) {
                 fprintf(out, " %-6d | %-6d | %-18s | %s\n",
                         invIdx++,
                         st->data[i].line,
-                        st->data[i].token ? st->data[i].token : "",
+                        tokenNames[st->data[i].token],
                         st->data[i].lexeme ? st->data[i].lexeme : "");
             }
         }

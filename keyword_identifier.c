@@ -27,8 +27,8 @@ static const DFAKeywordTest KEYWORD_TEST_SET[] = {
     
     // Constant & Boolean keywords
     { "laging",   S_CONST,     "Constant/immutable declaration" },
-    { "TRUE",     S_TRUE,      "Boolean literal true" },
-    { "FALSE",    S_FALSE,     "Boolean literal false" },
+    { "TRUE",     S_T_TRUE,      "Boolean literal true" },
+    { "FALSE",    S_T_FALSE,     "Boolean literal false" },
     
     // Noise words
     { "ng",       S_Noise_NG,     "I/O readability particle" },
