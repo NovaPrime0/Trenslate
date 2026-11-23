@@ -1,27 +1,14 @@
 ========================================================================================================================
                                    TRENSLATE INVALID TOKENS & LEXICAL ERROR REPORT                                      
- Source File: all_invalid_tokens.tren
+ Source File: sample.tren
 ========================================================================================================================
 
 ------------------------------------------------------------------------------------------------------------------------
  Index | Line  | Col   | Invalid Lexeme       | Violated Rule  | Description
 ------------------------------------------------------------------------------------------------------------------------
- 1     | 4     | 1     | @                    | Rule 1         | Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.
- 2     | 5     | 1     | $                    | Rule 1         | Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.
- 3     | 6     | 1     | ~                    | Rule 1         | Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.
- 4     | 7     | 1     | ^                    | Rule 1         | Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.
- 5     | 8     | 1     | ?                    | Rule 1         | Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.
- 6     | 12    | 8     | 9pasahero            | Rule 2         | Identifiers must start with a letter (A-Z, a-z) or underscore (_), never a digit (0-9).
- 7     | 13    | 8     | 2count               | Rule 2         | Identifiers must start with a letter (A-Z, a-z) or underscore (_), never a digit (0-9).
- 8     | 14    | 8     | 0bilang              | Rule 2         | Identifiers must start with a letter (A-Z, a-z) or underscore (_), never a digit (0-9).
- 9     | 17    | 12    | @                    | Rule 1         | Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.
- 10    | 21    | 23    | |                    | Rule 4         | Single '|' is not a recognized operator in Trenslate. Logical OR requires '||'.
- 11    | 23    | 23    | &                    | Rule 4         | Single '&' is not a recognized operator in Trenslate. Logical AND requires '&&'.
- 12    | 27    | 23    | 15.                  | Rule 5         | Decimal point must be followed by at least one digit (0-9).
- 13    | 30    | 13    | \"Unclosed string literal reaching line end | Rule 6         | String literal was opened with '"' but reached newline or EOF without closing '"'.
- 14    | 33    | 16    | 'L                   | Rule 7         | Character literal was opened with ''' but reached delimiter/newline/EOF without closing '''.
+ 1     | 34    | 12    | @                    | Rule 1         | Character is outside the Trenslate alphabet and cannot appear in source code or identifiers.
 ------------------------------------------------------------------------------------------------------------------------
- Total Invalid Entries: 14
+ Total Invalid Entries: 1
 ========================================================================================================================
 
 ========================================================================================================================

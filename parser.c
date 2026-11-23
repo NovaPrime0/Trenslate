@@ -1,18 +1,24 @@
 #include <stdio.h>
 #include "enums.h"
 #include "symtbl.h"
-#include <stdbool.h>
+#include "parserUtils.h"
+
+/* SYNTACTIC ANALYZER 1 Utils
+    Recursive Descent Parser
+        - Production rule functions
+        - expect & syntax error reproting
+*/
+
 
 static SymTBL* lexxedTable;
 static int curr;
 char ptree[1024];
+char* sourcefile;
 
-
-
-
-void initParser(SymTBL* tbl){
+void initParser(SymTBL* tbl, char* sf){
     lexxedTable = tbl;
     curr = 0;
+    sourcefile = sf;
 }
 
 //add a way to safeguard end-of-table
@@ -24,16 +30,40 @@ static int match(TokenType t){
     if(curr > lexxedTable->curIdx) return -1;
     return peekTok(0) == t;
 }
-static void syntaxErr(TokenType rec, TokenType tar){
-    printf("[parser.c: %d]: SyntaxErr: Received %s, expected %s", __LINE__, tokenNames[rec], tokenNames[tar]);
+void syntaxErr(Symbol *s, TokenType expectedTok){
+    printf("====================================================\n");
+    printf("SYNTAX ERROR detected in %s, line %d \n", sourcefile, s->line);
+    printf("  -> Received Token: %s (Type ID: %d)\n", tokenNames[(int)s->token], s->token);
+    printf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
+    printf("====================================================\n");
 }
 
 static int matchOffset(TokenType t, int offset){
+
     if(offset + curr > lexxedTable->curIdx) return -1;
-    return peekTok(curr + offset) == t;
+    printf("[parser.c | %s: %d]: Lookahead %d Token(s)\n", __func__, __LINE__, offset);
+    TokenType tok = peekTok(curr + offset);
+    printf("[parser.c | %s: %d]: Found %s \n", __func__, __LINE__, tokenNames[tok]);
+    
+    return tok == t;
 }
+
+//attach parserutils methods
+static int expectRule(TokenType target, Rule r){
+    printf("[parser.c | %s: %d]: Expecting %s to attach <> \n", __func__, __LINE__, tokenNames[target], getName(r));
+    if(peekTok(0) == target) {
+        printf("[parser.c | %s: %d]: Token matched with current pointer \n", __func__, __LINE__);
+        curr++;
+    }
+    else syntaxErr(peekTok(0), target);
+}
+
 static int expect(TokenType target){
-    if(peekTok(0) == target) curr++;
+    printf("[parser.c | %s: %d]: Expecting %s \n", __func__, __LINE__, tokenNames[target]);
+    if(peekTok(0) == target) {
+        printf("[parser.c | %s: %d]: Token matched with current pointer \n", __func__, __LINE__);
+        curr++;
+    }
     else syntaxErr(peekTok(0), target);
 }
 
@@ -42,7 +72,7 @@ static void parseStmt();
 static void parseDeclarationStmt();
 static void parseVarDecl();
 static void parseConstDecl();
-static void parseImportStmt();
+static void parseImport();
 static void parseValue();
 static void parseFunctionDecl();
 static void parseParamList();
@@ -129,8 +159,25 @@ static void parseVarDecl(){
         parseValue();
     } else if(match(Noise_AY)){
         expect(Noise_AY);
-
+        parseValue();
     }
+}
+
+static void parseConstDecl(){
+    expect(CONST);
+    expect(IDENTIFIER);
+    while(match(LBRACKET)){
+        expect(LBRACKET);
+        if (!match(RBRACKET)) parseExpr();
+        expect(RBRACKET);
+    }
+    if(match(ASSIGN)){
+        expect(ASSIGN);
+        parseValue();
+    } else if(match(Noise_AY)){
+        expect(Noise_AY);
+        parseValue();
+    } else syntaxErr(peekTok(0), ASSIGN);
 }
 
 static void parseImport(){
@@ -146,6 +193,8 @@ static void parseValue(){
         parseExpr();
     }
 }
+
+
 
 static void parseFunctionDecl(){
     expect(FUNCTION);
@@ -190,8 +239,25 @@ static void parseInlineStmt(){
     expect(LINE_END);
 }
 
-static void parseInlineStmt(){
+static void parseIfStmt(){
     expect(IF);
+    expect(LPAREN); 
+    parseExpr();
+    expect(RPAREN);
+    parseBlock();
+    if(match(ELSE)){
+        parseElseChain();
+    }
+}
+
+static void parseElseChain(){
+    expect(ELSE);
+    if(match(IF)){
+        parseIfStmt();
+    } else parseBlock();
+}
+static void parseWhileStmt(){
+    expect(WHILE);
     expect(LPAREN);
     parseExpr();
     expect(RPAREN);
