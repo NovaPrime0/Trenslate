@@ -227,6 +227,8 @@ static void parseBlockStmt(){
         parseForStmt();
     } else if(match(FOREACH)){
         parseForeachStmt();
+    } else {
+        syntaxErr(peekSym(0), LINE_END);
     }
 }
 
@@ -271,7 +273,9 @@ static void parseForStmt(){
     expect(FOR);
     expect(LPAREN);
     expect(IDENTIFIER);
-    if(match(Noise_MULA)) expect(Noise_MULA);
+    if(match(Noise_MULA)){
+        expect(Noise_MULA);
+    }
     parseExpr();
     expect(For_LIM);
     parseExpr();
@@ -283,7 +287,9 @@ static void parseForeachStmt(){
     expect(FOREACH);
     expect(LPAREN);
     expect(IDENTIFIER);
-    if(match(Noise_MULA)) expect(Noise_MULA);
+    if(match(Noise_MULA)){
+        expect(Noise_MULA);
+    }
     parseExpr();
     expect(RPAREN);
     parseBlock();
@@ -297,7 +303,9 @@ static void parseKeywordStmt(){
 
 static void parseReturnStmt(){
     expect(RETURN);
-    if(!match(LINE_END)) parseExpr();
+    if(match(EXPR)){
+        expect(EXPR);
+    }
 }
 
 static void parseContinueStmt(){
@@ -346,27 +354,27 @@ static void parseRelExpr(){
         expect(Noise_AY);
         parseRelOp();
         parseArithExpr();
-    } else if(match(Rel_G) || match(Rel_GEQ) || 
-            match(Rel_NEQ) || match(Rel_EQ) || 
-            match(Rel_L) || match(Rel_LEQ)) {
+    } else {
         parseRelOp();
         parseArithExpr();
     }
 }
 
 static void parseRelOp(){
-    if(match(Rel_G)){
+    if(match(Rel_G)) {
         expect(Rel_G);
-    } else if(match(Rel_GEQ)){
+    } else if(match(Rel_GEQ)) {
         expect(Rel_GEQ);
-    } else if(match(Rel_NEQ)){
+    } else if(match(Rel_NEQ)) {
         expect(Rel_NEQ);
-    } else if(match(Rel_EQ)){
+    } else if(match(Rel_EQ)) {
         expect(Rel_EQ);
-    } else if(match(Rel_L)){
+    } else if(match(Rel_L)) {
         expect(Rel_L);
-    } else if(match(Rel_LEQ)){
+    } else if(match(Rel_LEQ)) {
         expect(Rel_LEQ);
+    } else {
+        syntaxErr();
     }
 }
 
@@ -401,10 +409,7 @@ static void parseMul(){
 
 static void parseUnary(){
     if (match(Op_SUB)){
-        expect(Cond_NOT);
-        parseUnary();
-    } else if(match(Cond_NOT)){
-        expect(Cond_NOT);
+        expect(Op_SUB);
         parseUnary();
     } else {
         parsePower();
@@ -483,7 +488,9 @@ static void parseCallStmt(){
         expect(IDENTIFIER);
         expect(Noise_NG);
         parseArgList();
-    } else parseCallExpr();
+    } else {
+        parseCallExpr();
+    }
 }
 
 static void parseArgList(){
