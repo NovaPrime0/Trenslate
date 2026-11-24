@@ -829,6 +829,12 @@ SymTBL* runAnalysis(DFAStateList *dsl, const char *sourceFilename) {
     printf("----------------------------------------------------------------------\n");
     printf("[4] Analysis Complete! Emitted %d tokens into Symbol Table.\n\n", symtbl->curIdx);
     
+    Symbol sym ={
+        .lexeme = "<EOF>",
+        .line = lineNum,
+        .token = END_OF_FILE
+    }; 
+    addSymbol(symtbl, &sym);
     return symtbl;
 }
 

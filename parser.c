@@ -2,6 +2,7 @@
 #include "enums.h"
 #include "symtbl.h"
 #include "parserUtils.h"
+#include <stdbool.h>
 
 /* SYNTACTIC ANALYZER 1 Utils
     Recursive Descent Parser
@@ -10,27 +11,40 @@
 */
 
 
-static SymTBL* lexxedTable;
-static int curr;
+SymTBL* lexxedTable;
+int curr;
+bool errorInProgress;  // Flag to skip expect/match on error
 char ptree[1024];
 char* sourcefile;
 
-void initParser(SymTBL* tbl, char* sf){
+bool initParser(SymTBL* tbl, char* sf){
+    if(!tbl){
+        printf("[parser.c | %s: %d]: Received Null Symbol Table \n", __func__, __LINE__);
+        return false;
+    }
+    if(!startTokenStack()){
+        printf("[parser.c | %s: %d]: Failed to create Token Stack \n", __func__, __LINE__);
+        return false;
+    }
     lexxedTable = tbl;
     curr = 0;
     sourcefile = sf;
+    return true;
 }
 
 //add a way to safeguard end-of-table
-static TokenType peekTok(int i){
+TokenType peekTok(int i){
     return lexxedTable->data[curr+i].token; 
 }
 static Symbol *peekSym(int i){
     return &lexxedTable->data[curr+i]; 
 }
 
-static int match(TokenType t){
-    if(curr > lexxedTable->curIdx) return -1;
+bool match(TokenType t){
+    if(errorInProgress || curr > lexxedTable->curIdx) {
+        // Auto-fail and attempt recovery
+        return 0;
+    }
     return peekTok(0) == t;
 }
 void syntaxErr(Symbol *s, TokenType expectedTok){
@@ -39,39 +53,81 @@ void syntaxErr(Symbol *s, TokenType expectedTok){
     printf("  -> Received Token: %s (Type ID: %d)\n", tokenNames[(int)s->token], s->token);
     printf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
     printf("====================================================\n");
+    errorInProgress = true;  // Set flag to skip expect/match
 }
 
-static int matchOffset(TokenType t, int offset){
+void consumeToNextSync(int startIdx){
+    int depth = 0;
+    while(curr < lexxedTable->curIdx){
+        Symbol *s = &lexxedTable->data[curr];
+        TokenType next = lexxedTable->data[curr + 1].token;   // safe: curr < curIdx
 
-    if(offset + curr > lexxedTable->curIdx) {
-        printf("[parser.c | %s: %d]: Out of bounds lookup\n", __func__, __LINE__);
-        return 0;
+        if(s->token == LBRACE) depth++;
+        else if(s->token == RBRACE){
+            if(depth == 0) return;              // enclosing block's brace, leave it
+            curr++;
+            if(--depth == 0) return;            // finished the broken statement's block
+            continue;
+        }
+        else if(depth == 0 && isSync(s, next)){
+            if(s->token == LINE_END){ curr++; return; }
+            if(curr > startIdx) return;         // keyword/ident start, only after progress
+        }
+        curr++;
     }
+}
+
+bool matchOffset(TokenType t, int offset){
+
+    if(offset + curr > lexxedTable->curIdx) return false;
     printf("[parser.c | %s: %d]: Lookahead %d Token(s)\n", __func__, __LINE__, offset);
-    TokenType tok = peekTok(curr + offset);
+    TokenType tok = peekTok(curr);
     printf("[parser.c | %s: %d]: Found %s \n", __func__, __LINE__, tokenNames[tok]);
     
     return tok == t;
 }
 
+// Sync point restoration - pops stack until sync token (LINE_END or RBRACE)
+
 //attach parserutils methods
-static int expectRule(TokenType target, Rule r){
+bool expectRule(TokenType target, Rule r){
+    if(errorInProgress) {
+        return false;
+    }
     printf("[parser.c | %s: %d]: Expecting %s to attach <%s> \n", __func__, __LINE__, tokenNames[target], getName(r));
     if(peekTok(0) == target) {
         printf("[parser.c | %s: %d]: Token matched with current pointer \n", __func__, __LINE__);
-        curr++;
+        pushToken(&lexxedTable->data[curr++], r);
     }
     else syntaxErr(peekSym(0), target);
+    return true;
+}
+bool markRule(Rule r){
+    if(errorInProgress) return false;
+    printf("[parser.c | %s: %d]: Marking Rule Start for %s: \n", __func__, __LINE__, getName(r));
+    if(!pushToken(NULL, r)) return false;
+    return true;
 }
 
-static int expect(TokenType target){
+bool expect(TokenType target){
+    if(match(END_OF_FILE) ||errorInProgress) {
+        return false;
+    }
     printf("[parser.c | %s: %d]: Expecting %s \n", __func__, __LINE__, tokenNames[target]);
     if(peekTok(0) == target) {
         printf("[parser.c | %s: %d]: Token matched with current pointer \n", __func__, __LINE__);
-        curr++;
+        pushToken(&lexxedTable->data[curr++], NONE);
     }
     else syntaxErr(peekSym(0), target);
+    return true;
 }
+
+void synchronize(){
+    unwindToLastSync();
+    consumeToNextSync(curr);
+    errorInProgress = false;
+}
+
 
 static void parseProgram();
 static void parseStmt();
@@ -116,44 +172,51 @@ static void parseBlock();
 
 
 static void parseProgram(){
+    markRule(PROGRAM);
     while(match(IMPORT)){
         parseImport();
     }
+    
     while(match(FUNCTION)){
         parseFunctionDecl();
     }
+    
     expect(PROG_MAIN);
     expect(LBRACE);
+    
     while (!match(PROG_END)){
         parseStmt();
     }
     
-    //expect <stmt>
     expect(PROG_END);
     expect(LINE_END);
     expect(RBRACE);
     while(match(FUNCTION)){
         parseFunctionDecl();
     }
+    markRule(END_RULE);
 }
 
 static void parseStmt(){
+    markRule(STMT);
     //if not block then parse inline basically since block stmts start with an easy-to-check keyword
     if(match(IF) || match(WHILE) || match(FOR) || match(FOREACH)) parseBlockStmt();
     else parseInlineStmt();
-
+    markRule(END_RULE);
 }
 
 static void parseDeclarationStmt(){
+    markRule(DECL_STMT);
     if(match(VARIABLE)){
         parseVarDecl();
     }else if(match(CONST)){
         parseConstDecl();
     }
+    markRule(END_RULE);
 }
 
 static void parseVarDecl(){
-    expect(VARIABLE);
+    expectRule(VARIABLE, VAR_DECL);
     expect(IDENTIFIER);
     while(match(LBRACKET)){
         expect(LBRACKET);
@@ -166,13 +229,12 @@ static void parseVarDecl(){
     } else if(match(Noise_AY)){
         expect(Noise_AY);
         parseValue();
-    } else {
-        syntaxErr(peekSym(0), ASSIGN);
     }
+    markRule(END_RULE);
 }
 
 static void parseConstDecl(){
-    expect(CONST);
+    expectRule(CONST, CONST_DECL);
     expect(IDENTIFIER);
     while(match(LBRACKET)){
         expect(LBRACKET);
@@ -186,34 +248,37 @@ static void parseConstDecl(){
         expect(Noise_AY);
         parseValue();
     } else syntaxErr(peekSym(0), ASSIGN);
+    markRule(END_RULE);
 }
 
 static void parseImport(){
-    expect(IMPORT);
+    expectRule(IMPORT, IMPORT_STMT);
     expect(Lit_STRING);
-    expect(LINE_END);
+    expectRule(LINE_END, END_RULE);
 }
 
 static void parseValue(){
-    if(match(LPAREN)){
+    markRule(VALUE);
+    if(match(LBRACKET)){
         parseArrayLit();
     } else {
         parseExpr();
     }
+    markRule(END_RULE);
 }
 
-
-
 static void parseFunctionDecl(){
-    expect(FUNCTION);
+    expectRule(FUNCTION, FUNCTION_DECL);
     expect(IDENTIFIER);
     expect(LPAREN);
     parseParamList();
     expect(RPAREN);
     parseBlock();
+    markRule(END_RULE);
 }
 
 static void parseParamList(){
+    markRule(PARAM_LIST);
     if(match(IDENTIFIER)){
         expect(IDENTIFIER);
         while(match(COMMA)){
@@ -221,9 +286,11 @@ static void parseParamList(){
             expect(IDENTIFIER);
         }
     }
+    markRule(END_RULE);
 }
 
 static void parseBlockStmt(){
+    markRule(BLOCK_STMT);
     if(match(IF)){
         parseIfStmt();
     } else if(match(WHILE)){
@@ -232,25 +299,25 @@ static void parseBlockStmt(){
         parseForStmt();
     } else if(match(FOREACH)){
         parseForeachStmt();
-    } else {
-        syntaxErr(peekSym(0), LINE_END);
     }
+    markRule(END_RULE);
 }
 
 static void parseInlineStmt(){
+    markRule(INLINE_STMT);
     if(match(IDENTIFIER)){
-        if(matchOffset(ASSIGN, 1)) parseAssignStmt();
+        if(matchOffset(ASSIGN, 1) || matchOffset(Noise_AY, 1) || matchOffset(LBRACKET, 1)) parseAssignStmt();
         else if(matchOffset(LPAREN, 1)) parseCallStmt();
     } else if(match(VARIABLE) || match(CONST)){
         parseDeclarationStmt();
     } else {
         parseKeywordStmt();
     }
-    expect(LINE_END);
+    expectRule(LINE_END, END_RULE);
 }
 
 static void parseIfStmt(){
-    expect(IF);
+    expectRule(IF, IF_STMT);
     expect(LPAREN); 
     parseExpr();
     expect(RPAREN);
@@ -258,71 +325,75 @@ static void parseIfStmt(){
     if(match(ELSE)){
         parseElseChain();
     }
+    markRule(END_RULE);
 }
 
 static void parseElseChain(){
-    expect(ELSE);
+    expectRule(ELSE, ELSE_CHAIN);
     if(match(IF)){
         parseIfStmt();
     } else parseBlock();
+    markRule(END_RULE);
 }
 static void parseWhileStmt(){
-    expect(WHILE);
+    expectRule(WHILE, WHILE_STMT);
     expect(LPAREN);
     parseExpr();
     expect(RPAREN);
     parseBlock();
+    markRule(END_RULE);
 }
 
 static void parseForStmt(){
-    expect(FOR);
+    expectRule(FOR, FOR_STMT);
     expect(LPAREN);
     expect(IDENTIFIER);
-    if(match(Noise_MULA)){
-        expect(Noise_MULA);
-    }
+    if(match(Noise_MULA)) expect(Noise_MULA);
     parseExpr();
     expect(For_LIM);
     parseExpr();
     expect(RPAREN);
     parseBlock();
+    markRule(END_RULE);
 }
 
 static void parseForeachStmt(){
-    expect(FOREACH);
+    expectRule(FOREACH, FOREACH_STMT);
     expect(LPAREN);
     expect(IDENTIFIER);
-    if(match(Noise_MULA)){
-        expect(Noise_MULA);
-    }
+    if(match(Noise_MULA)) expect(Noise_MULA);
     parseExpr();
     expect(RPAREN);
     parseBlock();
+    markRule(END_RULE);
 }
 
 static void parseKeywordStmt(){
+    markRule(KEYWORD_STMT);
     if(match(RETURN)) parseReturnStmt();
     else if(match(BREAK)) parseBreakStmt();
     else if(match(CONTINUE)) parseContinueStmt();
+    markRule(END_RULE);
 }
 
 static void parseReturnStmt(){
-    expect(RETURN);
-    if(match(EXPR)){
-        expect(EXPR);
-    }
+    expectRule(RETURN, RETURN_STMT);
+    if(!match(LINE_END)) parseExpr();
+    markRule(END_RULE);
 }
 
 static void parseContinueStmt(){
-    expect(CONTINUE);
+    expectRule(CONTINUE, CONTINUE_STMT);
+    markRule(END_RULE);
 }
 
 static void parseBreakStmt(){
-    expect(BREAK);
+    expectRule(BREAK, BREAK_STMT);
+    markRule(END_RULE);
 }
 
 static void parseAssignStmt(){
-    expect(IDENTIFIER);
+    expectRule(IDENTIFIER, ASSIGN_STMT);
     while(match(LBRACKET)){
         expect(LBRACKET);
         parseExpr();
@@ -331,125 +402,145 @@ static void parseAssignStmt(){
     if(match(ASSIGN)) expect(ASSIGN);
     else if(match(Noise_AY)) expect(Noise_AY);
     parseValue();
+    markRule(END_RULE);
 }
 
 static void parseExpr(){
+    markRule(EXPR);
     parseOrExpr();
+    markRule(END_RULE);
 }
 
 static void parseOrExpr(){
+    markRule(OR_EXPR);
     parseAndExpr();
     while(match(Cond_OR)){
         expect(Cond_OR);
         parseAndExpr();
     }
+    markRule(END_RULE); 
 }
 
 static void parseAndExpr(){
+    markRule(AND_EXPR);
     parseRelExpr();
     while(match(Cond_AND)){
         expect(Cond_AND);
         parseRelExpr();
     }
+    markRule(END_RULE);
 }
 
 static void parseRelExpr(){
+    markRule(REL_EXPR);
     parseArithExpr();
     if(match(Noise_AY)){
         expect(Noise_AY);
         parseRelOp();
         parseArithExpr();
-    } else {
+    } else if(match(Rel_G) || match(Rel_GEQ) || 
+            match(Rel_NEQ) || match(Rel_EQ) || 
+            match(Rel_L) || match(Rel_LEQ)) {
         parseRelOp();
         parseArithExpr();
     }
+    markRule(END_RULE);
 }
 
 static void parseRelOp(){
-    if(match(Rel_G)) {
+    markRule(REL_OP);
+    if(match(Rel_G)){
         expect(Rel_G);
-    } else if(match(Rel_GEQ)) {
+    } else if(match(Rel_GEQ)){
         expect(Rel_GEQ);
-    } else if(match(Rel_NEQ)) {
+    } else if(match(Rel_NEQ)){
         expect(Rel_NEQ);
-    } else if(match(Rel_EQ)) {
+    } else if(match(Rel_EQ)){
         expect(Rel_EQ);
-    } else if(match(Rel_L)) {
+    } else if(match(Rel_L)){
         expect(Rel_L);
-    } else if(match(Rel_LEQ)) {
+    } else if(match(Rel_LEQ)){
         expect(Rel_LEQ);
-    } else {
-        syntaxErr(peekSym(0), Rel_G);
     }
+    markRule(END_RULE);
 }
 
 static void parseArithExpr(){
+    markRule(ARITH_EXPR);
     parseMul();
+
     while(match(Op_ADD) || match(Op_SUB)){
-        if (match(Op_ADD)) {
-            expect(Op_ADD);
-            parseMul();
-        } else if (match(Op_SUB)) {
-            expect(Op_SUB);
-            parseMul();
-        }
+        if(match(Op_ADD)) expect(Op_ADD);
+        else if (match(Op_SUB)) expect(Op_SUB);
+        parseMul();
     }
+    markRule(END_RULE);
 }
 
 static void parseMul(){
+    markRule(MUL);
     parseUnary();
-    while(match(Op_DIV) || match(Op_MULT) || match(Op_DIV_INT)){
-        if (match(Op_DIV)) {
-            expect(Op_DIV);
-            parseUnary();
-        } else if (match(Op_MULT)) {
-            expect(Op_MULT);
-            parseUnary();
-        } else if (match(Op_DIV_INT)) {
-            expect(Op_DIV_INT);
-            parseUnary();
-        }
+
+    while (match(Op_DIV) ||  match(Op_MULT) || match(Op_DIV_INT)){
+        if(match(Op_DIV)) expect(Op_DIV);
+        else if(match(Op_MULT)) expect(Op_MULT);
+        else if(match(Op_DIV_INT)) expect(Op_DIV_INT);
+        parseUnary();
     }
+    markRule(END_RULE);
 }
 
 static void parseUnary(){
+    markRule(UNARY);
     if (match(Op_SUB)){
         expect(Op_SUB);
+        parseUnary();
+    } else if(match(Cond_NOT)){
+        expect(Cond_NOT);
         parseUnary();
     } else {
         parsePower();
     }
+    markRule(END_RULE);
 }
 
 static void parsePower(){
+    markRule(POWER);
     parseTerm();
     if(match(Op_EXP)){
         expect(Op_EXP);
         parseUnary();
     }
+    markRule(END_RULE);
 }
 
 static void parseTerm(){
+    markRule(TERM);
     if(match(LPAREN)){
         expect(LPAREN);
         parseExpr();
         expect(RPAREN);
     } else if(match(IDENTIFIER)){
-        if(matchOffset(LPAREN,1)) parseCallExpr();
+        if(matchOffset(LPAREN,1) || matchOffset(Noise_NG,1)) parseCallExpr();
         else parseIdentTerm();
+    } else{
+        parseLiteral();
     }
+    markRule(END_RULE);
 }
 
 static void parseIdentTerm(){
-    expect(IDENTIFIER);
+    expectRule(IDENTIFIER, IDENT_TERM);
     while(match(LBRACKET)){
         expect(LBRACKET);
         parseExpr();
         expect(RBRACKET);
     }
+    markRule(END_RULE);
 }
 
 static void parseLiteral(){
+    markRule(LITERAL);
     if(match(Lit_INT)){
         expect(Lit_INT);
     } else if(match(Lit_DEC)) {
@@ -465,10 +556,11 @@ static void parseLiteral(){
     } else if(match(T_NULL)) {
         expect(T_NULL);
     }
+    markRule(END_RULE);
 }
 
 static void parseArrayLit(){
-    expect(LBRACKET);
+    expectRule(LBRACKET, ARRAY_LIT);
     if(!match(RBRACKET)){
         parseValue();
         while(match(COMMA)){
@@ -476,38 +568,43 @@ static void parseArrayLit(){
             parseValue();
         }
     }
-    expect(RBRACKET);
+    expectRule(RBRACKET, END_RULE);
 }
 
 static void parseCallExpr(){
-    expect(IDENTIFIER);
+    expectRule(IDENTIFIER, CALL_EXPR);
     expect(LPAREN);
     if(!match(RPAREN)){
         parseArgList();
     }
-    expect(RPAREN);
+    expectRule(RPAREN, END_RULE);
 }
 
 static void parseCallStmt(){
+    markRule(CALL_STMT);
     if(matchOffset(Noise_NG, 1)){
         expect(IDENTIFIER);
         expect(Noise_NG);
         parseArgList();
-    } else {
-        parseCallExpr();
-    }
+    } else parseCallExpr();
+    markRule(END_RULE);
 }
 
 static void parseArgList(){
+    markRule(ARG_LIST);
     parseExpr();
     while(match(COMMA)){
         expect(COMMA);
         parseExpr();
     }
+    markRule(END_RULE);
 }
 
 static void parseBlock(){
-    expect(LBRACE);
-    while(!match(RBRACE)) parseStmt();
-    expect(RBRACE);
+    expectRule(LBRACE, BLOCK);
+    while(!match(RBRACE)) {
+        if(errorInProgress) synchronize();
+        parseStmt();
+    };
+    expectRule(RBRACE, END_RULE);
 }

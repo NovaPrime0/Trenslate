@@ -6,22 +6,24 @@
 #include <string.h>
 #include "enums.h"
 
+// Sync state file path (can be overridden at runtime)
+#define SYNC_FILE_PATH ".ppl_sync_state.txt"
+
 const char* ruleNames[] = {
-    "PROGRAM", "STMT", "DECL_STMT",
+    "NONE", "PROGRAM", "STMT", "DECL_STMT",
     "VAR_DECL", "CONST_DECL", "IMPORT",
     "VALUE", "FUNCTION_DECL", "PARAM_LIST",
     "BLOCK_STMT", "INLINE_STMT", "IF_STMT",
     "ELSE_CHAIN", "WHILE_STMT", "FOR_STMT",
-    "FROEACH_STMT", "KEYWORD_STMT", "RETURN_STMT",
+    "FOREACH_STMT", "KEYWORD_STMT", "RETURN_STMT",
     "CONTINUE_STMT", "BREAK_STMT",
     "ASSIGN_STMT", "EXPR", "OR_EXPR",
     "AND_EXPR", "REL_EXPR", "REL_OP",
-    "ARITH_EXPR", "MUL", "UNARY",
+    "ARITH_EXPR", "MUL", "UNARY", "POWER",
     "TERM", "IDENT_TERM", "LITERAL",
     "ARRAY_LIT", "CALL_EXPR", "CALL_STMT",
     "ARG_LIST", "BLOCK", "END_RULE"
 };
-
 
 /* SYNTACTIC ANALYZER 1 Utils
     Recursive Descent Parser
@@ -34,13 +36,14 @@ const char* ruleNames[] = {
 
 static Entry *startSymbol;
 static Stack *tokenStack;
-// static RuleStack *ruleStack;
 static int curDepth;
+static int lastSyncTokIndex;
+static int tokDistFromLastSync;
+// static RuleStack *ruleStack;
 
 const char* getName(Rule r){
-    return ruleNames[r-1];
+    return ruleNames[r];
 }
-
 
 void resetEntry(Entry* s){
     // if(s->children) free(s->children);
@@ -48,7 +51,7 @@ void resetEntry(Entry* s){
 }
 
 bool peek(Stack *s, Entry **w){
-    if(!s || !w) return false;
+    if(!s || !w || s->curSize < 1) return false;
     *w = &s->data[s->curSize-1];
     return true; 
 }
@@ -64,8 +67,18 @@ bool expand(Stack *s){
     for(int i = s->curSize; i < s->maxSize; i++) resetEntry(&s->data[i]);
     return true;
 }
-
-bool initStack(Stack  *s){
+bool startTokenStack(){
+    tokenStack = malloc(sizeof(Stack));
+    if(!tokenStack){
+        printf("[parserUtils.c | %s: %d]: Failed to allocate token stack \n", __func__, __LINE__);
+        return false;
+    }
+    if(!initStack(tokenStack)) return false;
+    curDepth = 0;
+    tokDistFromLastSync = 0;
+    return true;
+}
+bool initStack(Stack *s){
     int newSize = 2;
     s->data = malloc(sizeof(Entry)*2);
     if(!s->data){
@@ -95,7 +108,7 @@ bool pop(Stack *st, Entry* w){
     }
     printf("[parserUtils.c | %s: %d]: Attaching data to passed address \n", __func__, __LINE__);
     
-    Entry *poppedNode = &st->data[st->curSize-1];
+    Entry *poppedNode = &st->data[--st->curSize];
     w->sym = poppedNode->sym;
     w->rule = poppedNode->rule;
     w->depth = poppedNode->depth;
@@ -105,18 +118,19 @@ bool pop(Stack *st, Entry* w){
     // w->childrenMaxCount = poppedNode -> childrenMaxCount;
     printf("[parserUtils.c | %s: %d]: Popped Entry: [%s|%s], Rule: %sw\n",
         __func__, __LINE__,
-         w->sym->lexeme, 
-         tokenNames[w->sym->token],
+         w->sym ? w->sym->lexeme : "<Rule", 
+         w->sym ? tokenNames[w->sym->token] : "Marker>",
          getName(w->rule));
-    
     resetEntry(poppedNode);
     return true;
 }
 
 bool push(Stack *st, Symbol *s, Rule r){
-    if(st->curSize + 1 > st->maxSize && !expand(st)) return false;
+    if(st->curSize + 1 > st->maxSize && !expand(st)) {
+        printf("[parserUtils.c | %s: %d]: Failed to Expand Stack \n", __func__, __LINE__);
+        return false;
+    }
     Entry *w = &st->data[st->curSize++];
-    if(r > 0 && r != END_RULE) curDepth++;
     w->depth = curDepth;
     w->sym = s;
     w->rule = r;
@@ -124,151 +138,89 @@ bool push(Stack *st, Symbol *s, Rule r){
     return true;
 }
 
-bool recover(){
-    Entry *working = malloc(sizeof(Entry));
-    do{
-        if(!pop(tokenStack, working)) return false;
-    } while(working->sym->token != LINE_END || working->rule != RBRACE); 
-    pop(tokenStack, NULL);
-    return true;
-}
+
 //data is only a wrapper for symTBL symbol for AST, can free only the data without freeing the symbol inside
 void freeStack(Stack *s){
     free(s->data);
     free(s); 
 }
 
-// bool appendChild(Entry *parent, Entry *child){
-//     if(!parent || !child)  return false;
+bool isDelim(Symbol* s){
+    if (!s) return false;
+    switch (s->token) {
+        case LINE_END: return true;
+        case LBRACE: return true;
+        case RBRACE: return true;
+        default: return false;
+    }
+}
+bool isSync(Symbol* s, TokenType lookahead){
+    if (!s) return false;
+    switch (s->token) {
+        //control-flow statements
+        case IF: return true;
+        case ELSE: return true;
+        case WHILE: return true;
+        case FOR: return true;
+        case FOREACH: return true;
+        //keywords
+        case BREAK: return true;
+        case CONTINUE: return true;
+        case RETURN: return true;
+        //decl
+        case VARIABLE: return true;
+        case CONST: return true;
+        case LINE_END: return true;
+        case RBRACE: return true;
+        
+        case IDENTIFIER: 
+            switch (lookahead) {
+                case Noise_AY: return true;
+                case ASSIGN: return true;
+                case RPAREN: return true;
+                case RBRACKET: return true;
+                default: return false;
+            }
+        default: return false;
+    }
+}
 
-//     if(parent->childrenMaxCount == 0 && parent->childrenCount && !parent->children){
-//         int newSize = 2;
-//         parent->children = malloc(sizeof(Entry*)*newSize);
-//         if(!parent->children) return false;
-//         parent->childrenMaxCount = newSize;
-//     }
+//important shared functions
 
-//     if(parent->childrenCount + 1 > parent->childrenMaxCount){
-//         int newSize = parent->childrenMaxCount*2;
-//         parent->children = realloc(parent->children, sizeof(Entry*)*newSize);
-//         if(!parent->children){
-//             printf("[parserUtils.c: %d]: Child Array Reallocation fail\n", __LINE__);
-//             return false;
-//         }
-//         parent->childrenMaxCount = newSize;
-//         for(int i = parent->childrenCount; i < parent->childrenMaxCount; i++) 
-//             parent->children[i] = NULL;
-//     }
-//     child->parent = parent;
-//     parent->children[parent->childrenCount++] = child;
-//     return true;
-// }
+//handles token descent & rule marking
+bool pushToken(Symbol *s, Rule r){
+    if(!push(tokenStack, s, r)){
+        printf("[parserUtils.c | %s: %d]: Failed to push symbol in to stack \n", __func__, __LINE__);
+        return false;   
+    } 
+    if(isDelim(s)) {
+        lastSyncTokIndex = tokenStack->curSize-1;
+        tokDistFromLastSync = 0;
+    } else {
+        // Increment only for actual tokens, NOT END_RULE markers with NULL symbol
+        if(s != NULL && r != END_RULE) {
+            tokDistFromLastSync++;
+        }
+    }
+    switch(r){
+        //end of production rule
+        case END_RULE: curDepth--; break;
+        //terminals
+        case NONE: break;
+        //in-betweens (rule tokens)
+        default: curDepth++; break;
+    }
+    return true;
+}
 
-// bool expandRule(RuleStack *s){
-//     int newSize = s->maxSize*2;
-//     s->data = realloc(s->data, sizeof(Entry*)*newSize);
-//     if(!s->data){
-//         printf("[perserUtils.c: %d]: Failed to allocate stack", __LINE__);
-//         return false;
-//     }
-//     s->maxSize = newSize;
-//     for(int i = s->curSize; i < newSize; i++){
-//         s->data[i] = NULL;
-//     }
-//     return true;
-// }
-
-// bool initRuleStack(RuleStack  *s){
-//     int newSize = 2;
-//     s -> data = malloc(sizeof(Entry*)*2);
-//     if(!s->data){
-//         printf("[perserUtils.c: %d]: Failed to allocate stack", __LINE__);
-//         return false;
-//     }
-//     s->curSize = 0;
-//     s->maxSize = newSize;
-//     memset(s->data, 0, sizeof(Entry*)*s->maxSize);
-//     return true;
-// }
-
-// //data is only a wrapper for symTBL symbol for AST, can free only the data without freeing the symbol inside
-// void freeRuleStack(RuleStack *s){
-//     free(s->data); 
-//     free(s);
-// }
-//keep for when we make an actual parse tree
-// //popping rule upon completion of production rule
-// bool popRule(RuleStack *st, Entry **s){
-//     if(!st || st->curSize == 0) {
-//         printf("[parserUtils.c: %d]: Null RuleStack || No elements\n", __LINE__);
-//         return false;
-//     } else if (!*s){
-//         printf("[parserUtils.c | %s: %d]: Null Entry, deducting from rulestack instead \n", __func__, __LINE__);
-//         st->data[--st->curSize] = NULL;
-//         return true;
-//     }
-//     printf("[parserUtils.c: %d]: Copying popped data to Entry \n", __LINE__);
-//     *s = st->data[--st->curSize];
-//     return true;
-// }
-// bool peekRule(RuleStack *st, Entry **s){
-//     if(!st || st->curSize == 0) {
-//         printf("[parserUtils.c: %d]: Null RuleStack || No elements\n", __LINE__);
-//         return false;
-
-//     } else if (!*s){
-//         printf("[parserUtils.c | %s: %d]: Null Entry; Cannot peek at data \n", __func__, __LINE__);
-//         return false;
-//     }
-//     printf("[parserUtils.c: %d]: Copying popped data to Entry \n", __LINE__);
-//     *s = st->data[st->curSize-1];
-//     return true;
-// }
-
-// bool appendChildToRule(RuleStack *st, Entry *s){
-//     if(!st||!s) {
-//         printf("[parserUtils.c | %s: %d]: Null RuleStack || Entry \n", __func__, __LINE__);
-//         return false;
-//     }
-//     Entry *working;
-//     peekRule(st, &working);
-//     appendChild(working, s);
-//     return true;
-// }
-
-// //pushing rule when descending into a production rule (LL(n))
-// bool pushRule(RuleStack *s, Entry* a){
-//     if(!s||!a) {
-//         printf("[parserUtils.c | %s: %d]: Null RuleStack || Entry \n", __func__, __LINE__);
-//         return false;
-//     }
-//     if(s->curSize + 1 > s->maxSize) expandRule(s);
-//     s->data[s->curSize++] = a;
-//     return true;    
-// }
-
-// //pop all until a sync token has been found, work on 
-// bool startParse(){
-    
-//     if(!initStack(tokenStack) || !initRuleStack(ruleStack)) return false;
-//     curDepth = 0;
-//     return true;    
-// }
-
-// //define AST functions
-// bool appendToken(Symbol* sym, Rule r){
-//     if(!push(tokenStack, sym, r)) return false;
-//     if(r != 0) {
-//         Entry* peekNode;
-//         if(!peek(tokenStack, &peekNode) || 
-//             !pushRule(ruleStack, peek(tokenStack, peekNode)))
-//         return false;
-//     }
-//     else if(r == 0) {
-//         Entry* peekNode;
-//         if(!peek(tokenStack, &peekNode) || 
-//             !appendChildToRule(ruleStack, peek(tokenStack, peekNode))) 
-//             return false;
-//     }
-//     return true;
-// }
+void unwindToLastSync(){
+    int lastSync = lastSyncTokIndex;
+    while(lastSync + 1 < tokenStack->curSize 
+        && tokenStack->data[lastSync+1].rule == END_RULE) lastSync++;
+    for(int i = lastSyncTokIndex +1; i < tokenStack->curSize; i++){
+        resetEntry(&tokenStack->data[i]);
+    }
+    tokDistFromLastSync = 0;
+    tokenStack->curSize = lastSync+1;
+    curDepth = tokenStack->data[lastSync].depth;
+}

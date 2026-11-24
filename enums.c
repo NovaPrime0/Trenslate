@@ -62,5 +62,5 @@ const char *tokenNames[] = {
     "WHITESPACE",
     "Noise_NA", "Noise_NG", "Noise_AY", "Noise_MULA", "Noise_SA",
     "C_BLOCK", "C_LINE",
-    "IDENTIFIER",
+    "IDENTIFIER", "END_OF_FILE"
 };
