@@ -372,29 +372,30 @@ static void parseRelOp(){
 
 static void parseArithExpr(){
     parseMul();
-    while(match(Op_ADD)){
-        expect(Op_ADD);
-        parseMul();
-    }
-    while(match(Op_SUB)){
-        expect(Op_SUB);
-        parseMul();
+    while(match(Op_ADD) || match(Op_SUB)){
+        if (match(Op_ADD)) {
+            expect(Op_ADD);
+            parseMul();
+        } else if (match(Op_SUB)) {
+            expect(Op_SUB);
+            parseMul();
+        }
     }
 }
 
 static void parseMul(){
     parseUnary();
-    while(match(Op_DIV)){
-        expect(Op_DIV);
-        parseUnary();
-    }
-    while(match(Op_MULT)){
-        expect(Op_MULT);
-        parseUnary();
-    }
-    while(match(Op_DIV_INT)){
-        expect(Op_DIV_INT);
-        parseUnary();
+    while(match(Op_DIV) || match(Op_MULT) || match(Op_DIV_INT)){
+        if (match(Op_DIV)) {
+            expect(Op_DIV);
+            parseUnary();
+        } else if (match(Op_MULT)) {
+            expect(Op_MULT);
+            parseUnary();
+        } else if (match(Op_DIV_INT)) {
+            expect(Op_DIV_INT);
+            parseUnary();
+        }
     }
 }
 
