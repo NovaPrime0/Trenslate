@@ -43,7 +43,10 @@ void syntaxErr(Symbol *s, TokenType expectedTok){
 
 static int matchOffset(TokenType t, int offset){
 
-    if(offset + curr > lexxedTable->curIdx) return -1;
+    if(offset + curr > lexxedTable->curIdx) {
+        printf("[parser.c | %s: %d]: Out of bounds lookup\n", __func__, __LINE__);
+        return 0;
+    }
     printf("[parser.c | %s: %d]: Lookahead %d Token(s)\n", __func__, __LINE__, offset);
     TokenType tok = peekTok(curr + offset);
     printf("[parser.c | %s: %d]: Found %s \n", __func__, __LINE__, tokenNames[tok]);
@@ -163,6 +166,8 @@ static void parseVarDecl(){
     } else if(match(Noise_AY)){
         expect(Noise_AY);
         parseValue();
+    } else {
+        syntaxErr(peekSym(0), ASSIGN);
     }
 }
 
@@ -374,20 +379,19 @@ static void parseRelOp(){
     } else if(match(Rel_LEQ)) {
         expect(Rel_LEQ);
     } else {
-        syntaxErr();
+        syntaxErr(peekSym(0), Rel_G);
     }
 }
 
 static void parseArithExpr(){
     parseMul();
-    while(match(Op_ADD) || match(Op_SUB)){
-        if (match(Op_ADD)) {
-            expect(Op_ADD);
-            parseMul();
-        } else if (match(Op_SUB)) {
-            expect(Op_SUB);
-            parseMul();
-        }
+    while(match(Op_ADD)){
+        expect(Op_ADD);
+        parseMul();
+    }
+    while(match(Op_SUB)){
+        expect(Op_SUB);
+        parseMul();
     }
 }
 
