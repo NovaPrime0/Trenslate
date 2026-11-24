@@ -385,13 +385,14 @@ static void parseRelOp(){
 
 static void parseArithExpr(){
     parseMul();
-    while(match(Op_ADD)){
-        expect(Op_ADD);
-        parseMul();
-    }
-    while(match(Op_SUB)){
-        expect(Op_SUB);
-        parseMul();
+    while(match(Op_ADD) || match(Op_SUB)){
+        if (match(Op_ADD)) {
+            expect(Op_ADD);
+            parseMul();
+        } else if (match(Op_SUB)) {
+            expect(Op_SUB);
+            parseMul();
+        }
     }
 }
 
