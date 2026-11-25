@@ -17,7 +17,6 @@ bool errorInProgress;  // Flag to skip expect/match on error
 char ptree[1024];
 char* sourcefile;
 int errCount; 
-bool isEof;
 
 bool initParser(SymTBL* tbl, char* sf){
     if(!tbl){
@@ -32,12 +31,6 @@ bool initParser(SymTBL* tbl, char* sf){
     curr = 0;
     sourcefile = sf;
     errCount = 0;
-    return true;
-}
-
-bool parse(){
-    parseProgram();
-    if(errCount > 0) return false;
     return true;
 }
 
@@ -56,15 +49,16 @@ bool match(TokenType t){
     }
     return peekTok(0) == t;
 }
+//syntaxErr report (views eof when expecting grammar still)
 void syntaxErrEOF(Symbol* s, TokenType expectedTok){
     printf("====================================================\n");
     printf("SYNTAX ERROR (Unexpected EOF) detected in %s, line %d \n", sourcefile, s->line);
     printf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
     printf("====================================================\n");
     errorInProgress = true;  // Set flag to skip expect/match
-    isEof = true;  // Set flag to skip expect/match
     errCount++;
 }
+//syntaxErr report (wrong received symbol)
 void syntaxErr(Symbol *s, TokenType expectedTok){
     printf("====================================================\n");
     printf("SYNTAX ERROR detected in %s, line %d \n", sourcefile, s->line);
@@ -100,7 +94,7 @@ bool matchOffset(TokenType t, int offset){
 
     if(offset + curr > lexxedTable->curIdx) return false;
     printf("[parser.c | %s: %d]: Lookahead %d Token(s)\n", __func__, __LINE__, offset);
-    TokenType tok = peekTok(curr);
+    TokenType tok = peekTok(offset);
     printf("[parser.c | %s: %d]: Found %s \n", __func__, __LINE__, tokenNames[tok]);
     
     return tok == t;
@@ -116,7 +110,7 @@ void expectRule(TokenType target, Rule r){
     TokenType tok = peekTok(0);
     printf("[parser.c | %s: %d]: Expecting %s (terminal) to attach <%s> rule\n", __func__, __LINE__, tokenNames[target], getName(r));
     if (tok == END_OF_FILE && target != END_OF_FILE) {
-        syntaxErrorEOF(peekSym(0), target);
+        syntaxErrEOF(peekSym(0), target);
         return;
     }
     if(tok == target) {
@@ -139,7 +133,7 @@ void expect(TokenType target){
     TokenType tok = peekTok(0);
     printf("[parser.c | %s: %d]: Expecting %s \n", __func__, __LINE__, tokenNames[target]);
     if (tok == END_OF_FILE && target != END_OF_FILE) {
-        syntaxErrorEOF(peekSym(0), target);
+        syntaxErrEOF(peekSym(0), target);
         return;
     }
     if(tok == target) {
@@ -196,7 +190,7 @@ static void parseBlock();
 
 
 
-
+bool isTopLevelSync;
 static void parseProgram(){
     markRule(PROGRAM);
     int topDepth = getDepth();
@@ -216,7 +210,7 @@ static void parseProgram(){
     expect(LBRACE);
     int stmtDepth = getDepth();
     if(errorInProgress) return;
-    while (!match(PROG_END) && !match(END_OF_FILE)){
+    while (!match(PROG_END) && !match(END_OF_FILE) && !match(RBRACE)){
         int startIdx = curr;
         parseStmt();
         if(errorInProgress) synchronize(startIdx, stmtDepth);
@@ -284,7 +278,7 @@ static void parseConstDecl(){
     } else if(match(Noise_AY)){
         expect(Noise_AY);
         parseValue();
-    } else syntaxErr(peekSym(0), ASSIGN);
+    } else if (!errorInProgress) syntaxErr(peekSym(0), ASSIGN);
     markRule(END_RULE);
 }
 
@@ -647,4 +641,10 @@ static void parseBlock(){
         if(errorInProgress) synchronize(startIdx, blockDepth);
     };
     expectRule(RBRACE, END_RULE);
+}
+
+bool parse(){
+    parseProgram();
+    if(errCount > 0) return false;
+    return true;
 }

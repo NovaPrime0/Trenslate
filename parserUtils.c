@@ -218,7 +218,7 @@ void unwindToLastSync(int stmtDepth){
     
     if(cut < old){
         Entry* first = &tokenStack->data[cut];
-        curDepth = (first->rule == END_RULE)? first->depth + 1 : first->depth++;
+        curDepth = (first->rule == END_RULE)? first->depth + 1 : first->depth;
         for(int i = cut; i < old; i++) resetEntry(&tokenStack->data[i]);
         tokenStack->curSize = cut;
     }
