@@ -1,288 +1,345 @@
-# Parser Issues Checklist
+# Parser Issues Checklist - Fresh Start (Post-Revert)
 
-## Pre-Testing Fixes (Items 1-6)
-
-### ✅ Issue 1: parseProgram loop doesn't stop on RBRACE
-**Location:** `parser.c` line ~328-340  
-**Problem:** A stray `}` in the main body fails `parseStmt`, the skip returns at `}` without consuming it, and the same token fails forever.
-
-**Fix Required:** Add `&& !match(RBRACE)` guard to stop parsing when RBRACE is encountered.
-
-```c
-// Current (line 328-340):
-while (!match(PROG_END) && !match(END_OF_FILE) && !match(RBRACE)){
-    int startIdx = curr;
-    parseStmt();
-    if(errorInProgress) synchronize(startIdx, stmtDepth);
-}
-
-// Fix: The guard already exists but the issue is that parseStmt fails on stray }
-// Need to ensure RBRACE is consumed after loop or handle it in parseProgram
-```
-
-**Files Affected:** `parser.c`
+**Status:** Ready for Testing  
+**Last Known State:** All Items 1-6 reverted to original code  
+**Working Directory:** `K:/Codez/C/PPL`  
 
 ---
 
-### ✅ Issue 2: Import loop passes curr (should be startIdx)
-**Location:** `parser.c` line ~310-318  
-**Problem:** The import loop passes `curr` but should pass `startIdx`. With `curr`, the progress guard never works.
+## Core Fixes Required Before Testing (Items 1-6)
 
+### Issue 2a: Import loop passes wrong token index to synchronize
+**Location:** `parser.c` line ~310-318  
+**Problem:** The import loop passes `curr` but should pass `startIdx`. With `curr`, the progress guard never works.  
 **Fix Required:** Change `synchronize(curr, topDepth)` to `synchronize(startIdx, topDepth)`.
 
 ```c
-// Current (line 310-318):
+// Current (line ~310-318):
 while(match(IMPORT)){
     int startIdx = curr;
     parseImport();
     if(errorInProgress) synchronize(curr, topDepth);  // BUG: should be startIdx
 }
-
 // Fix:
 if(errorInProgress) synchronize(startIdx, topDepth);
-```
-
-**Files Affected:** `parser.c`
+```  
+**Files Affected:** `parser.c` | **Lines:** ~310-318  
 
 ---
 
-### ✅ Issue 3: Early return after expect(LBRACE) leaves PROGRAM open
-**Location:** `parser.c` line ~342-345  
-**Problem:** After `expect(LBRACE)` in parseProgram, if errorInProgress is set, it returns early leaving PROGRAM marked but not cleaned up.
-
-**Fix Required:** Remove the early return or ensure parse() cleans up properly.
+### Issue 2b: parseProgram loop doesn't stop on RBRACE
+**Location:** `parser.c` line ~213 (or similar)  
+**Problem:** A stray `}` in the main body fails `parseStmt`, causing infinite hang. The skip returns at `}` without consuming it, and the same token fails forever.  
+**Fix Required:** Add `&& !match(RBRACE)` guard to while loop condition.
 
 ```c
-// Current (line 342-345):
+// Current (line ~213):
+while (!match(PROG_END) && !match(END_OF_FILE)) {
+
+// Should be:
+while (!match(PROG_END) && !match(END_OF_FILE) && !match(RBRACE)) {
+```  
+**Files Affected:** `parser.c` | **Lines:** ~213  
+
+---
+
+### Issue 3a: parseProgram leaves errorInProgress set after early return
+**Location:** `parser.c` line ~212 (or similar)  
+**Problem:** If an error occurs before LBRACE in main body, the program stays open with PROGRAM flag still active. Early exit doesn't clear error state properly.  
+**Fix Required:** Remove early exit or ensure cleanup happens unconditionally after expect(LBRACE).
+
+```c
+// Current (line ~212):
 expect(PROG_MAIN);
 expect(LBRACE);
 int stmtDepth = getDepth();
-if(errorInProgress) return;  // BUG: leaves PROGRAM open
+if(errorInProgress) return;  // BUG: leaves PROGRAM open, doesn't clean up properly
 
 // Fix Option A - Remove early return:
 expect(PROG_MAIN);
 expect(LBRACE);
 int stmtDepth = getDepth();
-// No early return, let parse() handle cleanup
+// No early return, let parse() handle cleanup below
 
-// Fix Option B - Make sure parse() cleans up (preferred)
-```
-
-**Files Affected:** `parser.c`
+// Fix Option B - Make sure parse() cleans up (preferred):
+if(errorInProgress) { /* do minimal cleanup instead of returning */ }
+```  
+**Files Affected:** `parser.c` | **Lines:** ~210-215  
 
 ---
 
-### ✅ Issue 4: parse() doesn't close the log
-**Location:** `parser.c` line ~378-381  
-**Problem:** If expect(PROG_END), expect(LINE_END) or expect(RBRACE) fails, the final markRule(END_RULE) is suppressed.
-
-**Fix Required:** Make parse() clear errorInProgress, then call a closeAll() in parserUtils that pushes END_RULE while curDepth > 0.
+### Issue 3b: parse() doesn't close the log on error
+**Location:** `parser.c` line ~647 (parse function) or similar  
+**Problem:** If expect(PROG_END), expect(LINE_END) or expect(RBRACE) fails, final markRule(END_RULE) is suppressed. Error handling leaves cleanup incomplete.  
+**Fix Required:** Make parse() clear errorInProgress, then call a closeAll() function that pushes END_RULE while curDepth > 0.
 
 ```c
-// Current (line 378-381):
+// Current (line ~647):
 bool parse(){
     parseProgram();
     if(errCount > 0) return false;
     return true;
 }
 
-// Fix:
+// Fix: Add proper cleanup after parseProgram completes or fails
 void closeAll() {
-    // Push END_RULE while curDepth > 0
-    while(curDepth > 0) {
-        pushToken(NULL, END_RULE);
-    }
+    // Push      while curDepth > 0 (implementation in parserUtils.c)
+    errorInProgress = false;  // Clear error flag on exit
 }
 
 bool parse(){
-    parseProgram();
-    if(errCount > 0) return false;
-    
-    // Close the log
+    if(parseProgram()) { 
+        cleanupParse(true); 
+        return true; 
+    } else { 
+        cleanupParse(false); 
+        return false; 
+    }
+}
+
+void cleanupParse(bool success){
     closeAll();
-    errorInProgress = false;  // Clear error flag
+}
+```  
+**Files Affected:** `parser.c`, `parserUtils.h` (add closeAll function) | **Lines:** ~647-658  
+
+---
+
+### Issue 3c: lastSyncTokIndex is -1 at first import/function parse
+**Location:** `parser.c` line ~203-215  
+**Problem:** An error in the first import or function can cut PROGRAM's open, leaving lastSyncTokIndex as -1. markRule(PROGRAM) hasn't been called yet when errors occur early.  
+**Fix Required:** Add `markSyncFloor()` call right after markRule(PROGRAM).
+
+```c
+// Current (line ~203-215):
+while(match(IMPORT)){
+    int startIdx = curr;
+    parseImport();
+    if(errorInProgress) synchronize(curr, topDepth);  // BUG: lastSyncTokIndex still -1 here
+
+// Should be:
+int topDepth = getDepth();
+markRule(PROGRAM);  // <-- Add this line after markRule call (if exists before IMPORT loop)
+while(match(IMPORT)){
+    int startIdx = curr;
+    parseImport();
+```  
+**Files Affected:** `parser.c` | **Lines:** ~203-215  
+
+---
+
+### Issue 4a: initParser doesn't reset errorInProgress
+**Location:** `parser.c` line ~31-37 (initParser function)  
+**Problem:** Repeated parses leave old errors in place. No explicit reset of error state at parser initialization.  
+**Fix Required:** Add `errorInProgress = false;` after other initializations.
+
+```c
+// Current (line ~31-37):
+bool initParser(SymTBL* tbl, char* sf){
+    if(!tbl) { ... }
+    if(!startTokenStack()) { ... }
+    lexxedTable = tbl;
+    curr = 0;
+    sourcefile = sf;
+    errCount = 0;
+
+// Fix: Add errorInProgress reset after other initializations
+bool initParser(SymTBL* tbl, char* sf){
+    if(!tbl) { ... }
+    if(!startTokenStack()) { ... }
+    lexxedTable = tbl;
+    curr = 0;
+    sourcefile = sf;
+    errCount = 0;
+    errorInProgress = false;  // ADD THIS LINE - Reset for repeat parses
+
+// Files Affected:** `parser.c` | **Lines:** ~31-42  
+
+---
+
+### Issue 5a: Recovery gaps - skip doesn't stop at top-level constructs
+**Location:** Various locations in parser.c (IMPORT/FUNCTION/PROGRAM_MAIN loops)  
+**Problem:** After a broken import, the skip can swallow the next function. isTopLevelSync declared but unused. No synchronization points for IMPORT/FUNCTION/PROGRAM_MAIN tokens during error recovery.  
+
+```c
+// Need to add syncToBlock() or similar before consuming top-level constructs:
+while(match(IMPORT)){ /* needs sync after parseImport */ }
+    if(errorInProgress) synchronize(startIdx, topDepth);  // Add this line
+
+while(match(FUNCTION)) { /* needs sync after parseFunctionDecl */ }
+    int startIdx = curr;
+    parseFunctionDecl();
+```  
+**Files Affected:** `parser.c` | **Lines:** ~203-215 (IMPORT loop), various function definitions  
+
+---
+
+### Issue 6a: Header errors hide body's errors in skip
+**Location:** Various block parsing locations throughout parser.c  
+**Problem:** The skip consumes the whole function or if body, hiding internal errors. No synchronization before parseBlock() calls inside functions/ifs/whiles/fors/foreaches.  
+
+```c
+// Example in function:
+static void function(){
+    markRule(FUNCTION); // or similar marker
+    syncToBlock();  // <-- Add this line here (implementation needed)
+    expect(LBRACE);
+    int blockDepth = getDepth();
+    while(!match(RBRACE) && !match(END_OF_FILE)) { /* ... */ }
+
+// Need to add before each parseBlock() call: function/if/else/while/for/foreach
+```  
+**Files Affected:** `parser.c` | **Lines:** ~240+ (various function definitions, block parsing code)  
+
+---
+
+## Additional Issues Identified During Analysis
+
+### Issue 7a: EOF error can print twice
+**Location:** Various locations in parser.c where errors are reported  
+**Problem:** The broken statement prints an error, then the block's closing brace also triggers one. No guard against duplicate eofReported flag usage.  
+
+```c
+// Need to add guard like this (example):
+bool eofReported = false;  // Add at appropriate scope level
+
+void syntaxErrEOF(Symbol* s, TokenType expectedTok){
+    if(eofReported) return;  // Prevent double printing
+    eofReported = true;      // Set flag after first print
     
-    return true;
+    printf("====================================================\n");
 }
-```
-
-**Files Affected:** `parser.c`, `parserUtils.h` (add closeAll function)
+```  
+**Files Affected:** `parser.c` | **Lines:** Various error reporting locations  
 
 ---
 
-### ✅ Issue 5: initParser doesn't reset errorInProgress
-**Location:** `parser.c` line ~26-37  
-**Problem:** initParser doesn't reset errorInProgress for repeat parses.
-
-**Fix Required:** Reset errorInProgress in initParser.
+### Issue 7b: parseInlineStmt dispatches only on LPAREN
+**Location:** parser.c, parseInlineStmt function (around line ~240+)  
+**Problem:** Noise_NG calls are unreachable since inline stmts don't check for LPAREN before calling parseCallExpr. parseTerm sends Noise_NG to parseCallExpr, which expects LPAREN but doesn't receive it from parseInlineStmt.  
 
 ```c
-// Current (line 26-37):
-bool initParser(SymTBL* tbl, char* sf){
-    if(!tbl) { ... }
-    if(!startTokenStack()) { ... }
-    lexxedTable = tbl;
-    curr = 0;
-    sourcefile = sf;
-    errCount = 0;
-    return true;
-}
+// Current (parseInlineStmt):
+static void parseInlineStmt(){
+    markRule(INLINE_STMT);
+    //if not block then parse inline basically since block stmts start with an easy-to-check keyword
+    if(match(IF) || match(WHILE) || match(FOR) || match(FOREACH)) parseBlockStmt();
+    else parseInlineStmt();  // BUG: doesn't check for LPAREN before calling Noise_NG/parseCallExpr
 
-// Fix:
-bool initParser(SymTBL* tbl, char* sf){
-    if(!tbl) { ... }
-    if(!startTokenStack()) { ... }
-    lexxedTable = tbl;
-    curr = 0;
-    sourcefile = sf;
-    errCount = 0;
-    errorInProgress = false;  // ADD THIS LINE
-    return true;
-}
-```
-
-**Files Affected:** `parser.c`
+// Fix (optional): Add LPAREN check or remove the dispatch logic entirely if not needed
+if(match(LPAREN)){ /* handle call expressions */ }
+else { /* other inline statements */ }
+```  
+**Files Affected:** `parser.c` | **Lines:** ~240+  
 
 ---
 
-### ✅ Issue 6: Recovery gaps - No top-level stops in skip
-**Location:** `parser.c` line ~78-95 (consumeToNextSync function)  
-**Problem:** After a broken import, the skip doesn't stop at IMPORT, FUNCTION or PROG_MAIN. The variable isTopLevelSync is declared but nothing uses it.
-
-**Fix Required:** Either pass a topLevel flag through synchronize and consumeToNextSync, or drop the unused variable and add proper sync points for top-level constructs.
+### Issue 7c: Unused ptree global variable
+**Location:** parser.c, line ~16-18 (global declarations)  
+**Problem:** `char ptree[1024]` declared in parser.c is never used. Dead code left over from earlier development phase.  
 
 ```c
-// Current (line 78-95):
-bool consumeToNextSync(int startIdx){
-    int depth = 0;
-    while(curr < lexxedTable->curIdx){
-        Symbol *s = &lexxedTable->data[curr];
-        TokenType next = lexxedTable->data[curr + 1].token;
+// Current (line ~16-18):
+SymTBL* lexxedTable;
+int curr;
+bool errorInProgress;  // Flag to skip expect/match on error
+char ptree[1024];      // BUG: Unused global array declaration
 
-        if(s->token == LBRACE) depth++;
-        else if(s->token == RBRACE){
-            if(depth == 0) return;              
-            curr++;
-            if(--depth == 0) return;            
-            continue;
-        }
-        else if(depth == 0 && isSync(s, next)){
-            if(s->token == LINE_END){ curr++; return; }
-            if(curr > startIdx) return;        
-        }
-        curr++;
-    }
-}
+// Fix Option A - Remove entirely:
+// SymTBL* lexxedTable;
+// int curr;
+// bool errorInProgress;  
+// (Remove line ~17)
 
-// Fix: Add sync points for IMPORT, FUNCTION, PROG_MAIN at top level
-bool consumeToNextSync(int startIdx, bool topLevel){
-    int depth = 0;
-    while(curr < lexxedTable->curIdx){
-        Symbol *s = &lexxedTable->data[curr];
-        TokenType next = lexxedTable->data[curr + 1].token;
-
-        if(s->token == LBRACE) depth++;
-        else if(s->token == RBRACE){
-            if(depth == 0) return;              
-            curr++;
-            if(--depth == 0) return;            
-            continue;
-        }
-        // ADD TOP-LEVEL SYNC POINTS:
-        else if(depth == 0 && topLevel){
-            if(s->token == IMPORT || s->token == FUNCTION || s->token == PROG_MAIN){
-                if(curr > startIdx) return;
-            }
-        }
-        else if(depth == 0 && isSync(s, next)){
-            if(s->token == LINE_END){ curr++; return; }
-            if(curr > startIdx) return;        
-        }
-        curr++;
-    }
-}
-
-// Update callers to pass topLevel flag
-```
-
-**Files Affected:** `parser.c` (consumeToNextSync function and callers)
+// Fix Option B - Comment out if needed for debugging:
+char ptree[1024] __attribute__((unused));  // Mark as unused to compiler warnings
+```  
+**Files Affected:** `parser.c` | **Lines:** ~16-18  
 
 ---
 
-## Additional Issues Found During Review
+## Test Scenarios (Must Run After Each Fix)
 
-### Issue 7: Block statements lack sync points before parseBlock()
-**Location:** Various block statement functions (parseIfStmt, parseWhileStmt, parseForStmt, parseForeachStmt, parseFunctionDecl)  
-**Problem:** A header error hides the body's errors. Need syncToBlock() before parseBlock().
-
-**Fix Required:** Add `syncToBlock()` before each call to `parseBlock()`.
-
-```c
-// Example for parseIfStmt (line ~280):
-static void parseIfStmt(){
-    expectRule(IF, IF_STMT);
-    expect(LPAREN); 
-    parseExpr();
-    expect(RPAREN);
-    syncToBlock();  // ADD THIS LINE - sync before block
-    parseBlock();
-    if(match(ELSE)){
-        parseElseChain();
-    }
-    markRule(END_RULE);
-}
-
-// Define syncToBlock in parser.c:
-void syncToBlock(){
-    int depth = getDepth();
-    while(curr < lexxedTable->curIdx){
-        Symbol *s = &lexxedTable->data[curr];
-        TokenType next = lexxedTable->data[curr + 1].token;
-
-        if(s->token == LBRACE) {
-            curr++;
-            // Consume block until RBRACE at same depth
-            while(curr < lexxedTable->curIdx){
-                Symbol *innerS = &lexxedTable->data[curr];
-                TokenType innerNext = lexxedTable->data[curr + 1].token;
-                
-                if(innerS->token == RBRACE) break;
-                curr++;
-            }
-        } else if(depth == 0 && isSync(s, next)){
-            if(s->token == LINE_END){ curr++; return; }
-            if(curr > startIdx) return;        
-        }
-    }
-}
-```
-
-**Files Affected:** `parser.c` (all functions calling parseBlock())
+| # | Scenario | Expected Behavior | File/Command | Priority |
+|---|----------|------------------|--------------|----------|
+| 1 | Valid program parsing | Parse successfully, no errors | `TestCases/valid_program/test_valid.tren` + run parser | HIGH (baseline) |
+| 2 | Stray `}` in main body | Report error at RBRACE position, recover gracefully without hang | Create test file with stray brace before PROG_END | MEDIUM |
+| 3 | Missing PROG_END token | Report missing end marker, don't hang indefinitely | Test file without final } or PROG_END | HIGH |
+| 4 | Broken first import (`daan "invalid_file"`) | Stop at next top-level construct (FUNCTION/PROGRAM_MAIN) instead of swallowing it | Create test with invalid import syntax followed by valid FUNCTION | MEDIUM |
 
 ---
 
-## Summary of Required Changes
+## Files to Modify Summary
 
-| # | Issue | File(s) | Priority |
-|---|-------|---------|----------|
-| 1 | parseProgram RBRACE handling | parser.c | High |
-| 2 | Import loop curr vs startIdx | parser.c | High |
-| 3 | Early return after expect(LBRACE) | parser.c | Medium |
-| 4 | parse() doesn't close log | parser.c, parserUtils.h | High |
-| 5 | initParser missing errorInProgress reset | parser.c | Medium |
-| 6 | consumeToNextSync lacks top-level sync points | parser.c | High |
-| 7 | Block statements lack syncToBlock() | parser.c | Medium |
+1. **`parser.c`** - Main parsing logic, all Items 2a-6 apply here
+   - Line ~310: Fix synchronize parameter (Issue 2a)  
+   - Line ~213: Add RBRACE guard (Issue 2b)  
+   - Line ~212: Handle early return properly (Issue 3a)  
+   - Line ~647+: Proper cleanup in parse() function (Issue 3b)  
+   - Line ~203-215: markSyncFloor after PROGRAM marker (Issue 3c)  
+   - Line ~31-37: Reset errorInProgress in initParser (Issue 4a)  
 
----
+2. **`parserUtils.h/c`** - Synchronization utilities if needed for syncToBlock/markSyncFloor/closeAll functions
+   - Add `closeAll()` function to push END_RULE while curDepth > 0  
+   - Implement `syncToBlock()` helper function  
+   - Implement `markSyncFloor()` helper function  
 
-## Testing Plan
-
-1. **Run a valid program** - Verify normal parsing works after fixes
-2. **Test stray `}` in main body** - Should not cause infinite loop
-3. **Test missing PROG_END** - Should report error and recover
-4. **Test broken first import** - Should stop at next top-level construct
+3. **Output files:** Will be generated during testing (not tracked in git)
 
 ---
 
-*Generated: 2026-11-25*  
-*Status: Ready for implementation*
+## Notes from Previous Handoff Analysis
+
+**Completed Fixes (4/7):** errorInProgress reset, unused variable removal, SYNC_FILE_PATH deletion, tokDistFromLastSync comment-out  
+**Reverted Items (3/7):** All items requiring testing before proceeding - reverted per user instruction to "not repeat yourself"  
+
+**Critical Gap:** Tests have NOT been run yet. This checklist documents what needs to be done AFTER verifying the current state with actual test runs.
+
+---
+
+## Git Commands Reference
+
+```bash
+# Check current state of files
+git diff --stat HEAD
+
+# Restore a reverted change (if needed)  
+git checkout HEAD -- parser.c
+
+# View original code for reference
+cat parser.c | grep -n "while.*PROG_END"  # Issue 2b location
+cat parser.c | grep -n "synchronize(curr, topDepth)"  # Issue 2a location
+```  
+
+---
+
+## Next Steps After Testing Each Fix
+
+1. Run valid program → verify baseline parsing works  
+   ```bash
+   cd K:/Codez/C/PPL && make clean -s && make run TestCases/valid_program/test_valid.tren
+   ```  
+
+2. Test stray `}` scenario → confirm error reporting and recovery without hang  
+3. Test missing PROG_END → ensure no infinite hang, proper error message  
+4. Test broken import → verify stop at next top-level construct (FUNCTION/PROGRAM_MAIN) instead of swallowing it  
+
+**If any test fails:** Revert the fix using git checkout HEAD -- parser.c or specific file, then investigate further before proceeding to next item.
+
+---
+
+## Success Criteria for Each Item
+
+| Issue | Pass Condition |
+|-------|----------------|
+| 2a (synchronize) | Error in import doesn't cause infinite loop; progress guard works correctly |
+| 2b (RBRACE guard) | Stray `}` causes error but program terminates/hangs gracefully, not infinitely |
+| 3a (early return) | PROGRAM state is properly cleaned up after LBRACE errors |
+| 3b (closeAll) | END_RULE marker pushed even when expect() fails at end of parseProgram |
+| 3c (markSyncFloor) | lastSyncTokIndex initialized correctly before first import/function parses |
+| 4a (initParser reset) | Repeated parser invocations start with clean error state |
+
+---
+
+**Last Updated:** After reverting all pre-test modifications  
+**Ready for Testing Phase: YES** ✅  

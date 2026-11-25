@@ -39,6 +39,8 @@ static int lastSyncTokIndex;
 static int tokDistFromLastSync;
 // static RuleStack *ruleStack;
 
+
+
 const char* getName(Rule r){
     return ruleNames[r];
 }
@@ -218,7 +220,7 @@ void unwindToLastSync(int stmtDepth){
     
     if(cut < old){
         Entry* first = &tokenStack->data[cut];
-        curDepth = (first->rule == END_RULE)? first->depth + 1 : first->depth;
+        curDepth = (first->rule == END_RULE)? first->depth + 1 : first->depth++;
         for(int i = cut; i < old; i++) resetEntry(&tokenStack->data[i]);
         tokenStack->curSize = cut;
     }
@@ -229,4 +231,7 @@ void unwindToLastSync(int stmtDepth){
 }
 int getDepth() {
     return curDepth;
+}
+bool closeAll(){
+    while(curDepth > 0) pushToken(NULL, END_RULE);
 }
