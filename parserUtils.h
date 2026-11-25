@@ -46,9 +46,10 @@ bool peek(Stack *s, Entry **w);
 bool initStack(Stack  *s);
 bool pop(Stack *st, Entry* w);
 bool pushToken(Symbol *s, Rule r);
-void unwindToLastSync();
+void unwindToLastSync(int stmtDepth);
 bool startTokenStack();
 void freeStack(Stack *s);
 bool isSync(Symbol* s, TokenType lookahead);
+int getDepth();
 
 #endif

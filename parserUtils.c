@@ -33,8 +33,6 @@ const char* ruleNames[] = {
     -- they are extensions if a full-fledged parse tree is required
 */
 
-
-static Entry *startSymbol;
 static Stack *tokenStack;
 static int curDepth;
 static int lastSyncTokIndex;
@@ -58,11 +56,13 @@ bool peek(Stack *s, Entry **w){
 
 bool expand(Stack *s){
     int newSize = s->maxSize*2;
-    s->data = realloc(s->data, sizeof(Entry)*newSize);
-    if(!s->data){
+    Entry *temp = realloc(s->data, sizeof(Entry)*newSize);
+    if(!temp){
         printf("[perserUtils.c: %d]: Failed to allocate stack", __LINE__);
+        s->data = NULL;
         return false;
     }
+    s->data = temp;
     s->maxSize = newSize;
     for(int i = s->curSize; i < s->maxSize; i++) resetEntry(&s->data[i]);
     return true;
@@ -75,7 +75,7 @@ bool startTokenStack(){
     }
     if(!initStack(tokenStack)) return false;
     curDepth = 0;
-    tokDistFromLastSync = 0;
+    lastSyncTokIndex = -1;
     return true;
 }
 bool initStack(Stack *s){
@@ -116,6 +116,8 @@ bool pop(Stack *st, Entry* w){
     // w->children = poppedNode -> children;
     // w->childrenCount = poppedNode -> childrenCount;
     // w->childrenMaxCount = poppedNode -> childrenMaxCount;
+    if(poppedNode->rule == END_RULE) curDepth++;
+    else if (poppedNode->rule != NONE) curDepth--;
     printf("[parserUtils.c | %s: %d]: Popped Entry: [%s|%s], Rule: %sw\n",
         __func__, __LINE__,
          w->sym ? w->sym->lexeme : "<Rule", 
@@ -134,7 +136,6 @@ bool push(Stack *st, Symbol *s, Rule r){
     w->depth = curDepth;
     w->sym = s;
     w->rule = r;
-    if(st->curSize == 1) startSymbol = &st->data[st->curSize-1];
     return true;
 }
 
@@ -145,6 +146,7 @@ void freeStack(Stack *s){
     free(s); 
 }
 
+//only valid delim sync tokens for fallback
 bool isDelim(Symbol* s){
     if (!s) return false;
     switch (s->token) {
@@ -154,12 +156,13 @@ bool isDelim(Symbol* s){
         default: return false;
     }
 }
+
+//all possible lookahead tokens for recovery
 bool isSync(Symbol* s, TokenType lookahead){
     if (!s) return false;
     switch (s->token) {
         //control-flow statements
         case IF: return true;
-        case ELSE: return true;
         case WHILE: return true;
         case FOR: return true;
         case FOREACH: return true;
@@ -172,13 +175,13 @@ bool isSync(Symbol* s, TokenType lookahead){
         case CONST: return true;
         case LINE_END: return true;
         case RBRACE: return true;
-        
+        case PROG_END: return true;
+        case END_OF_FILE: return true;
+
+
         case IDENTIFIER: 
             switch (lookahead) {
-                case Noise_AY: return true;
                 case ASSIGN: return true;
-                case RPAREN: return true;
-                case RBRACKET: return true;
                 default: return false;
             }
         default: return false;
@@ -189,38 +192,41 @@ bool isSync(Symbol* s, TokenType lookahead){
 
 //handles token descent & rule marking
 bool pushToken(Symbol *s, Rule r){
+    if(r == END_RULE) curDepth--;
     if(!push(tokenStack, s, r)){
+        if(r == END_RULE) curDepth++;
         printf("[parserUtils.c | %s: %d]: Failed to push symbol in to stack \n", __func__, __LINE__);
         return false;   
     } 
+    if(r != NONE && r != END_RULE) {
+        curDepth++;
+    }
     if(isDelim(s)) {
-        lastSyncTokIndex = tokenStack->curSize-1;
-        tokDistFromLastSync = 0;
-    } else {
+        lastSyncTokIndex = tokenStack->curSize - 1;
+    }
         // Increment only for actual tokens, NOT END_RULE markers with NULL symbol
-        if(s != NULL && r != END_RULE) {
-            tokDistFromLastSync++;
-        }
-    }
-    switch(r){
-        //end of production rule
-        case END_RULE: curDepth--; break;
-        //terminals
-        case NONE: break;
-        //in-betweens (rule tokens)
-        default: curDepth++; break;
-    }
     return true;
 }
 
-void unwindToLastSync(){
-    int lastSync = lastSyncTokIndex;
-    while(lastSync + 1 < tokenStack->curSize 
-        && tokenStack->data[lastSync+1].rule == END_RULE) lastSync++;
-    for(int i = lastSyncTokIndex +1; i < tokenStack->curSize; i++){
-        resetEntry(&tokenStack->data[i]);
+void unwindToLastSync(int stmtDepth){
+    int old = tokenStack -> curSize;
+    int cut = lastSyncTokIndex + 1;
+    
+    while(cut < old 
+        && tokenStack->data[cut].rule == END_RULE
+        && tokenStack->data[cut].sym == NULL) cut++;
+    
+    if(cut < old){
+        Entry* first = &tokenStack->data[cut];
+        curDepth = (first->rule == END_RULE)? first->depth + 1 : first->depth++;
+        for(int i = cut; i < old; i++) resetEntry(&tokenStack->data[i]);
+        tokenStack->curSize = cut;
     }
-    tokDistFromLastSync = 0;
-    tokenStack->curSize = lastSync+1;
-    curDepth = tokenStack->data[lastSync].depth;
+
+    while(curDepth > stmtDepth) {
+        pushToken(NULL, END_RULE);
+    }
+}
+int getDepth() {
+    return curDepth;
 }

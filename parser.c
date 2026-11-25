@@ -16,6 +16,8 @@ int curr;
 bool errorInProgress;  // Flag to skip expect/match on error
 char ptree[1024];
 char* sourcefile;
+int errCount; 
+bool isEof;
 
 bool initParser(SymTBL* tbl, char* sf){
     if(!tbl){
@@ -29,6 +31,13 @@ bool initParser(SymTBL* tbl, char* sf){
     lexxedTable = tbl;
     curr = 0;
     sourcefile = sf;
+    errCount = 0;
+    return true;
+}
+
+bool parse(){
+    parseProgram();
+    if(errCount > 0) return false;
     return true;
 }
 
@@ -43,9 +52,18 @@ static Symbol *peekSym(int i){
 bool match(TokenType t){
     if(errorInProgress || curr > lexxedTable->curIdx) {
         // Auto-fail and attempt recovery
-        return 0;
+        return false;
     }
     return peekTok(0) == t;
+}
+void syntaxErrEOF(Symbol* s, TokenType expectedTok){
+    printf("====================================================\n");
+    printf("SYNTAX ERROR (Unexpected EOF) detected in %s, line %d \n", sourcefile, s->line);
+    printf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
+    printf("====================================================\n");
+    errorInProgress = true;  // Set flag to skip expect/match
+    isEof = true;  // Set flag to skip expect/match
+    errCount++;
 }
 void syntaxErr(Symbol *s, TokenType expectedTok){
     printf("====================================================\n");
@@ -54,24 +72,25 @@ void syntaxErr(Symbol *s, TokenType expectedTok){
     printf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
     printf("====================================================\n");
     errorInProgress = true;  // Set flag to skip expect/match
+    errCount++;
 }
 
 void consumeToNextSync(int startIdx){
     int depth = 0;
     while(curr < lexxedTable->curIdx){
         Symbol *s = &lexxedTable->data[curr];
-        TokenType next = lexxedTable->data[curr + 1].token;   // safe: curr < curIdx
+        TokenType next = lexxedTable->data[curr + 1].token;  
 
         if(s->token == LBRACE) depth++;
         else if(s->token == RBRACE){
-            if(depth == 0) return;              // enclosing block's brace, leave it
+            if(depth == 0) return;              
             curr++;
-            if(--depth == 0) return;            // finished the broken statement's block
+            if(--depth == 0) return;            
             continue;
         }
         else if(depth == 0 && isSync(s, next)){
             if(s->token == LINE_END){ curr++; return; }
-            if(curr > startIdx) return;         // keyword/ident start, only after progress
+            if(curr > startIdx) return;        
         }
         curr++;
     }
@@ -90,41 +109,48 @@ bool matchOffset(TokenType t, int offset){
 // Sync point restoration - pops stack until sync token (LINE_END or RBRACE)
 
 //attach parserutils methods
-bool expectRule(TokenType target, Rule r){
+void expectRule(TokenType target, Rule r){
     if(errorInProgress) {
-        return false;
+        return;
     }
-    printf("[parser.c | %s: %d]: Expecting %s to attach <%s> \n", __func__, __LINE__, tokenNames[target], getName(r));
-    if(peekTok(0) == target) {
+    TokenType tok = peekTok(0);
+    printf("[parser.c | %s: %d]: Expecting %s (terminal) to attach <%s> rule\n", __func__, __LINE__, tokenNames[target], getName(r));
+    if (tok == END_OF_FILE && target != END_OF_FILE) {
+        syntaxErrorEOF(peekSym(0), target);
+        return;
+    }
+    if(tok == target) {
         printf("[parser.c | %s: %d]: Token matched with current pointer \n", __func__, __LINE__);
         pushToken(&lexxedTable->data[curr++], r);
     }
     else syntaxErr(peekSym(0), target);
-    return true;
 }
 bool markRule(Rule r){
     if(errorInProgress) return false;
-    printf("[parser.c | %s: %d]: Marking Rule Start for %s: \n", __func__, __LINE__, getName(r));
+    printf("[parser.c | %s: %d]: Marking Rule Start for <%s>: \n", __func__, __LINE__, getName(r));
     if(!pushToken(NULL, r)) return false;
     return true;
 }
 
-bool expect(TokenType target){
-    if(match(END_OF_FILE) ||errorInProgress) {
-        return false;
+void expect(TokenType target){
+    if(errorInProgress) {
+        return;
     }
+    TokenType tok = peekTok(0);
     printf("[parser.c | %s: %d]: Expecting %s \n", __func__, __LINE__, tokenNames[target]);
-    if(peekTok(0) == target) {
+    if (tok == END_OF_FILE && target != END_OF_FILE) {
+        syntaxErrorEOF(peekSym(0), target);
+        return;
+    }
+    if(tok == target) {
         printf("[parser.c | %s: %d]: Token matched with current pointer \n", __func__, __LINE__);
         pushToken(&lexxedTable->data[curr++], NONE);
-    }
-    else syntaxErr(peekSym(0), target);
-    return true;
+    }  else syntaxErr(peekSym(0), target);
 }
 
-void synchronize(){
-    unwindToLastSync();
-    consumeToNextSync(curr);
+void synchronize(int startIdx, int blockDepth){
+    unwindToLastSync(blockDepth);
+    consumeToNextSync(startIdx);
     errorInProgress = false;
 }
 
@@ -173,26 +199,37 @@ static void parseBlock();
 
 static void parseProgram(){
     markRule(PROGRAM);
+    int topDepth = getDepth();
     while(match(IMPORT)){
+        int startIdx = curr;
         parseImport();
+        if(errorInProgress) synchronize(curr, topDepth);
     }
     
     while(match(FUNCTION)){
+        int startIdx = curr;
         parseFunctionDecl();
+        if(errorInProgress) synchronize(startIdx, topDepth);
     }
     
     expect(PROG_MAIN);
     expect(LBRACE);
-    
-    while (!match(PROG_END)){
+    int stmtDepth = getDepth();
+    if(errorInProgress) return;
+    while (!match(PROG_END) && !match(END_OF_FILE)){
+        int startIdx = curr;
         parseStmt();
+        if(errorInProgress) synchronize(startIdx, stmtDepth);
+        
     }
     
     expect(PROG_END);
     expect(LINE_END);
     expect(RBRACE);
     while(match(FUNCTION)){
+        int startIdx = curr;
         parseFunctionDecl();
+        if(errorInProgress) synchronize(startIdx, topDepth);
     }
     markRule(END_RULE);
 }
@@ -602,9 +639,12 @@ static void parseArgList(){
 
 static void parseBlock(){
     expectRule(LBRACE, BLOCK);
-    while(!match(RBRACE)) {
-        if(errorInProgress) synchronize();
+    if(errorInProgress) return;
+    int blockDepth = getDepth();
+    while(!match(RBRACE) && !match(END_OF_FILE) && !match(PROG_END)) {
+        int startIdx = curr;
         parseStmt();
+        if(errorInProgress) synchronize(startIdx, blockDepth);
     };
     expectRule(RBRACE, END_RULE);
 }
