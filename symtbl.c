@@ -23,11 +23,22 @@ void addSymbol(SymTBL *st, Symbol *s){
 bool contains(SymTBL *st, Symbol *s){
     if(st == NULL || s == NULL) return false;
     
-    for(int i = 0; i <= st->curIdx; i++){
+    for(int i = 0; i < st->curIdx; i++){
         Symbol cur = st->data[i];
-        if(strcmp(s->lexeme, cur.lexeme) == 0){
+        if(cur.lexeme && strcmp(s->lexeme, cur.lexeme) == 0){
             return true;
         }
     };
     return false;
+}
+
+void freeTable(SymTBL *st){
+    if(!st) return;
+    for(int i = 0; i < st->curIdx; i++){
+        if(st->data[i].token != END_OF_FILE) {
+            free(st->data[i].lexeme);
+        }
+    }
+    free(st->data);
+    free(st);
 }

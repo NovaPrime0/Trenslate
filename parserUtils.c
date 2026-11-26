@@ -33,7 +33,6 @@ const char* ruleNames[] = {
 static Stack *tokenStack;
 static int curDepth;
 static int lastSyncTokIndex;
-static int tokDistFromLastSync;
 // static RuleStack *ruleStack;
 
 
@@ -208,7 +207,7 @@ bool pushToken(Symbol *s, Rule r){
 
 void unwindToLastSync(int stmtDepth){
     int old = tokenStack -> curSize;
-    int cut = lastSyncTokIndex + 1;
+    int cut = (lastSyncTokIndex >= 0) ? (lastSyncTokIndex + 1) : 1;
     
     while(cut < old 
         && tokenStack->data[cut].rule == END_RULE

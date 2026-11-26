@@ -6,6 +6,7 @@
 #include "symtbl.h"
 #include "analysis.h"
 #include "keyword_identifier.h"
+#include "parser.h"
 
 /*
  * Trenslate Lexical Analyzer
@@ -18,8 +19,8 @@ int main(int argc, char *argv[]){
     // Load states and construct DFA
     StateList *st = loadList("Misc/newStates.txt");
     DFAStateList *dst = subsetConstruction(st);
-    FILE *NFAdump = fopen("Test/NFAdump.txt", "w+");
-    FILE *DFAdump = fopen("Test/DFAdump.txt", "w+");
+    FILE *NFAdump = fopen("Output/NFAdump.txt", "w+");
+    FILE *DFAdump = fopen("Output/DFAdump.txt", "w+");
     
     if (NFAdump) {
         for(int i = 0; i < st->length; i++) printState(&st->data[i], NFAdump); 
@@ -67,6 +68,26 @@ int main(int argc, char *argv[]){
     if (idTable) {
         printIdentifierTable(idTable, stdout);
         freeIdentifierTable(idTable);
+    }
+
+    // Syntactic Analysis (Parser) Phase
+    if (symtbl) {
+        printf("\n======================================================================\n");
+        printf("                       SYNTACTIC ANALYSIS (PARSER)                    \n");
+        printf("======================================================================\n");
+        if (initParser(symtbl, sourceFile)) {
+            bool parseSuccess = parse();
+            if (parseSuccess) {
+                printf("\n[Parser Success]: Parsing completed with 0 errors.\n");
+                printf("[Output File Generated]: 'Output/ptree.txt' / 'Output/ParserLog.txt'\n\n");
+            } else {
+                printf("\n[Parser Failed]: Parsing completed with syntax errors.\n");
+                printf("[Output File Generated]: 'Output/SyntaxError.txt' / 'Output/ptree.txt' / 'Output/ParserLog.txt'\n\n");
+            }
+        } else {
+            printf("\n[Parser Error]: Failed to initialize parser.\n\n");
+        }
+        freeTable(symtbl);
     }
 
     return 0;

@@ -18,4 +18,5 @@ typedef struct {
 SymTBL* createTable();
 void addSymbol(SymTBL *st, Symbol *s);
 bool contains(SymTBL *st, Symbol *s);
+void freeTable(SymTBL *st);
 #endif

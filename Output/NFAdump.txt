@@ -1,0 +1,495 @@
+State: 0, StateType: START
+TransitionLength: 40
+{1:_|ALPHA|alpha, 2:invalid, 3:whitespace, 4:+, 5:-, 6:*, 8:%, 9:/, 11:#, 15:;, 16:{, 17:}, 18:[, 19:], 20:(, 21:), 22:comma, 23:!, 25:&, 27:>, 29:=, 31:<, 33:pipe, 35:a, 37:b, 52:d, 59:e, 63:F, 68:h, 89:l, 98:m, 102:n, 104:r, 109:s, 115:t, 120:T, 124:num, 127:", 130:', 133:.}
+
+State: 1, StateType: S_IDENTIFIER
+TransitionLength: 1
+{1:_|ALPHA|alpha|num}
+
+State: 2, StateType: S_INVALID
+TransitionLength: 1
+{2:invalid}
+
+State: 3, StateType: S_WHITESPACE
+TransitionLength: 1
+{3:whitespace}
+
+State: 4, StateType: S_Op_ADD
+TransitionLength: 0
+
+State: 5, StateType: S_Op_SUB
+TransitionLength: 0
+
+State: 6, StateType: S_Op_MULT
+TransitionLength: 1
+{7:*}
+
+State: 7, StateType: S_Op_EXP
+TransitionLength: 0
+
+State: 8, StateType: S_Op_MOD
+TransitionLength: 0
+
+State: 9, StateType: S_Op_DIV
+TransitionLength: 2
+{10:/, 12:*}
+
+State: 10, StateType: S_Op_DIV_INT
+TransitionLength: 0
+
+State: 11, StateType: S_C_LINE
+TransitionLength: 1
+{11:ALPHA|alpha|num|sym| |\t}
+
+State: 12, StateType: INTERMEDIARY
+TransitionLength: 2
+{12:ALPHA|alpha|num|sym|whitespace, 13:*}
+
+State: 13, StateType: INTERMEDIARY
+TransitionLength: 2
+{12:ALPHA|alpha|num|sym|whitespace, 14:/}
+
+State: 14, StateType: S_C_BLOCK
+TransitionLength: 0
+
+State: 15, StateType: S_LINE_END
+TransitionLength: 0
+
+State: 16, StateType: S_LBRACE
+TransitionLength: 0
+
+State: 17, StateType: S_RBRACE
+TransitionLength: 0
+
+State: 18, StateType: S_LBRACKET
+TransitionLength: 0
+
+State: 19, StateType: S_RBRACKET
+TransitionLength: 0
+
+State: 20, StateType: S_LPAREN
+TransitionLength: 0
+
+State: 21, StateType: S_RPAREN
+TransitionLength: 0
+
+State: 22, StateType: S_COMMA
+TransitionLength: 0
+
+State: 23, StateType: S_Cond_NOT
+TransitionLength: 1
+{24:=}
+
+State: 24, StateType: S_Rel_NEQ
+TransitionLength: 0
+
+State: 25, StateType: INTERMEDIARY
+TransitionLength: 1
+{26:&}
+
+State: 26, StateType: S_Cond_AND
+TransitionLength: 0
+
+State: 27, StateType: S_Rel_G
+TransitionLength: 1
+{28:=}
+
+State: 28, StateType: S_Rel_GEQ
+TransitionLength: 0
+
+State: 29, StateType: S_ASSIGN
+TransitionLength: 1
+{30:=}
+
+State: 30, StateType: S_Rel_EQ
+TransitionLength: 0
+
+State: 31, StateType: S_Rel_L
+TransitionLength: 1
+{32:=}
+
+State: 32, StateType: S_Rel_LEQ
+TransitionLength: 0
+
+State: 33, StateType: INTERMEDIARY
+TransitionLength: 1
+{34:pipe}
+
+State: 34, StateType: S_Cond_OR
+TransitionLength: 0
+
+State: 35, StateType: INTERMEDIARY
+TransitionLength: 1
+{36:y}
+
+State: 36, StateType: S_Noise_AY
+TransitionLength: 0
+
+State: 37, StateType: INTERMEDIARY
+TransitionLength: 2
+{38:a, 48:y}
+
+State: 38, StateType: INTERMEDIARY
+TransitionLength: 3
+{39:g, 43:b, 45:w}
+
+State: 39, StateType: INTERMEDIARY
+TransitionLength: 1
+{40:a}
+
+State: 40, StateType: INTERMEDIARY
+TransitionLength: 1
+{41:h}
+
+State: 41, StateType: INTERMEDIARY
+TransitionLength: 1
+{42:e}
+
+State: 42, StateType: S_VARIABLE
+TransitionLength: 0
+
+State: 43, StateType: INTERMEDIARY
+TransitionLength: 1
+{44:a}
+
+State: 44, StateType: S_RETURN
+TransitionLength: 0
+
+State: 45, StateType: INTERMEDIARY
+TransitionLength: 1
+{46:a}
+
+State: 46, StateType: INTERMEDIARY
+TransitionLength: 1
+{47:t}
+
+State: 47, StateType: S_FOREACH
+TransitionLength: 0
+
+State: 48, StateType: INTERMEDIARY
+TransitionLength: 1
+{49:a}
+
+State: 49, StateType: INTERMEDIARY
+TransitionLength: 1
+{50:h}
+
+State: 50, StateType: INTERMEDIARY
+TransitionLength: 1
+{51:e}
+
+State: 51, StateType: S_PROG_MAIN
+TransitionLength: 0
+
+State: 52, StateType: INTERMEDIARY
+TransitionLength: 2
+{53:u, 56:a}
+
+State: 53, StateType: INTERMEDIARY
+TransitionLength: 1
+{54:l}
+
+State: 54, StateType: INTERMEDIARY
+TransitionLength: 1
+{55:o}
+
+State: 55, StateType: S_PROG_END
+TransitionLength: 0
+
+State: 56, StateType: INTERMEDIARY
+TransitionLength: 1
+{57:a}
+
+State: 57, StateType: INTERMEDIARY
+TransitionLength: 1
+{58:n}
+
+State: 58, StateType: S_IMPORT
+TransitionLength: 0
+
+State: 59, StateType: INTERMEDIARY
+TransitionLength: 1
+{60:x}
+
+State: 60, StateType: INTERMEDIARY
+TransitionLength: 1
+{61:i}
+
+State: 61, StateType: INTERMEDIARY
+TransitionLength: 1
+{62:t}
+
+State: 62, StateType: S_T_NULL
+TransitionLength: 0
+
+State: 63, StateType: INTERMEDIARY
+TransitionLength: 1
+{64:A|a}
+
+State: 64, StateType: INTERMEDIARY
+TransitionLength: 1
+{65:L|l}
+
+State: 65, StateType: INTERMEDIARY
+TransitionLength: 1
+{66:S|s}
+
+State: 66, StateType: INTERMEDIARY
+TransitionLength: 1
+{67:E|e}
+
+State: 67, StateType: S_T_FALSE
+TransitionLength: 0
+
+State: 68, StateType: INTERMEDIARY
+TransitionLength: 2
+{69:a, 85:i}
+
+State: 69, StateType: INTERMEDIARY
+TransitionLength: 3
+{70:b, 74:k, 79:n}
+
+State: 70, StateType: INTERMEDIARY
+TransitionLength: 1
+{71:a}
+
+State: 71, StateType: INTERMEDIARY
+TransitionLength: 1
+{72:n}
+
+State: 72, StateType: INTERMEDIARY
+TransitionLength: 1
+{73:g}
+
+State: 73, StateType: S_WHILE
+TransitionLength: 0
+
+State: 74, StateType: INTERMEDIARY
+TransitionLength: 1
+{75:b}
+
+State: 75, StateType: INTERMEDIARY
+TransitionLength: 1
+{76:a}
+
+State: 76, StateType: INTERMEDIARY
+TransitionLength: 1
+{77:n}
+
+State: 77, StateType: INTERMEDIARY
+TransitionLength: 1
+{78:g}
+
+State: 78, StateType: S_FOR
+TransitionLength: 0
+
+State: 79, StateType: INTERMEDIARY
+TransitionLength: 1
+{80:g}
+
+State: 80, StateType: INTERMEDIARY
+TransitionLength: 1
+{81:g}
+
+State: 81, StateType: INTERMEDIARY
+TransitionLength: 1
+{82:a}
+
+State: 82, StateType: INTERMEDIARY
+TransitionLength: 1
+{83:n}
+
+State: 83, StateType: INTERMEDIARY
+TransitionLength: 1
+{84:g}
+
+State: 84, StateType: S_For_LIM
+TransitionLength: 0
+
+State: 85, StateType: INTERMEDIARY
+TransitionLength: 1
+{86:n}
+
+State: 86, StateType: INTERMEDIARY
+TransitionLength: 1
+{87:t}
+
+State: 87, StateType: INTERMEDIARY
+TransitionLength: 1
+{88:o}
+
+State: 88, StateType: S_BREAK
+TransitionLength: 0
+
+State: 89, StateType: INTERMEDIARY
+TransitionLength: 2
+{90:a, 95:i}
+
+State: 90, StateType: INTERMEDIARY
+TransitionLength: 1
+{91:g}
+
+State: 91, StateType: INTERMEDIARY
+TransitionLength: 1
+{92:i}
+
+State: 92, StateType: INTERMEDIARY
+TransitionLength: 1
+{93:n}
+
+State: 93, StateType: INTERMEDIARY
+TransitionLength: 1
+{94:g}
+
+State: 94, StateType: S_CONST
+TransitionLength: 0
+
+State: 95, StateType: INTERMEDIARY
+TransitionLength: 1
+{96:k}
+
+State: 96, StateType: INTERMEDIARY
+TransitionLength: 1
+{97:o}
+
+State: 97, StateType: S_ELSE
+TransitionLength: 0
+
+State: 98, StateType: INTERMEDIARY
+TransitionLength: 1
+{99:u}
+
+State: 99, StateType: INTERMEDIARY
+TransitionLength: 1
+{100:l}
+
+State: 100, StateType: INTERMEDIARY
+TransitionLength: 1
+{101:a}
+
+State: 101, StateType: S_Noise_MULA
+TransitionLength: 0
+
+State: 102, StateType: INTERMEDIARY
+TransitionLength: 2
+{103:a, 134:g}
+
+State: 103, StateType: S_Noise_NA
+TransitionLength: 0
+
+State: 104, StateType: INTERMEDIARY
+TransitionLength: 1
+{105:o}
+
+State: 105, StateType: INTERMEDIARY
+TransitionLength: 1
+{106:u}
+
+State: 106, StateType: INTERMEDIARY
+TransitionLength: 1
+{107:t}
+
+State: 107, StateType: INTERMEDIARY
+TransitionLength: 1
+{108:e}
+
+State: 108, StateType: S_FUNCTION
+TransitionLength: 0
+
+State: 109, StateType: INTERMEDIARY
+TransitionLength: 1
+{110:a}
+
+State: 110, StateType: S_Noise_SA
+TransitionLength: 1
+{111:k}
+
+State: 111, StateType: INTERMEDIARY
+TransitionLength: 1
+{112:a}
+
+State: 112, StateType: INTERMEDIARY
+TransitionLength: 1
+{113:l}
+
+State: 113, StateType: INTERMEDIARY
+TransitionLength: 1
+{114:i}
+
+State: 114, StateType: S_IF
+TransitionLength: 0
+
+State: 115, StateType: INTERMEDIARY
+TransitionLength: 1
+{116:u}
+
+State: 116, StateType: INTERMEDIARY
+TransitionLength: 1
+{117:l}
+
+State: 117, StateType: INTERMEDIARY
+TransitionLength: 1
+{118:o}
+
+State: 118, StateType: INTERMEDIARY
+TransitionLength: 1
+{119:y}
+
+State: 119, StateType: S_CONTINUE
+TransitionLength: 0
+
+State: 120, StateType: INTERMEDIARY
+TransitionLength: 1
+{121:R|r}
+
+State: 121, StateType: INTERMEDIARY
+TransitionLength: 1
+{122:U|u}
+
+State: 122, StateType: INTERMEDIARY
+TransitionLength: 1
+{123:E|e}
+
+State: 123, StateType: S_T_TRUE
+TransitionLength: 0
+
+State: 124, StateType: S_Lit_INT
+TransitionLength: 2
+{124:num, 125:.}
+
+State: 125, StateType: INTERMEDIARY
+TransitionLength: 1
+{126:num}
+
+State: 126, StateType: S_Lit_DEC
+TransitionLength: 1
+{126:num}
+
+State: 127, StateType: INTERMEDIARY
+TransitionLength: 3
+{128:ALPHA|alpha|num|whitespace|comma|, 128:_|-|+|/|*|#|&|>|<|!|=|pipe|%|'|., 129:"}
+
+State: 128, StateType: INTERMEDIARY
+TransitionLength: 3
+{128:ALPHA|alpha|num|whitespace|comma|, 128:_|-|+|/|*|#|&|>|<|!|=|pipe|%|'|., 129:"}
+
+State: 129, StateType: S_Lit_STRING
+TransitionLength: 0
+
+State: 130, StateType: INTERMEDIARY
+TransitionLength: 1
+{131:ALPHA|alpha|num|sym|whitespace}
+
+State: 131, StateType: INTERMEDIARY
+TransitionLength: 1
+{132:'}
+
+State: 132, StateType: S_Lit_CHAR
+TransitionLength: 0
+
+State: 133, StateType: S_DOT
+TransitionLength: 0
+
+State: 134, StateType: S_Noise_NG
+TransitionLength: 0
+

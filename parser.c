@@ -1,9 +1,12 @@
 #include <stdio.h>
+#include <stdarg.h>
 #include "enums.h"
 #include "symtbl.h"
 #include "parserUtils.h"
+#include "parser.h"
 #include <stdbool.h>
 #define sErrFile "Output/SyntaxError.txt"
+#define pLogFile "Output/ParserLog.txt"
 /* SYNTACTIC ANALYZER 1 Utils
     Recursive Descent Parser
         - Production rule functions
@@ -14,12 +17,26 @@
 SymTBL* lexxedTable;
 int curr;
 bool errorInProgress;  // Flag to skip expect/match on error
-char* sourcefile;
+const char* sourcefile;
 int errCount; 
 bool isEof;
 FILE* errDump;
+FILE* parserLog;
 
-bool initParser(SymTBL* tbl, char* sf){
+static void parserPrintf(const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    vprintf(fmt, args);
+    va_end(args);
+
+    if (parserLog) {
+        va_start(args, fmt);
+        vfprintf(parserLog, fmt, args);
+        va_end(args);
+    }
+}
+
+bool initParser(SymTBL* tbl, const char* sf){
     if(!tbl){
         printf("[parser.c | %s: %d]: Received Null Symbol Table \n", __func__, __LINE__);
         return false;
@@ -27,6 +44,10 @@ bool initParser(SymTBL* tbl, char* sf){
     if(!startTokenStack()){
         printf("[parser.c | %s: %d]: Failed to create Token Stack \n", __func__, __LINE__);
         return false;
+    }
+    parserLog = fopen(pLogFile, "w+");
+    if (!parserLog) {
+        printf("[parser.c | %s: %d]: Could not create Parser Log File \n", __func__, __LINE__);
     }
     lexxedTable = tbl;
     curr = 0;
@@ -40,72 +61,82 @@ bool initParser(SymTBL* tbl, char* sf){
 
 //add a way to safeguard end-of-table
 TokenType peekTok(int i){
-    return lexxedTable->data[curr+i].token; 
+    int idx = curr + i;
+    if (!lexxedTable || lexxedTable->curIdx <= 0) return END_OF_FILE;
+    if (idx < 0) idx = 0;
+    if (idx >= lexxedTable->curIdx) return END_OF_FILE;
+    return lexxedTable->data[idx].token; 
 }
 static Symbol *peekSym(int i){
-    return &lexxedTable->data[curr+i]; 
+    int idx = curr + i;
+    if (idx < 0) idx = 0;
+    if (idx >= lexxedTable->curIdx) idx = lexxedTable->curIdx - 1;
+    return &lexxedTable->data[idx]; 
 }
 
 bool match(TokenType t){
-    if(errorInProgress || curr > lexxedTable->curIdx) {
+    if(errorInProgress || !lexxedTable || curr >= lexxedTable->curIdx) {
         // Auto-fail and attempt recovery
         return false;
     }
-    return peekTok(0) == t;
+    Symbol *s = peekSym(0);
+    parserPrintf("[parser.c | %s: %d]: Matching %s (current: %s '%s' at line %d)\n",
+                 __func__, __LINE__, tokenNames[t], tokenNames[s->token], s->lexeme ? s->lexeme : "", s->line);
+    return s->token == t;
 }
 void syntaxErrEOF(Symbol* s, TokenType expectedTok){
-    if(errorInProgress) return false;
-    printf("====================================================\n");
-    printf("SYNTAX ERROR (Unexpected EOF) detected in %s, line %d \n", sourcefile, s->line);
-    printf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
-    printf("====================================================\n");
+    if(errorInProgress) return;
+    parserPrintf("====================================================\n");
+    parserPrintf("SYNTAX ERROR (Unexpected EOF) detected in %s, line %d \n", sourcefile, s->line);
+    parserPrintf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
+    parserPrintf("====================================================\n");
     if(!errDump) {
         errDump = fopen(sErrFile, "w+");
         if(!errDump){
-            printf("[parser.c | %s: %d]: Could not create Syntax error File \n", __func__, __LINE__);
+            parserPrintf("[parser.c | %s: %d]: Could not create Syntax error File \n", __func__, __LINE__);
             return;
         }
     }
     if(errDump){
-        printf("====================================================\n");
-        printf("SYNTAX ERROR (Unexpected EOF) detected in %s, line %d \n", sourcefile, s->line);
-        printf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
-        printf("====================================================\n");
+        fprintf(errDump, "====================================================\n");
+        fprintf(errDump, "SYNTAX ERROR (Unexpected EOF) detected in %s, line %d \n", sourcefile, s->line);
+        fprintf(errDump, "  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
+        fprintf(errDump, "====================================================\n");
     }
     errorInProgress = true;  // Set flag to skip expect/match
     errCount++;
 }
 void syntaxErr(Symbol *s, TokenType expectedTok){
-    if(errorInProgress) return false;
-    printf("====================================================\n");
-    printf("SYNTAX ERROR detected in %s, line %d \n", sourcefile, s->line);
-    printf("  -> Received Token: %s (Type ID: %d)\n", tokenNames[(int)s->token], s->token);
-    printf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
-    printf("====================================================\n");
+    if(errorInProgress) return;
+    parserPrintf("====================================================\n");
+    parserPrintf("SYNTAX ERROR detected in %s, line %d \n", sourcefile, s->line);
+    parserPrintf("  -> Received Token: %s (Type ID: %d)\n", tokenNames[(int)s->token], s->token);
+    parserPrintf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
+    parserPrintf("====================================================\n");
     if(!errDump) {
         errDump = fopen(sErrFile, "w+");
         if(!errDump){
-            printf("[parser.c | %s: %d]: Could not create Syntax error File \n", __func__, __LINE__);
+            parserPrintf("[parser.c | %s: %d]: Could not create Syntax error File \n", __func__, __LINE__);
             return;
         }
     }
     if(errDump){
-        printf("====================================================\n");
-        printf("SYNTAX ERROR detected in %s, line %d \n", sourcefile, s->line);
-        printf("  -> Received Token: %s (Type ID: %d)\n", tokenNames[(int)s->token], s->token);
-        printf("  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
-        printf("====================================================\n");
+        fprintf(errDump, "====================================================\n");
+        fprintf(errDump, "SYNTAX ERROR detected in %s, line %d \n", sourcefile, s->line);
+        fprintf(errDump, "  -> Received Token: %s (Type ID: %d)\n", tokenNames[(int)s->token], s->token);
+        fprintf(errDump, "  -> Expected Token: %s (Type ID: %d)\n", tokenNames[expectedTok], expectedTok);
+        fprintf(errDump, "====================================================\n");
     }
     errorInProgress = true;  // Set flag to skip expect/match
     errCount++;
 }
 void syntaxRuleErr(Symbol *s, Rule target){
     if(errorInProgress) return;
-    printf("====================================================\n");
-    printf("SYNTAX ERROR detected in %s, line %d \n", sourcefile, s->line);
-    printf("  -> Received Token: %s (Type ID: %d)\n", tokenNames[(int)s->token], s->token);
-    printf("  -> Expected Encompassing Rule: %s (Type ID: %d)\n", getName(target), target);
-    printf("====================================================\n");
+    parserPrintf("====================================================\n");
+    parserPrintf("SYNTAX ERROR detected in %s, line %d \n", sourcefile, s->line);
+    parserPrintf("  -> Received Token: %s (Type ID: %d)\n", tokenNames[(int)s->token], s->token);
+    parserPrintf("  -> Expected Encompassing Rule: %s (Type ID: %d)\n", getName(target), target);
+    parserPrintf("====================================================\n");
     if(!errDump) {
         errDump = fopen(sErrFile, "w+");
         if(!errDump){
@@ -129,7 +160,7 @@ void consumeToNextSync(int startIdx){
     int depth = 0;
     while(curr < lexxedTable->curIdx){
         Symbol *s = &lexxedTable->data[curr];
-        TokenType next = lexxedTable->data[curr + 1].token;  
+        TokenType next = (curr + 1 < lexxedTable->curIdx) ? lexxedTable->data[curr + 1].token : END_OF_FILE;
 
         if(s->token == LBRACE) depth++;
         else if(s->token == RBRACE){
@@ -147,10 +178,10 @@ void consumeToNextSync(int startIdx){
 }
 
 bool matchOffset(TokenType t, int offset){
-    if(offset + curr > lexxedTable->curIdx || errorInProgress) return false;
-    printf("[parser.c | %s: %d]: Lookahead %d Token(s)\n", __func__, __LINE__, offset);
+    if(offset + curr >= lexxedTable->curIdx || offset + curr < 0 || errorInProgress) return false;
+    parserPrintf("[parser.c | %s: %d]: Lookahead %d Token(s)\n", __func__, __LINE__, offset);
     TokenType tok = peekTok(offset);
-    printf("[parser.c | %s: %d]: Found %s \n", __func__, __LINE__, tokenNames[tok]);
+    parserPrintf("[parser.c | %s: %d]: Found %s \n", __func__, __LINE__, tokenNames[tok]);
     
     return tok == t;
 }
@@ -162,21 +193,24 @@ void expectRule(TokenType target, Rule r){
     if(errorInProgress) {
         return;
     }
-    TokenType tok = peekTok(0);
-    printf("[parser.c | %s: %d]: Expecting %s (terminal) to attach <%s> rule\n", __func__, __LINE__, tokenNames[target], getName(r));
+    Symbol *s = peekSym(0);
+    TokenType tok = s->token;
+    parserPrintf("[parser.c | %s: %d]: Expecting %s (terminal) to attach <%s> rule (current: %s '%s' at line %d)\n",
+                 __func__, __LINE__, tokenNames[target], getName(r), tokenNames[tok], s->lexeme ? s->lexeme : "", s->line);
     if (tok == END_OF_FILE && target != END_OF_FILE) {
-        syntaxErrEOF(peekSym(0), target);
+        syntaxErrEOF(s, target);
         return;
     }
     if(tok == target) {
-        printf("[parser.c | %s: %d]: Token matched with current pointer \n", __func__, __LINE__);
+        parserPrintf("[parser.c | %s: %d]: Token matched with current pointer: %s '%s' at line %d\n",
+                     __func__, __LINE__, tokenNames[tok], s->lexeme ? s->lexeme : "", s->line);
         pushToken(&lexxedTable->data[curr++], r);
     }
-    else syntaxErr(peekSym(0), target);
+    else syntaxErr(s, target);
 }
 bool markRule(Rule r){
     if(errorInProgress) return false;
-    printf("[parser.c | %s: %d]: Marking Rule Start for <%s>: \n", __func__, __LINE__, getName(r));
+    parserPrintf("[parser.c | %s: %d]: Marking Rule Start for <%s>: \n", __func__, __LINE__, getName(r));
     if(!pushToken(NULL, r)) return false;
     return true;
 }
@@ -185,16 +219,19 @@ void expect(TokenType target){
     if(errorInProgress) {
         return;
     }
-    TokenType tok = peekTok(0);
-    printf("[parser.c | %s: %d]: Expecting %s \n", __func__, __LINE__, tokenNames[target]);
+    Symbol *s = peekSym(0);
+    TokenType tok = s->token;
+    parserPrintf("[parser.c | %s: %d]: Expecting %s (current: %s '%s' at line %d)\n",
+                 __func__, __LINE__, tokenNames[target], tokenNames[tok], s->lexeme ? s->lexeme : "", s->line);
     if (tok == END_OF_FILE && target != END_OF_FILE) {
-        syntaxErrEOF(peekSym(0), target);
+        syntaxErrEOF(s, target);
         return;
     }
     if(tok == target) {
-        printf("[parser.c | %s: %d]: Token matched with current pointer \n", __func__, __LINE__);
+        parserPrintf("[parser.c | %s: %d]: Token matched with current pointer: %s '%s' at line %d\n",
+                     __func__, __LINE__, tokenNames[tok], s->lexeme ? s->lexeme : "", s->line);
         pushToken(&lexxedTable->data[curr++], NONE);
-    }  else syntaxErr(peekSym(0), target);
+    }  else syntaxErr(s, target);
 }
 
 void synchronize(int startIdx, int blockDepth){
@@ -262,7 +299,14 @@ static void parseProgram(){
     }
     
     expect(PROG_MAIN);
+    if(errorInProgress) {
+        synchronize(curr, topDepth);
+        if(match(PROG_MAIN)) expect(PROG_MAIN);
+    }
     expect(LBRACE);
+    if(errorInProgress) {
+        synchronize(curr, topDepth);
+    }
     
     int stmtDepth = getDepth();
     while (!match(PROG_END) && !match(END_OF_FILE) && !match(RBRACE)){
@@ -613,10 +657,11 @@ static void parseMul(){
     markRule(MUL);
     parseUnary();
 
-    while (match(Op_DIV) ||  match(Op_MULT) || match(Op_DIV_INT)){
+    while (match(Op_DIV) || match(Op_MULT) || match(Op_DIV_INT) || match(Op_MOD)){
         if(match(Op_DIV)) expect(Op_DIV);
         else if(match(Op_MULT)) expect(Op_MULT);
         else if(match(Op_DIV_INT)) expect(Op_DIV_INT);
+        else if(match(Op_MOD)) expect(Op_MOD);
         parseUnary();
     }
 
@@ -757,13 +802,20 @@ static void parseBlock(){
 
 bool parse(){
     parseProgram();
+    closeAll();
+    printParseTree();
+    freeStack();
+    if(errDump){
+        fclose(errDump);
+        errDump = NULL;
+    }
+    if(parserLog){
+        fclose(parserLog);
+        parserLog = NULL;
+    }
+    errorInProgress = false;
     if(errCount > 0) {
-        closeAll();
-        freeStack();
         return false;
     }
-    closeAll();
-    errorInProgress = false;
-    freeStack();
     return true;
 }

@@ -1,19 +1,26 @@
-#for bash
+ifeq ($(OS),Windows_NT)
+	RM = del /f /q
+	EXE = main.exe
+else
+	RM = rm -f
+	EXE = main
+endif
+
 targetfiles := $(wildcard *.c)
-output := $(targetfiles:c=o)
+output := $(targetfiles:.c=.o)
 CFLAGS = -Wall -Wextra -g 
 do:
-	make run;
-	make clean -s;
+	$(MAKE) run
+	$(MAKE) clean -s
 main.exe: $(output)
-	gcc $^ -o main 
+	gcc $^ -o $(EXE)
 %.o: %.c
-	gcc $(CFLAGS) -c $^ 
+	gcc $(CFLAGS) -c $<
 run: main.exe
-	./$^
+	./$(EXE)
 clean: 
-	rm -f *.o main
+	$(RM) *.o $(EXE)
 
 main: main.exe
-	rm -f *.o
+	$(RM) *.o
 .PHONY: all run clean

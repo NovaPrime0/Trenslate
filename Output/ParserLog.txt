@@ -1,0 +1,2319 @@
+[parser.c | markRule: 213]: Marking Rule Start for <PROGRAM>: 
+[parser.c | match: 84]: Matching IMPORT (current: IMPORT 'daan' at line 4)
+[parser.c | expectRule: 199]: Expecting IMPORT (terminal) to attach <IMPORT> rule (current: IMPORT 'daan' at line 4)
+[parser.c | expectRule: 206]: Token matched with current pointer: IMPORT 'daan' at line 4
+[parser.c | expect: 225]: Expecting Lit_STRING (current: Lit_STRING '"istasyon.h"' at line 4)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_STRING '"istasyon.h"' at line 4
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 4)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 4
+[parser.c | match: 84]: Matching IMPORT (current: FUNCTION 'route' at line 7)
+[parser.c | match: 84]: Matching FUNCTION (current: FUNCTION 'route' at line 7)
+[parser.c | expectRule: 199]: Expecting FUNCTION (terminal) to attach <FUNCTION_DECL> rule (current: FUNCTION 'route' at line 7)
+[parser.c | expectRule: 206]: Token matched with current pointer: FUNCTION 'route' at line 7
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'kalkulahin' at line 7)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'kalkulahin' at line 7
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 7)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 7
+[parser.c | markRule: 213]: Marking Rule Start for <PARAM_LIST>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'distansya' at line 7)
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'distansya' at line 7)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'distansya' at line 7
+[parser.c | match: 84]: Matching COMMA (current: COMMA ',' at line 7)
+[parser.c | expect: 225]: Expecting COMMA (current: COMMA ',' at line 7)
+[parser.c | expect: 232]: Token matched with current pointer: COMMA ',' at line 7
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'mayDiskwento' at line 7)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'mayDiskwento' at line 7
+[parser.c | match: 84]: Matching COMMA (current: RPAREN ')' at line 7)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expect: 225]: Expecting RPAREN (current: RPAREN ')' at line 7)
+[parser.c | expect: 232]: Token matched with current pointer: RPAREN ')' at line 7
+[parser.c | expectRule: 199]: Expecting LBRACE (terminal) to attach <BLOCK> rule (current: LBRACE '{' at line 7)
+[parser.c | expectRule: 206]: Token matched with current pointer: LBRACE '{' at line 7
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 8)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 8)
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 8)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 8)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 8)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 8)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 8)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 8)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 8
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'pamasahe' at line 8)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'pamasahe' at line 8
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 8)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 8)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 8)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 8
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: Lit_INT '15' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '15' at line 8)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '15' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '15' at line 8)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '15' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '15' at line 8)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '15' at line 8)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '15' at line 8
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 8)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 8)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 8)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 8)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 8)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 8)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 8)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 8)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 8)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 8)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 8)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 8)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 8
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: IF 'sakali' at line 9)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IF 'sakali' at line 9)
+[parser.c | match: 84]: Matching PROG_END (current: IF 'sakali' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IF 'sakali' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <BLOCK_STMT>: 
+[parser.c | match: 84]: Matching IF (current: IF 'sakali' at line 9)
+[parser.c | expectRule: 199]: Expecting IF (terminal) to attach <IF_STMT> rule (current: IF 'sakali' at line 9)
+[parser.c | expectRule: 206]: Token matched with current pointer: IF 'sakali' at line 9
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 9)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 9
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'distansya' at line 9)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'distansya' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'distansya' at line 9)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'distansya' at line 9)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_G 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_G 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'distansya' at line 9)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'distansya' at line 9
+[parser.c | match: 84]: Matching LBRACKET (current: Rel_G '>' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Rel_G '>' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Rel_G '>' at line 9)
+[parser.c | match: 84]: Matching Op_MULT (current: Rel_G '>' at line 9)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Rel_G '>' at line 9)
+[parser.c | match: 84]: Matching Op_MOD (current: Rel_G '>' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: Rel_G '>' at line 9)
+[parser.c | match: 84]: Matching Op_SUB (current: Rel_G '>' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: Rel_G '>' at line 9)
+[parser.c | match: 84]: Matching Rel_G (current: Rel_G '>' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <REL_OP>: 
+[parser.c | match: 84]: Matching Rel_G (current: Rel_G '>' at line 9)
+[parser.c | expect: 225]: Expecting Rel_G (current: Rel_G '>' at line 9)
+[parser.c | expect: 232]: Token matched with current pointer: Rel_G '>' at line 9
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '5' at line 9)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '5' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '5' at line 9)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '5' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '5' at line 9)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '5' at line 9)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '5' at line 9
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: RPAREN ')' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: RPAREN ')' at line 9)
+[parser.c | match: 84]: Matching Op_MULT (current: RPAREN ')' at line 9)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: RPAREN ')' at line 9)
+[parser.c | match: 84]: Matching Op_MOD (current: RPAREN ')' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: RPAREN ')' at line 9)
+[parser.c | match: 84]: Matching Op_SUB (current: RPAREN ')' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: RPAREN ')' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: RPAREN ')' at line 9)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expect: 225]: Expecting RPAREN (current: RPAREN ')' at line 9)
+[parser.c | expect: 232]: Token matched with current pointer: RPAREN ')' at line 9
+[parser.c | expectRule: 199]: Expecting LBRACE (terminal) to attach <BLOCK> rule (current: LBRACE '{' at line 9)
+[parser.c | expectRule: 206]: Token matched with current pointer: LBRACE '{' at line 9
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 10)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 10)
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 10)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 10)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 10)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 10)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 10)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 10)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 10
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'dagdag' at line 10)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'dagdag' at line 10
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 10)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 10)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 10)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 10
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: LPAREN '(' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: LPAREN '(' at line 10)
+[parser.c | match: 84]: Matching Cond_NOT (current: LPAREN '(' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: LPAREN '(' at line 10)
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 10)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 10
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'distansya' at line 10)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'distansya' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'distansya' at line 10)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'distansya' at line 10)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Op_SUB 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Op_SUB 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'distansya' at line 10)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'distansya' at line 10
+[parser.c | match: 84]: Matching LBRACKET (current: Op_SUB '-' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Op_SUB '-' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Op_SUB '-' at line 10)
+[parser.c | match: 84]: Matching Op_MULT (current: Op_SUB '-' at line 10)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Op_SUB '-' at line 10)
+[parser.c | match: 84]: Matching Op_MOD (current: Op_SUB '-' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: Op_SUB '-' at line 10)
+[parser.c | match: 84]: Matching Op_SUB (current: Op_SUB '-' at line 10)
+[parser.c | match: 84]: Matching Op_ADD (current: Op_SUB '-' at line 10)
+[parser.c | match: 84]: Matching Op_SUB (current: Op_SUB '-' at line 10)
+[parser.c | expect: 225]: Expecting Op_SUB (current: Op_SUB '-' at line 10)
+[parser.c | expect: 232]: Token matched with current pointer: Op_SUB '-' at line 10
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '5' at line 10)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '5' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '5' at line 10)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '5' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '5' at line 10)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '5' at line 10)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '5' at line 10
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: RPAREN ')' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: RPAREN ')' at line 10)
+[parser.c | match: 84]: Matching Op_MULT (current: RPAREN ')' at line 10)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: RPAREN ')' at line 10)
+[parser.c | match: 84]: Matching Op_MOD (current: RPAREN ')' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: RPAREN ')' at line 10)
+[parser.c | match: 84]: Matching Op_SUB (current: RPAREN ')' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: RPAREN ')' at line 10)
+[parser.c | match: 84]: Matching Rel_G (current: RPAREN ')' at line 10)
+[parser.c | match: 84]: Matching Rel_GEQ (current: RPAREN ')' at line 10)
+[parser.c | match: 84]: Matching Rel_NEQ (current: RPAREN ')' at line 10)
+[parser.c | match: 84]: Matching Rel_EQ (current: RPAREN ')' at line 10)
+[parser.c | match: 84]: Matching Rel_L (current: RPAREN ')' at line 10)
+[parser.c | match: 84]: Matching Rel_LEQ (current: RPAREN ')' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: RPAREN ')' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: RPAREN ')' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expect: 225]: Expecting RPAREN (current: RPAREN ')' at line 10)
+[parser.c | expect: 232]: Token matched with current pointer: RPAREN ')' at line 10
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Op_MULT '*' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Op_MULT '*' at line 10)
+[parser.c | match: 84]: Matching Op_MULT (current: Op_MULT '*' at line 10)
+[parser.c | match: 84]: Matching Op_DIV (current: Op_MULT '*' at line 10)
+[parser.c | match: 84]: Matching Op_MULT (current: Op_MULT '*' at line 10)
+[parser.c | expect: 225]: Expecting Op_MULT (current: Op_MULT '*' at line 10)
+[parser.c | expect: 232]: Token matched with current pointer: Op_MULT '*' at line 10
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '2' at line 10)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '2' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '2' at line 10)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '2' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '2' at line 10)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '2' at line 10)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '2' at line 10
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 10)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 10)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 10)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 10)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 10)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 10)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 10)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 10)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 10)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 10)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 10)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 10)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 10
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | match: 84]: Matching PROG_END (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | match: 84]: Matching WHILE (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | match: 84]: Matching FOR (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | match: 84]: Matching FOREACH (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found ASSIGN 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <ASSIGN_STMT> rule (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'pamasahe' at line 11
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 11)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 11)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 11)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 11
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Op_ADD 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Op_ADD 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'pamasahe' at line 11)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'pamasahe' at line 11
+[parser.c | match: 84]: Matching LBRACKET (current: Op_ADD '+' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Op_ADD '+' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Op_ADD '+' at line 11)
+[parser.c | match: 84]: Matching Op_MULT (current: Op_ADD '+' at line 11)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Op_ADD '+' at line 11)
+[parser.c | match: 84]: Matching Op_MOD (current: Op_ADD '+' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: Op_ADD '+' at line 11)
+[parser.c | match: 84]: Matching Op_ADD (current: Op_ADD '+' at line 11)
+[parser.c | expect: 225]: Expecting Op_ADD (current: Op_ADD '+' at line 11)
+[parser.c | expect: 232]: Token matched with current pointer: Op_ADD '+' at line 11
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'dagdag' at line 11)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'dagdag' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'dagdag' at line 11)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'dagdag' at line 11)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LINE_END 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LINE_END 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'dagdag' at line 11)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'dagdag' at line 11
+[parser.c | match: 84]: Matching LBRACKET (current: LINE_END ';' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 11)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 11)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 11)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 11)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 11)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 11)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 11)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 11)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 11)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 11)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 11)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 11)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 11
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: RBRACE '}' at line 12)
+[parser.c | expectRule: 199]: Expecting RBRACE (terminal) to attach <END_RULE> rule (current: RBRACE '}' at line 12)
+[parser.c | expectRule: 206]: Token matched with current pointer: RBRACE '}' at line 12
+[parser.c | match: 84]: Matching ELSE (current: IF 'sakali' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: IF 'sakali' at line 14)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IF 'sakali' at line 14)
+[parser.c | match: 84]: Matching PROG_END (current: IF 'sakali' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IF 'sakali' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <BLOCK_STMT>: 
+[parser.c | match: 84]: Matching IF (current: IF 'sakali' at line 14)
+[parser.c | expectRule: 199]: Expecting IF (terminal) to attach <IF_STMT> rule (current: IF 'sakali' at line 14)
+[parser.c | expectRule: 206]: Token matched with current pointer: IF 'sakali' at line 14
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 14)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 14
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'mayDiskwento' at line 14)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'mayDiskwento' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'mayDiskwento' at line 14)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'mayDiskwento' at line 14)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_EQ 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_EQ 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'mayDiskwento' at line 14)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'mayDiskwento' at line 14
+[parser.c | match: 84]: Matching LBRACKET (current: Rel_EQ '==' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Rel_EQ '==' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Op_MULT (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Op_MOD (current: Rel_EQ '==' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Op_SUB (current: Rel_EQ '==' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Rel_G (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Rel_GEQ (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Rel_NEQ (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Rel_EQ (current: Rel_EQ '==' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <REL_OP>: 
+[parser.c | match: 84]: Matching Rel_G (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Rel_GEQ (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Rel_NEQ (current: Rel_EQ '==' at line 14)
+[parser.c | match: 84]: Matching Rel_EQ (current: Rel_EQ '==' at line 14)
+[parser.c | expect: 225]: Expecting Rel_EQ (current: Rel_EQ '==' at line 14)
+[parser.c | expect: 232]: Token matched with current pointer: Rel_EQ '==' at line 14
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '1' at line 14)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '1' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '1' at line 14)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '1' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '1' at line 14)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '1' at line 14)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '1' at line 14
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: RPAREN ')' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: RPAREN ')' at line 14)
+[parser.c | match: 84]: Matching Op_MULT (current: RPAREN ')' at line 14)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: RPAREN ')' at line 14)
+[parser.c | match: 84]: Matching Op_MOD (current: RPAREN ')' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: RPAREN ')' at line 14)
+[parser.c | match: 84]: Matching Op_SUB (current: RPAREN ')' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: RPAREN ')' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: RPAREN ')' at line 14)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expect: 225]: Expecting RPAREN (current: RPAREN ')' at line 14)
+[parser.c | expect: 232]: Token matched with current pointer: RPAREN ')' at line 14
+[parser.c | expectRule: 199]: Expecting LBRACE (terminal) to attach <BLOCK> rule (current: LBRACE '{' at line 14)
+[parser.c | expectRule: 206]: Token matched with current pointer: LBRACE '{' at line 14
+[parser.c | match: 84]: Matching RBRACE (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | match: 84]: Matching PROG_END (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | match: 84]: Matching WHILE (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | match: 84]: Matching FOR (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | match: 84]: Matching FOREACH (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found ASSIGN 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <ASSIGN_STMT> rule (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'pamasahe' at line 15
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 15)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 15)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 15)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 15
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Op_DIV_INT 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Op_DIV_INT 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'pamasahe' at line 15)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'pamasahe' at line 15
+[parser.c | match: 84]: Matching LBRACKET (current: Op_DIV_INT '//' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Op_DIV_INT '//' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Op_DIV_INT '//' at line 15)
+[parser.c | match: 84]: Matching Op_MULT (current: Op_DIV_INT '//' at line 15)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Op_DIV_INT '//' at line 15)
+[parser.c | match: 84]: Matching Op_DIV (current: Op_DIV_INT '//' at line 15)
+[parser.c | match: 84]: Matching Op_MULT (current: Op_DIV_INT '//' at line 15)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Op_DIV_INT '//' at line 15)
+[parser.c | expect: 225]: Expecting Op_DIV_INT (current: Op_DIV_INT '//' at line 15)
+[parser.c | expect: 232]: Token matched with current pointer: Op_DIV_INT '//' at line 15
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '2' at line 15)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '2' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '2' at line 15)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '2' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '2' at line 15)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '2' at line 15)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '2' at line 15
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 15)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 15)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 15)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 15)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 15)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 15)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 15)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 15)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 15)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 15)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 15)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 15)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 15
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: RBRACE '}' at line 16)
+[parser.c | expectRule: 199]: Expecting RBRACE (terminal) to attach <END_RULE> rule (current: RBRACE '}' at line 16)
+[parser.c | expectRule: 206]: Token matched with current pointer: RBRACE '}' at line 16
+[parser.c | match: 84]: Matching ELSE (current: RETURN 'baba' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: RETURN 'baba' at line 18)
+[parser.c | match: 84]: Matching END_OF_FILE (current: RETURN 'baba' at line 18)
+[parser.c | match: 84]: Matching PROG_END (current: RETURN 'baba' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: RETURN 'baba' at line 18)
+[parser.c | match: 84]: Matching WHILE (current: RETURN 'baba' at line 18)
+[parser.c | match: 84]: Matching FOR (current: RETURN 'baba' at line 18)
+[parser.c | match: 84]: Matching FOREACH (current: RETURN 'baba' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: RETURN 'baba' at line 18)
+[parser.c | match: 84]: Matching VARIABLE (current: RETURN 'baba' at line 18)
+[parser.c | match: 84]: Matching CONST (current: RETURN 'baba' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <KEYWORD_STMT>: 
+[parser.c | match: 84]: Matching RETURN (current: RETURN 'baba' at line 18)
+[parser.c | expectRule: 199]: Expecting RETURN (terminal) to attach <RETURN_STMT> rule (current: RETURN 'baba' at line 18)
+[parser.c | expectRule: 206]: Token matched with current pointer: RETURN 'baba' at line 18
+[parser.c | match: 84]: Matching LINE_END (current: IDENTIFIER 'pamasahe' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'pamasahe' at line 18)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'pamasahe' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'pamasahe' at line 18)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'pamasahe' at line 18)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LINE_END 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LINE_END 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'pamasahe' at line 18)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'pamasahe' at line 18
+[parser.c | match: 84]: Matching LBRACKET (current: LINE_END ';' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 18)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 18)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 18)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 18)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 18)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 18)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 18)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 18)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 18)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 18)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 18)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 18)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 18
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: RBRACE '}' at line 19)
+[parser.c | expectRule: 199]: Expecting RBRACE (terminal) to attach <END_RULE> rule (current: RBRACE '}' at line 19)
+[parser.c | expectRule: 206]: Token matched with current pointer: RBRACE '}' at line 19
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching FUNCTION (current: PROG_MAIN 'byahe' at line 22)
+[parser.c | expect: 225]: Expecting PROG_MAIN (current: PROG_MAIN 'byahe' at line 22)
+[parser.c | expect: 232]: Token matched with current pointer: PROG_MAIN 'byahe' at line 22
+[parser.c | expect: 225]: Expecting LBRACE (current: LBRACE '{' at line 22)
+[parser.c | expect: 232]: Token matched with current pointer: LBRACE '{' at line 22
+[parser.c | match: 84]: Matching PROG_END (current: IDENTIFIER 'announce' at line 23)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IDENTIFIER 'announce' at line 23)
+[parser.c | match: 84]: Matching RBRACE (current: IDENTIFIER 'announce' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IDENTIFIER 'announce' at line 23)
+[parser.c | match: 84]: Matching WHILE (current: IDENTIFIER 'announce' at line 23)
+[parser.c | match: 84]: Matching FOR (current: IDENTIFIER 'announce' at line 23)
+[parser.c | match: 84]: Matching FOREACH (current: IDENTIFIER 'announce' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'announce' at line 23)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Noise_NG 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Noise_NG 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Noise_NG 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Noise_NG 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Noise_NG 
+[parser.c | markRule: 213]: Marking Rule Start for <CALL_STMT>: 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Noise_NG 
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'announce' at line 23)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'announce' at line 23
+[parser.c | expect: 225]: Expecting Noise_NG (current: Noise_NG 'ng' at line 23)
+[parser.c | expect: 232]: Token matched with current pointer: Noise_NG 'ng' at line 23
+[parser.c | markRule: 213]: Marking Rule Start for <ARG_LIST>: 
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_STRING '"Maligayang pagdating sa Trenslate!"' at line 23)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_STRING '"Maligayang pagdating sa Trenslate!"' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_STRING '"Maligayang pagdating sa Trenslate!"' at line 23)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_STRING '"Maligayang pagdating sa Trenslate!"' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_STRING '"Maligayang pagdating sa Trenslate!"' at line 23)
+[parser.c | match: 84]: Matching Lit_DEC (current: Lit_STRING '"Maligayang pagdating sa Trenslate!"' at line 23)
+[parser.c | match: 84]: Matching Lit_CHAR (current: Lit_STRING '"Maligayang pagdating sa Trenslate!"' at line 23)
+[parser.c | match: 84]: Matching Lit_STRING (current: Lit_STRING '"Maligayang pagdating sa Trenslate!"' at line 23)
+[parser.c | expect: 225]: Expecting Lit_STRING (current: Lit_STRING '"Maligayang pagdating sa Trenslate!"' at line 23)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_STRING '"Maligayang pagdating sa Trenslate!"' at line 23
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 23)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 23)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 23)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 23)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 23)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 23)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 23)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 23)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 23)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 23)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching COMMA (current: LINE_END ';' at line 23)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 23)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 23
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 27)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 27)
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 27)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 27)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 27)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 27)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 27)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 27)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 27
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'pasahero' at line 27)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'pasahero' at line 27
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 27)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 27)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 27)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 27
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: Lit_INT '32' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '32' at line 27)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '32' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '32' at line 27)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '32' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '32' at line 27)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '32' at line 27)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '32' at line 27
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 27)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 27)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 27)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 27)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 27)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 27)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 27)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 27)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 27)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 27)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 27)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 27)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 27
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 28)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 28)
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 28)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 28)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 28)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 28)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 28)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 28)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 28
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'kabuuan' at line 28)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'kabuuan' at line 28
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 28)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 28)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 28)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 28
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: Lit_INT '0' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '0' at line 28)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '0' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '0' at line 28)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '0' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '0' at line 28)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '0' at line 28)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '0' at line 28
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 28)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 28)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 28)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 28)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 28)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 28)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 28)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 28)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 28)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 28)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 28)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 28)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 28
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 29)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 29)
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 29)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 29)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 29)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 29)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 29)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 29)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 29
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'rate' at line 29)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'rate' at line 29
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 29)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 29)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 29)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 29
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: Lit_INT '15' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '15' at line 29)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '15' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '15' at line 29)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '15' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '15' at line 29)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '15' at line 29)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '15' at line 29
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 29)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 29)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 29)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 29)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 29)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 29)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 29)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 29)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 29)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 29)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 29)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 29)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 29
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 30)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 30)
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 30)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 30)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 30)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 30)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 30)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 30)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 30
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'pamasaheRate' at line 30)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'pamasaheRate' at line 30
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 30)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 30)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 30)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 30
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: Lit_DEC '15.50' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_DEC '15.50' at line 30)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_DEC '15.50' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_DEC '15.50' at line 30)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_DEC '15.50' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_DEC '15.50' at line 30)
+[parser.c | match: 84]: Matching Lit_DEC (current: Lit_DEC '15.50' at line 30)
+[parser.c | expect: 225]: Expecting Lit_DEC (current: Lit_DEC '15.50' at line 30)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_DEC '15.50' at line 30
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 30)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 30)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 30)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 30)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 30)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 30)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 30)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 30)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 30)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 30)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 30)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 30)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 30
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 31)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 31)
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 31)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 31)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 31)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 31)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 31)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 31)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 31
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'mayDiskwento' at line 31)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'mayDiskwento' at line 31
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 31)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 31)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 31)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 31
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: T_TRUE 'TRUE' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: T_TRUE 'TRUE' at line 31)
+[parser.c | match: 84]: Matching Cond_NOT (current: T_TRUE 'TRUE' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: T_TRUE 'TRUE' at line 31)
+[parser.c | match: 84]: Matching IDENTIFIER (current: T_TRUE 'TRUE' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: T_TRUE 'TRUE' at line 31)
+[parser.c | match: 84]: Matching Lit_DEC (current: T_TRUE 'TRUE' at line 31)
+[parser.c | match: 84]: Matching Lit_CHAR (current: T_TRUE 'TRUE' at line 31)
+[parser.c | match: 84]: Matching Lit_STRING (current: T_TRUE 'TRUE' at line 31)
+[parser.c | match: 84]: Matching T_TRUE (current: T_TRUE 'TRUE' at line 31)
+[parser.c | expect: 225]: Expecting T_TRUE (current: T_TRUE 'TRUE' at line 31)
+[parser.c | expect: 232]: Token matched with current pointer: T_TRUE 'TRUE' at line 31
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 31)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 31)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 31)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 31)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 31)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 31)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 31)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 31)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 31)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 31)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 31)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 31)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 31
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 32)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 32)
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 32)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 32)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 32)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 32)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 32)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 32)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 32
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'linya' at line 32)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'linya' at line 32
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 32)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 32)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 32)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 32
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: Lit_CHAR ''L'' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_CHAR ''L'' at line 32)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_CHAR ''L'' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_CHAR ''L'' at line 32)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_CHAR ''L'' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_CHAR ''L'' at line 32)
+[parser.c | match: 84]: Matching Lit_DEC (current: Lit_CHAR ''L'' at line 32)
+[parser.c | match: 84]: Matching Lit_CHAR (current: Lit_CHAR ''L'' at line 32)
+[parser.c | expect: 225]: Expecting Lit_CHAR (current: Lit_CHAR ''L'' at line 32)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_CHAR ''L'' at line 32
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 32)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 32)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 32)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 32)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 32)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 32)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 32)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 32)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 32)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 32)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 32)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 32)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 32
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: CONST 'laging' at line 33)
+[parser.c | match: 84]: Matching END_OF_FILE (current: CONST 'laging' at line 33)
+[parser.c | match: 84]: Matching RBRACE (current: CONST 'laging' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: CONST 'laging' at line 33)
+[parser.c | match: 84]: Matching WHILE (current: CONST 'laging' at line 33)
+[parser.c | match: 84]: Matching FOR (current: CONST 'laging' at line 33)
+[parser.c | match: 84]: Matching FOREACH (current: CONST 'laging' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: CONST 'laging' at line 33)
+[parser.c | match: 84]: Matching VARIABLE (current: CONST 'laging' at line 33)
+[parser.c | match: 84]: Matching CONST (current: CONST 'laging' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: CONST 'laging' at line 33)
+[parser.c | match: 84]: Matching CONST (current: CONST 'laging' at line 33)
+[parser.c | expectRule: 199]: Expecting CONST (terminal) to attach <CONST_DECL> rule (current: CONST 'laging' at line 33)
+[parser.c | expectRule: 206]: Token matched with current pointer: CONST 'laging' at line 33
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'LIMIT' at line 33)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'LIMIT' at line 33
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 33)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 33)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 33)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 33
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: Lit_INT '100' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '100' at line 33)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '100' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '100' at line 33)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '100' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '100' at line 33)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '100' at line 33)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '100' at line 33
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 33)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 33)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 33)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 33)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 33)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 33)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 33)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 33)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 33)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 33)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 33)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 33)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 33
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 34)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 34)
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 34)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 34)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 34)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 34)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 34)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 34)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 34
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'mali' at line 34)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'mali' at line 34
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 34)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 34)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 34)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 34
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: Lit_INT '0' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '0' at line 34)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '0' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '0' at line 34)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '0' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '0' at line 34)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '0' at line 34)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '0' at line 34
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 34)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 34)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 34)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 34)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 34)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 34)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 34)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 34)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 34)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 34)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 34)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 34)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 34
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: IF 'sakali' at line 36)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IF 'sakali' at line 36)
+[parser.c | match: 84]: Matching RBRACE (current: IF 'sakali' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IF 'sakali' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <BLOCK_STMT>: 
+[parser.c | match: 84]: Matching IF (current: IF 'sakali' at line 36)
+[parser.c | expectRule: 199]: Expecting IF (terminal) to attach <IF_STMT> rule (current: IF 'sakali' at line 36)
+[parser.c | expectRule: 206]: Token matched with current pointer: IF 'sakali' at line 36
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 36)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 36
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'pasahero' at line 36)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'pasahero' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'pasahero' at line 36)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'pasahero' at line 36)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_G 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_G 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'pasahero' at line 36)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'pasahero' at line 36
+[parser.c | match: 84]: Matching LBRACKET (current: Rel_G '>' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Rel_G '>' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Rel_G '>' at line 36)
+[parser.c | match: 84]: Matching Op_MULT (current: Rel_G '>' at line 36)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Rel_G '>' at line 36)
+[parser.c | match: 84]: Matching Op_MOD (current: Rel_G '>' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: Rel_G '>' at line 36)
+[parser.c | match: 84]: Matching Op_SUB (current: Rel_G '>' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: Rel_G '>' at line 36)
+[parser.c | match: 84]: Matching Rel_G (current: Rel_G '>' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <REL_OP>: 
+[parser.c | match: 84]: Matching Rel_G (current: Rel_G '>' at line 36)
+[parser.c | expect: 225]: Expecting Rel_G (current: Rel_G '>' at line 36)
+[parser.c | expect: 232]: Token matched with current pointer: Rel_G '>' at line 36
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '35' at line 36)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '35' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '35' at line 36)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '35' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '35' at line 36)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '35' at line 36)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '35' at line 36
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: RPAREN ')' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: RPAREN ')' at line 36)
+[parser.c | match: 84]: Matching Op_MULT (current: RPAREN ')' at line 36)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: RPAREN ')' at line 36)
+[parser.c | match: 84]: Matching Op_MOD (current: RPAREN ')' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: RPAREN ')' at line 36)
+[parser.c | match: 84]: Matching Op_SUB (current: RPAREN ')' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: RPAREN ')' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: RPAREN ')' at line 36)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expect: 225]: Expecting RPAREN (current: RPAREN ')' at line 36)
+[parser.c | expect: 232]: Token matched with current pointer: RPAREN ')' at line 36
+[parser.c | expectRule: 199]: Expecting LBRACE (terminal) to attach <BLOCK> rule (current: LBRACE '{' at line 36)
+[parser.c | expectRule: 206]: Token matched with current pointer: LBRACE '{' at line 36
+[parser.c | match: 84]: Matching RBRACE (current: IDENTIFIER 'announce' at line 37)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IDENTIFIER 'announce' at line 37)
+[parser.c | match: 84]: Matching PROG_END (current: IDENTIFIER 'announce' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IDENTIFIER 'announce' at line 37)
+[parser.c | match: 84]: Matching WHILE (current: IDENTIFIER 'announce' at line 37)
+[parser.c | match: 84]: Matching FOR (current: IDENTIFIER 'announce' at line 37)
+[parser.c | match: 84]: Matching FOREACH (current: IDENTIFIER 'announce' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'announce' at line 37)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | markRule: 213]: Marking Rule Start for <CALL_STMT>: 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <CALL_EXPR> rule (current: IDENTIFIER 'announce' at line 37)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'announce' at line 37
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 37)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 37
+[parser.c | match: 84]: Matching RPAREN (current: Lit_STRING '"It's very crowded!"' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <ARG_LIST>: 
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_STRING '"It's very crowded!"' at line 37)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_STRING '"It's very crowded!"' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_STRING '"It's very crowded!"' at line 37)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_STRING '"It's very crowded!"' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_STRING '"It's very crowded!"' at line 37)
+[parser.c | match: 84]: Matching Lit_DEC (current: Lit_STRING '"It's very crowded!"' at line 37)
+[parser.c | match: 84]: Matching Lit_CHAR (current: Lit_STRING '"It's very crowded!"' at line 37)
+[parser.c | match: 84]: Matching Lit_STRING (current: Lit_STRING '"It's very crowded!"' at line 37)
+[parser.c | expect: 225]: Expecting Lit_STRING (current: Lit_STRING '"It's very crowded!"' at line 37)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_STRING '"It's very crowded!"' at line 37
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: RPAREN ')' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: RPAREN ')' at line 37)
+[parser.c | match: 84]: Matching Op_MULT (current: RPAREN ')' at line 37)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: RPAREN ')' at line 37)
+[parser.c | match: 84]: Matching Op_MOD (current: RPAREN ')' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: RPAREN ')' at line 37)
+[parser.c | match: 84]: Matching Op_SUB (current: RPAREN ')' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: RPAREN ')' at line 37)
+[parser.c | match: 84]: Matching Rel_G (current: RPAREN ')' at line 37)
+[parser.c | match: 84]: Matching Rel_GEQ (current: RPAREN ')' at line 37)
+[parser.c | match: 84]: Matching Rel_NEQ (current: RPAREN ')' at line 37)
+[parser.c | match: 84]: Matching Rel_EQ (current: RPAREN ')' at line 37)
+[parser.c | match: 84]: Matching Rel_L (current: RPAREN ')' at line 37)
+[parser.c | match: 84]: Matching Rel_LEQ (current: RPAREN ')' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: RPAREN ')' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: RPAREN ')' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching COMMA (current: RPAREN ')' at line 37)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting RPAREN (terminal) to attach <END_RULE> rule (current: RPAREN ')' at line 37)
+[parser.c | expectRule: 206]: Token matched with current pointer: RPAREN ')' at line 37
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 37)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 37
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: RBRACE '}' at line 38)
+[parser.c | expectRule: 199]: Expecting RBRACE (terminal) to attach <END_RULE> rule (current: RBRACE '}' at line 38)
+[parser.c | expectRule: 206]: Token matched with current pointer: RBRACE '}' at line 38
+[parser.c | match: 84]: Matching ELSE (current: ELSE 'liko' at line 38)
+[parser.c | expectRule: 199]: Expecting ELSE (terminal) to attach <ELSE_CHAIN> rule (current: ELSE 'liko' at line 38)
+[parser.c | expectRule: 206]: Token matched with current pointer: ELSE 'liko' at line 38
+[parser.c | match: 84]: Matching IF (current: IF 'sakali' at line 38)
+[parser.c | expectRule: 199]: Expecting IF (terminal) to attach <IF_STMT> rule (current: IF 'sakali' at line 38)
+[parser.c | expectRule: 206]: Token matched with current pointer: IF 'sakali' at line 38
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 38)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 38
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'pasahero' at line 38)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'pasahero' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'pasahero' at line 38)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'pasahero' at line 38)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_GEQ 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_GEQ 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'pasahero' at line 38)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'pasahero' at line 38
+[parser.c | match: 84]: Matching LBRACKET (current: Rel_GEQ '>=' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Rel_GEQ '>=' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Rel_GEQ '>=' at line 38)
+[parser.c | match: 84]: Matching Op_MULT (current: Rel_GEQ '>=' at line 38)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Rel_GEQ '>=' at line 38)
+[parser.c | match: 84]: Matching Op_MOD (current: Rel_GEQ '>=' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: Rel_GEQ '>=' at line 38)
+[parser.c | match: 84]: Matching Op_SUB (current: Rel_GEQ '>=' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: Rel_GEQ '>=' at line 38)
+[parser.c | match: 84]: Matching Rel_G (current: Rel_GEQ '>=' at line 38)
+[parser.c | match: 84]: Matching Rel_GEQ (current: Rel_GEQ '>=' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <REL_OP>: 
+[parser.c | match: 84]: Matching Rel_G (current: Rel_GEQ '>=' at line 38)
+[parser.c | match: 84]: Matching Rel_GEQ (current: Rel_GEQ '>=' at line 38)
+[parser.c | expect: 225]: Expecting Rel_GEQ (current: Rel_GEQ '>=' at line 38)
+[parser.c | expect: 232]: Token matched with current pointer: Rel_GEQ '>=' at line 38
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '25' at line 38)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '25' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '25' at line 38)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '25' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '25' at line 38)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '25' at line 38)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '25' at line 38
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: RPAREN ')' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: RPAREN ')' at line 38)
+[parser.c | match: 84]: Matching Op_MULT (current: RPAREN ')' at line 38)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: RPAREN ')' at line 38)
+[parser.c | match: 84]: Matching Op_MOD (current: RPAREN ')' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: RPAREN ')' at line 38)
+[parser.c | match: 84]: Matching Op_SUB (current: RPAREN ')' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: RPAREN ')' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: RPAREN ')' at line 38)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expect: 225]: Expecting RPAREN (current: RPAREN ')' at line 38)
+[parser.c | expect: 232]: Token matched with current pointer: RPAREN ')' at line 38
+[parser.c | expectRule: 199]: Expecting LBRACE (terminal) to attach <BLOCK> rule (current: LBRACE '{' at line 38)
+[parser.c | expectRule: 206]: Token matched with current pointer: LBRACE '{' at line 38
+[parser.c | match: 84]: Matching RBRACE (current: IDENTIFIER 'announce' at line 39)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IDENTIFIER 'announce' at line 39)
+[parser.c | match: 84]: Matching PROG_END (current: IDENTIFIER 'announce' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IDENTIFIER 'announce' at line 39)
+[parser.c | match: 84]: Matching WHILE (current: IDENTIFIER 'announce' at line 39)
+[parser.c | match: 84]: Matching FOR (current: IDENTIFIER 'announce' at line 39)
+[parser.c | match: 84]: Matching FOREACH (current: IDENTIFIER 'announce' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'announce' at line 39)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | markRule: 213]: Marking Rule Start for <CALL_STMT>: 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <CALL_EXPR> rule (current: IDENTIFIER 'announce' at line 39)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'announce' at line 39
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 39)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 39
+[parser.c | match: 84]: Matching RPAREN (current: Lit_STRING '"It's comfortably crowded."' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <ARG_LIST>: 
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_STRING '"It's comfortably crowded."' at line 39)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_STRING '"It's comfortably crowded."' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_STRING '"It's comfortably crowded."' at line 39)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_STRING '"It's comfortably crowded."' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_STRING '"It's comfortably crowded."' at line 39)
+[parser.c | match: 84]: Matching Lit_DEC (current: Lit_STRING '"It's comfortably crowded."' at line 39)
+[parser.c | match: 84]: Matching Lit_CHAR (current: Lit_STRING '"It's comfortably crowded."' at line 39)
+[parser.c | match: 84]: Matching Lit_STRING (current: Lit_STRING '"It's comfortably crowded."' at line 39)
+[parser.c | expect: 225]: Expecting Lit_STRING (current: Lit_STRING '"It's comfortably crowded."' at line 39)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_STRING '"It's comfortably crowded."' at line 39
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: RPAREN ')' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: RPAREN ')' at line 39)
+[parser.c | match: 84]: Matching Op_MULT (current: RPAREN ')' at line 39)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: RPAREN ')' at line 39)
+[parser.c | match: 84]: Matching Op_MOD (current: RPAREN ')' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: RPAREN ')' at line 39)
+[parser.c | match: 84]: Matching Op_SUB (current: RPAREN ')' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: RPAREN ')' at line 39)
+[parser.c | match: 84]: Matching Rel_G (current: RPAREN ')' at line 39)
+[parser.c | match: 84]: Matching Rel_GEQ (current: RPAREN ')' at line 39)
+[parser.c | match: 84]: Matching Rel_NEQ (current: RPAREN ')' at line 39)
+[parser.c | match: 84]: Matching Rel_EQ (current: RPAREN ')' at line 39)
+[parser.c | match: 84]: Matching Rel_L (current: RPAREN ')' at line 39)
+[parser.c | match: 84]: Matching Rel_LEQ (current: RPAREN ')' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: RPAREN ')' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: RPAREN ')' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching COMMA (current: RPAREN ')' at line 39)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting RPAREN (terminal) to attach <END_RULE> rule (current: RPAREN ')' at line 39)
+[parser.c | expectRule: 206]: Token matched with current pointer: RPAREN ')' at line 39
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 39)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 39
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: RBRACE '}' at line 40)
+[parser.c | expectRule: 199]: Expecting RBRACE (terminal) to attach <END_RULE> rule (current: RBRACE '}' at line 40)
+[parser.c | expectRule: 206]: Token matched with current pointer: RBRACE '}' at line 40
+[parser.c | match: 84]: Matching ELSE (current: ELSE 'liko' at line 40)
+[parser.c | expectRule: 199]: Expecting ELSE (terminal) to attach <ELSE_CHAIN> rule (current: ELSE 'liko' at line 40)
+[parser.c | expectRule: 206]: Token matched with current pointer: ELSE 'liko' at line 40
+[parser.c | match: 84]: Matching IF (current: LBRACE '{' at line 40)
+[parser.c | expectRule: 199]: Expecting LBRACE (terminal) to attach <BLOCK> rule (current: LBRACE '{' at line 40)
+[parser.c | expectRule: 206]: Token matched with current pointer: LBRACE '{' at line 40
+[parser.c | match: 84]: Matching RBRACE (current: IDENTIFIER 'announce' at line 41)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IDENTIFIER 'announce' at line 41)
+[parser.c | match: 84]: Matching PROG_END (current: IDENTIFIER 'announce' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IDENTIFIER 'announce' at line 41)
+[parser.c | match: 84]: Matching WHILE (current: IDENTIFIER 'announce' at line 41)
+[parser.c | match: 84]: Matching FOR (current: IDENTIFIER 'announce' at line 41)
+[parser.c | match: 84]: Matching FOREACH (current: IDENTIFIER 'announce' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'announce' at line 41)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | markRule: 213]: Marking Rule Start for <CALL_STMT>: 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found LPAREN 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <CALL_EXPR> rule (current: IDENTIFIER 'announce' at line 41)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'announce' at line 41
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 41)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 41
+[parser.c | match: 84]: Matching RPAREN (current: Lit_STRING '"It's a bit lonely."' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <ARG_LIST>: 
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_STRING '"It's a bit lonely."' at line 41)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_STRING '"It's a bit lonely."' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_STRING '"It's a bit lonely."' at line 41)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_STRING '"It's a bit lonely."' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_STRING '"It's a bit lonely."' at line 41)
+[parser.c | match: 84]: Matching Lit_DEC (current: Lit_STRING '"It's a bit lonely."' at line 41)
+[parser.c | match: 84]: Matching Lit_CHAR (current: Lit_STRING '"It's a bit lonely."' at line 41)
+[parser.c | match: 84]: Matching Lit_STRING (current: Lit_STRING '"It's a bit lonely."' at line 41)
+[parser.c | expect: 225]: Expecting Lit_STRING (current: Lit_STRING '"It's a bit lonely."' at line 41)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_STRING '"It's a bit lonely."' at line 41
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: RPAREN ')' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: RPAREN ')' at line 41)
+[parser.c | match: 84]: Matching Op_MULT (current: RPAREN ')' at line 41)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: RPAREN ')' at line 41)
+[parser.c | match: 84]: Matching Op_MOD (current: RPAREN ')' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: RPAREN ')' at line 41)
+[parser.c | match: 84]: Matching Op_SUB (current: RPAREN ')' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: RPAREN ')' at line 41)
+[parser.c | match: 84]: Matching Rel_G (current: RPAREN ')' at line 41)
+[parser.c | match: 84]: Matching Rel_GEQ (current: RPAREN ')' at line 41)
+[parser.c | match: 84]: Matching Rel_NEQ (current: RPAREN ')' at line 41)
+[parser.c | match: 84]: Matching Rel_EQ (current: RPAREN ')' at line 41)
+[parser.c | match: 84]: Matching Rel_L (current: RPAREN ')' at line 41)
+[parser.c | match: 84]: Matching Rel_LEQ (current: RPAREN ')' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: RPAREN ')' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: RPAREN ')' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching COMMA (current: RPAREN ')' at line 41)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting RPAREN (terminal) to attach <END_RULE> rule (current: RPAREN ')' at line 41)
+[parser.c | expectRule: 206]: Token matched with current pointer: RPAREN ')' at line 41
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 41)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 41
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: RBRACE '}' at line 42)
+[parser.c | expectRule: 199]: Expecting RBRACE (terminal) to attach <END_RULE> rule (current: RBRACE '}' at line 42)
+[parser.c | expectRule: 206]: Token matched with current pointer: RBRACE '}' at line 42
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 45)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 45)
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 45)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 45)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 45)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 45)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 45)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 45)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 45
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'bilang' at line 45)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'bilang' at line 45
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 45)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 45)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 45)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 45
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: Lit_INT '0' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '0' at line 45)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '0' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '0' at line 45)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '0' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '0' at line 45)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '0' at line 45)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '0' at line 45
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 45)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 45)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 45)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 45)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 45)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 45)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 45)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 45)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 45)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 45)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 45)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 45)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 45
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: WHILE 'habang' at line 46)
+[parser.c | match: 84]: Matching END_OF_FILE (current: WHILE 'habang' at line 46)
+[parser.c | match: 84]: Matching RBRACE (current: WHILE 'habang' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: WHILE 'habang' at line 46)
+[parser.c | match: 84]: Matching WHILE (current: WHILE 'habang' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <BLOCK_STMT>: 
+[parser.c | match: 84]: Matching IF (current: WHILE 'habang' at line 46)
+[parser.c | match: 84]: Matching WHILE (current: WHILE 'habang' at line 46)
+[parser.c | expectRule: 199]: Expecting WHILE (terminal) to attach <WHILE_STMT> rule (current: WHILE 'habang' at line 46)
+[parser.c | expectRule: 206]: Token matched with current pointer: WHILE 'habang' at line 46
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 46)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 46
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'bilang' at line 46)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'bilang' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'bilang' at line 46)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'bilang' at line 46)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_L 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_L 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'bilang' at line 46)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'bilang' at line 46
+[parser.c | match: 84]: Matching LBRACKET (current: Rel_L '<' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Rel_L '<' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Op_MULT (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Op_MOD (current: Rel_L '<' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Op_SUB (current: Rel_L '<' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Rel_G (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Rel_GEQ (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Rel_NEQ (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Rel_EQ (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Rel_L (current: Rel_L '<' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <REL_OP>: 
+[parser.c | match: 84]: Matching Rel_G (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Rel_GEQ (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Rel_NEQ (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Rel_EQ (current: Rel_L '<' at line 46)
+[parser.c | match: 84]: Matching Rel_L (current: Rel_L '<' at line 46)
+[parser.c | expect: 225]: Expecting Rel_L (current: Rel_L '<' at line 46)
+[parser.c | expect: 232]: Token matched with current pointer: Rel_L '<' at line 46
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '3' at line 46)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '3' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '3' at line 46)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '3' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '3' at line 46)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '3' at line 46)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '3' at line 46
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: RPAREN ')' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: RPAREN ')' at line 46)
+[parser.c | match: 84]: Matching Op_MULT (current: RPAREN ')' at line 46)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: RPAREN ')' at line 46)
+[parser.c | match: 84]: Matching Op_MOD (current: RPAREN ')' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: RPAREN ')' at line 46)
+[parser.c | match: 84]: Matching Op_SUB (current: RPAREN ')' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: RPAREN ')' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: RPAREN ')' at line 46)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expect: 225]: Expecting RPAREN (current: RPAREN ')' at line 46)
+[parser.c | expect: 232]: Token matched with current pointer: RPAREN ')' at line 46
+[parser.c | expectRule: 199]: Expecting LBRACE (terminal) to attach <BLOCK> rule (current: LBRACE '{' at line 46)
+[parser.c | expectRule: 206]: Token matched with current pointer: LBRACE '{' at line 46
+[parser.c | match: 84]: Matching RBRACE (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | match: 84]: Matching PROG_END (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | match: 84]: Matching WHILE (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | match: 84]: Matching FOR (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | match: 84]: Matching FOREACH (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found ASSIGN 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <ASSIGN_STMT> rule (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'bilang' at line 47
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 47)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 47)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 47)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 47
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Op_ADD 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Op_ADD 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'bilang' at line 47)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'bilang' at line 47
+[parser.c | match: 84]: Matching LBRACKET (current: Op_ADD '+' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Op_ADD '+' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Op_ADD '+' at line 47)
+[parser.c | match: 84]: Matching Op_MULT (current: Op_ADD '+' at line 47)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Op_ADD '+' at line 47)
+[parser.c | match: 84]: Matching Op_MOD (current: Op_ADD '+' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: Op_ADD '+' at line 47)
+[parser.c | match: 84]: Matching Op_ADD (current: Op_ADD '+' at line 47)
+[parser.c | expect: 225]: Expecting Op_ADD (current: Op_ADD '+' at line 47)
+[parser.c | expect: 232]: Token matched with current pointer: Op_ADD '+' at line 47
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '1' at line 47)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '1' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '1' at line 47)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '1' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '1' at line 47)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '1' at line 47)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '1' at line 47
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 47)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 47)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 47)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 47)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 47)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 47)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 47)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 47)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 47)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 47)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 47)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 47)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 47
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: IF 'sakali' at line 48)
+[parser.c | match: 84]: Matching END_OF_FILE (current: IF 'sakali' at line 48)
+[parser.c | match: 84]: Matching PROG_END (current: IF 'sakali' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: IF 'sakali' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <BLOCK_STMT>: 
+[parser.c | match: 84]: Matching IF (current: IF 'sakali' at line 48)
+[parser.c | expectRule: 199]: Expecting IF (terminal) to attach <IF_STMT> rule (current: IF 'sakali' at line 48)
+[parser.c | expectRule: 206]: Token matched with current pointer: IF 'sakali' at line 48
+[parser.c | expect: 225]: Expecting LPAREN (current: LPAREN '(' at line 48)
+[parser.c | expect: 232]: Token matched with current pointer: LPAREN '(' at line 48
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: IDENTIFIER 'bilang' at line 48)
+[parser.c | match: 84]: Matching Cond_NOT (current: IDENTIFIER 'bilang' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: IDENTIFIER 'bilang' at line 48)
+[parser.c | match: 84]: Matching IDENTIFIER (current: IDENTIFIER 'bilang' at line 48)
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_EQ 
+[parser.c | matchOffset: 182]: Lookahead 1 Token(s)
+[parser.c | matchOffset: 184]: Found Rel_EQ 
+[parser.c | expectRule: 199]: Expecting IDENTIFIER (terminal) to attach <IDENT_TERM> rule (current: IDENTIFIER 'bilang' at line 48)
+[parser.c | expectRule: 206]: Token matched with current pointer: IDENTIFIER 'bilang' at line 48
+[parser.c | match: 84]: Matching LBRACKET (current: Rel_EQ '==' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: Rel_EQ '==' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Op_MULT (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Op_MOD (current: Rel_EQ '==' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Op_SUB (current: Rel_EQ '==' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Rel_G (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Rel_GEQ (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Rel_NEQ (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Rel_EQ (current: Rel_EQ '==' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <REL_OP>: 
+[parser.c | match: 84]: Matching Rel_G (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Rel_GEQ (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Rel_NEQ (current: Rel_EQ '==' at line 48)
+[parser.c | match: 84]: Matching Rel_EQ (current: Rel_EQ '==' at line 48)
+[parser.c | expect: 225]: Expecting Rel_EQ (current: Rel_EQ '==' at line 48)
+[parser.c | expect: 232]: Token matched with current pointer: Rel_EQ '==' at line 48
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: Lit_INT '2' at line 48)
+[parser.c | match: 84]: Matching Cond_NOT (current: Lit_INT '2' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: Lit_INT '2' at line 48)
+[parser.c | match: 84]: Matching IDENTIFIER (current: Lit_INT '2' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: Lit_INT '2' at line 48)
+[parser.c | expect: 225]: Expecting Lit_INT (current: Lit_INT '2' at line 48)
+[parser.c | expect: 232]: Token matched with current pointer: Lit_INT '2' at line 48
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: RPAREN ')' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: RPAREN ')' at line 48)
+[parser.c | match: 84]: Matching Op_MULT (current: RPAREN ')' at line 48)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: RPAREN ')' at line 48)
+[parser.c | match: 84]: Matching Op_MOD (current: RPAREN ')' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: RPAREN ')' at line 48)
+[parser.c | match: 84]: Matching Op_SUB (current: RPAREN ')' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: RPAREN ')' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: RPAREN ')' at line 48)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expect: 225]: Expecting RPAREN (current: RPAREN ')' at line 48)
+[parser.c | expect: 232]: Token matched with current pointer: RPAREN ')' at line 48
+[parser.c | expectRule: 199]: Expecting LBRACE (terminal) to attach <BLOCK> rule (current: LBRACE '{' at line 48)
+[parser.c | expectRule: 206]: Token matched with current pointer: LBRACE '{' at line 48
+[parser.c | match: 84]: Matching RBRACE (current: CONTINUE 'tuloy' at line 49)
+[parser.c | match: 84]: Matching END_OF_FILE (current: CONTINUE 'tuloy' at line 49)
+[parser.c | match: 84]: Matching PROG_END (current: CONTINUE 'tuloy' at line 49)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: CONTINUE 'tuloy' at line 49)
+[parser.c | match: 84]: Matching WHILE (current: CONTINUE 'tuloy' at line 49)
+[parser.c | match: 84]: Matching FOR (current: CONTINUE 'tuloy' at line 49)
+[parser.c | match: 84]: Matching FOREACH (current: CONTINUE 'tuloy' at line 49)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: CONTINUE 'tuloy' at line 49)
+[parser.c | match: 84]: Matching VARIABLE (current: CONTINUE 'tuloy' at line 49)
+[parser.c | match: 84]: Matching CONST (current: CONTINUE 'tuloy' at line 49)
+[parser.c | markRule: 213]: Marking Rule Start for <KEYWORD_STMT>: 
+[parser.c | match: 84]: Matching RETURN (current: CONTINUE 'tuloy' at line 49)
+[parser.c | match: 84]: Matching BREAK (current: CONTINUE 'tuloy' at line 49)
+[parser.c | match: 84]: Matching CONTINUE (current: CONTINUE 'tuloy' at line 49)
+[parser.c | expectRule: 199]: Expecting CONTINUE (terminal) to attach <CONTINUE_STMT> rule (current: CONTINUE 'tuloy' at line 49)
+[parser.c | expectRule: 206]: Token matched with current pointer: CONTINUE 'tuloy' at line 49
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 49)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 49
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: RBRACE '}' at line 50)
+[parser.c | expectRule: 199]: Expecting RBRACE (terminal) to attach <END_RULE> rule (current: RBRACE '}' at line 50)
+[parser.c | expectRule: 206]: Token matched with current pointer: RBRACE '}' at line 50
+[parser.c | match: 84]: Matching ELSE (current: RBRACE '}' at line 51)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching RBRACE (current: RBRACE '}' at line 51)
+[parser.c | expectRule: 199]: Expecting RBRACE (terminal) to attach <END_RULE> rule (current: RBRACE '}' at line 51)
+[parser.c | expectRule: 206]: Token matched with current pointer: RBRACE '}' at line 51
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: VARIABLE 'bagahe' at line 54)
+[parser.c | match: 84]: Matching END_OF_FILE (current: VARIABLE 'bagahe' at line 54)
+[parser.c | match: 84]: Matching RBRACE (current: VARIABLE 'bagahe' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <STMT>: 
+[parser.c | match: 84]: Matching IF (current: VARIABLE 'bagahe' at line 54)
+[parser.c | match: 84]: Matching WHILE (current: VARIABLE 'bagahe' at line 54)
+[parser.c | match: 84]: Matching FOR (current: VARIABLE 'bagahe' at line 54)
+[parser.c | match: 84]: Matching FOREACH (current: VARIABLE 'bagahe' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <INLINE_STMT>: 
+[parser.c | match: 84]: Matching IDENTIFIER (current: VARIABLE 'bagahe' at line 54)
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <DECL_STMT>: 
+[parser.c | match: 84]: Matching VARIABLE (current: VARIABLE 'bagahe' at line 54)
+[parser.c | expectRule: 199]: Expecting VARIABLE (terminal) to attach <VAR_DECL> rule (current: VARIABLE 'bagahe' at line 54)
+[parser.c | expectRule: 206]: Token matched with current pointer: VARIABLE 'bagahe' at line 54
+[parser.c | expect: 225]: Expecting IDENTIFIER (current: IDENTIFIER 'ticket' at line 54)
+[parser.c | expect: 232]: Token matched with current pointer: IDENTIFIER 'ticket' at line 54
+[parser.c | match: 84]: Matching LBRACKET (current: ASSIGN '=' at line 54)
+[parser.c | match: 84]: Matching ASSIGN (current: ASSIGN '=' at line 54)
+[parser.c | expect: 225]: Expecting ASSIGN (current: ASSIGN '=' at line 54)
+[parser.c | expect: 232]: Token matched with current pointer: ASSIGN '=' at line 54
+[parser.c | markRule: 213]: Marking Rule Start for <VALUE>: 
+[parser.c | match: 84]: Matching LBRACKET (current: T_NULL 'exit' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <OR_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <AND_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <REL_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <ARITH_EXPR>: 
+[parser.c | markRule: 213]: Marking Rule Start for <MUL>: 
+[parser.c | markRule: 213]: Marking Rule Start for <UNARY>: 
+[parser.c | match: 84]: Matching Op_SUB (current: T_NULL 'exit' at line 54)
+[parser.c | match: 84]: Matching Cond_NOT (current: T_NULL 'exit' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <POWER>: 
+[parser.c | markRule: 213]: Marking Rule Start for <TERM>: 
+[parser.c | match: 84]: Matching LPAREN (current: T_NULL 'exit' at line 54)
+[parser.c | match: 84]: Matching IDENTIFIER (current: T_NULL 'exit' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <LITERAL>: 
+[parser.c | match: 84]: Matching Lit_INT (current: T_NULL 'exit' at line 54)
+[parser.c | match: 84]: Matching Lit_DEC (current: T_NULL 'exit' at line 54)
+[parser.c | match: 84]: Matching Lit_CHAR (current: T_NULL 'exit' at line 54)
+[parser.c | match: 84]: Matching Lit_STRING (current: T_NULL 'exit' at line 54)
+[parser.c | match: 84]: Matching T_TRUE (current: T_NULL 'exit' at line 54)
+[parser.c | match: 84]: Matching T_FALSE (current: T_NULL 'exit' at line 54)
+[parser.c | match: 84]: Matching T_NULL (current: T_NULL 'exit' at line 54)
+[parser.c | expect: 225]: Expecting T_NULL (current: T_NULL 'exit' at line 54)
+[parser.c | expect: 232]: Token matched with current pointer: T_NULL 'exit' at line 54
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_EXP (current: LINE_END ';' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_DIV (current: LINE_END ';' at line 54)
+[parser.c | match: 84]: Matching Op_MULT (current: LINE_END ';' at line 54)
+[parser.c | match: 84]: Matching Op_DIV_INT (current: LINE_END ';' at line 54)
+[parser.c | match: 84]: Matching Op_MOD (current: LINE_END ';' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Op_ADD (current: LINE_END ';' at line 54)
+[parser.c | match: 84]: Matching Op_SUB (current: LINE_END ';' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Noise_AY (current: LINE_END ';' at line 54)
+[parser.c | match: 84]: Matching Rel_G (current: LINE_END ';' at line 54)
+[parser.c | match: 84]: Matching Rel_GEQ (current: LINE_END ';' at line 54)
+[parser.c | match: 84]: Matching Rel_NEQ (current: LINE_END ';' at line 54)
+[parser.c | match: 84]: Matching Rel_EQ (current: LINE_END ';' at line 54)
+[parser.c | match: 84]: Matching Rel_L (current: LINE_END ';' at line 54)
+[parser.c | match: 84]: Matching Rel_LEQ (current: LINE_END ';' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_AND (current: LINE_END ';' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching Cond_OR (current: LINE_END ';' at line 54)
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | expectRule: 199]: Expecting LINE_END (terminal) to attach <END_RULE> rule (current: LINE_END ';' at line 54)
+[parser.c | expectRule: 206]: Token matched with current pointer: LINE_END ';' at line 54
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 
+[parser.c | match: 84]: Matching PROG_END (current: PROG_END 'dulo' at line 57)
+[parser.c | expect: 225]: Expecting PROG_END (current: PROG_END 'dulo' at line 57)
+[parser.c | expect: 232]: Token matched with current pointer: PROG_END 'dulo' at line 57
+[parser.c | expect: 225]: Expecting LINE_END (current: LINE_END ';' at line 57)
+[parser.c | expect: 232]: Token matched with current pointer: LINE_END ';' at line 57
+[parser.c | match: 84]: Matching FUNCTION (current: RBRACE '}' at line 58)
+[parser.c | expect: 225]: Expecting RBRACE (current: RBRACE '}' at line 58)
+[parser.c | expect: 232]: Token matched with current pointer: RBRACE '}' at line 58
+[parser.c | markRule: 213]: Marking Rule Start for <END_RULE>: 

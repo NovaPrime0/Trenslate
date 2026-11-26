@@ -31,7 +31,7 @@ byahe {
     bagahe mayDiskwento = TRUE;
     bagahe linya = 'L';
     laging LIMIT = 100;
-    bagahe @mali = 0;
+    bagahe mali = 0;
     
     sakali (pasahero > 35) {
         announce("It's very crowded!");

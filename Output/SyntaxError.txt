@@ -1,0 +1,14 @@
+====================================================
+SYNTAX ERROR detected in sample_syntax_errors.tren, line 12 
+  -> Received Token: LINE_END (Type ID: 24)
+  -> Expected Token: ASSIGN (Type ID: 39)
+====================================================
+====================================================
+SYNTAX ERROR detected in sample_syntax_errors.tren, line 18 
+  -> Received Token: IDENTIFIER (Type ID: 57)
+  -> Expected Token: LBRACE (Type ID: 25)
+====================================================
+====================================================
+SYNTAX ERROR (Unexpected EOF) detected in sample_syntax_errors.tren, line 23 
+  -> Expected Token: PROG_END (Type ID: 12)
+====================================================

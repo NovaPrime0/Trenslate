@@ -61,7 +61,7 @@ byahe {
     }
     
     # For loop using 'mula' and 'hanggang'
-    hakbang index mula 1 hanggang 5 {
+    hakbang (index mula 1 hanggang 5) {
         sakali (index == 3) {
             tuloy; # continue to next iteration
         }
@@ -69,7 +69,7 @@ byahe {
     
     # Foreach loop using 'bawat' and 'sa'
     bagahe rutaListahan = [1, 2, 3, 4, 5];
-    bawat ruta sa rutaListahan {
+    bawat (ruta sa rutaListahan) {
         sakali (ruta > 4) {
             hinto; # break loop
         }

@@ -1,0 +1,23 @@
+# Trenslate Sample Program 2 with Syntax Errors - Commuter Fare & Station Check
+# COSC 303 - Principles of Programming Language
+
+daan "istasyon.h";
+
+# Main program entry point
+byahe {
+    announce ng "Biyahe sa LRT-1";
+
+    # ERROR 1 (Line 12): Constant declaration missing '=' and value
+    # Expected Error: SYNTAX ERROR line 12 -> Received: LINE_END (24), Expected Token: ASSIGN (39)
+    laging LIMIT;
+
+    # ERROR 2 (Line 18): Missing opening brace '{' after sakali condition
+    # Expected Error: SYNTAX ERROR line 18 -> Received: IDENTIFIER (57), Expected Token: LBRACE (25)
+    bagahe pasahero = 40;
+    sakali (pasahero > 35)
+        announce("Masikip sa tren!");
+    }
+
+    # ERROR 3 (Line 23): Missing 'dulo;' before closing '}' of byahe
+    # Expected Error: SYNTAX ERROR line 23 -> Received: RBRACE (26), Expected Token: PROG_END (12)
+

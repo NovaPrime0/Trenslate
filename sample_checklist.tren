@@ -1,0 +1,72 @@
+# Trenslate Checklist Sample Program
+# Covers all required statement types with labels
+
+daan "istasyon.h";
+
+# [Declaration Statement] - Function Declaration
+route kalkulahin(km) {
+    bagahe dagdag = (km - 5) * 2;
+    baba dagdag;
+}
+
+byahe {
+    # [Declaration Statement] - Variable & Constant Declarations
+    bagahe distansya;
+    laging BASE_FARE = 15;
+
+    # [Assignment Statements] - Declaration with Assignment
+    bagahe pasahero = 25;
+
+    # [Assignment Statements] - Simple Assignment
+    distansya = 12;
+
+    # [Assignment Statements] - Assignment with Expression
+    bagahe kabuuan = BASE_FARE + (distansya - 5) * 2;
+
+    # [Input Statement] (at least 1)
+    bagahe bayad = scan("Ipasok ang bayad ");
+    kuha ng bayad;
+
+    # [Output Statements] - Print String
+    announce("Maligayang pagdating sa Trenslate!");
+
+    # [Output Statements] - Print with Formatting
+    announce("Pamasahe para sa %d km ay %d", distansya, kabuuan);
+
+    # [Output Statements] - Print with Multiple Arguments
+    announce("Pasahero ", pasahero, " Kabuuan ", kabuuan);
+
+    # [Conditional Statement] - If
+    sakali (pasahero > 20) {
+        announce("Maraming pasahero.");
+    }
+
+    # [Conditional Statement] - If-Else
+    sakali (bayad >= kabuuan) {
+        announce("Sapat ang bayad.");
+    } liko {
+        announce("Kulang ang bayad.");
+    }
+
+    # [Conditional Statement] - If-Else-If
+    sakali (pasahero > 40) {
+        announce("Siksikan na sa tren.");
+    } liko sakali (pasahero >= 20) {
+        announce("Katamtaman ang dami ng pasahero.");
+    } liko {
+        announce("Maluwag pa sa tren.");
+    }
+
+    # [Iterative Statement] - For Loop (hakbang) with Nested While Loop (habang)
+    hakbang (istasyon mula 1 hanggang 3) {
+        bagahe ikot = 0;
+        habang (ikot < 2) {
+            ikot = ikot + 1;
+            sakali (ikot == 2) {
+                tuloy;
+            }
+        }
+    }
+
+    dulo;
+}

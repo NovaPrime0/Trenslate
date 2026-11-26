@@ -49,24 +49,6 @@ bool expandTransitionList(TransitionList* s){
     return true;
 };
 
-//state
-static State* createState(int stateNumber, StateType type){   
-    State* s = malloc(sizeof(State));
-    if (!s) {
-        perror("CreateState Allocation failed");
-        return NULL;
-    }
-    s -> stateNumber = stateNumber; 
-    s -> transitionList = createTransitionList();
-    if (!s->transitionList){
-        perror("CreateState TransitionList Allocation failed");
-        free(s);
-        return NULL;
-    }
-    s -> type = type;
-    return s;
-}
-
 void printState(State *s, FILE* fpt) {
     if(!fpt || !s) {
         printf("[state.c: %d]: state or fpt not found\n",__LINE__);

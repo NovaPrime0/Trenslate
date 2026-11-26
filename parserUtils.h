@@ -51,5 +51,6 @@ void freeStack();
 bool isSync(Symbol* s, TokenType lookahead);
 int getDepth();
 void closeAll();
+void printParseTree();
 
 #endif
