@@ -83,7 +83,7 @@ bool parse(){
 
 // Fix: Add proper cleanup after parseProgram completes or fails
 void closeAll() {
-    // Push      while curDepth > 0 (implementation in parserUtils.c)
+    // Push END_RULE while curDepth > 0 (implementation in parserUtils.c)
     errorInProgress = false;  // Clear error flag on exit
 }
 

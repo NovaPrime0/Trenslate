@@ -44,12 +44,12 @@ typedef struct{
 const char* getName(Rule r);
 bool peek(Stack *s, Entry **w);
 bool initStack(Stack  *s);
-bool pop(Stack *st, Entry* w);
 bool pushToken(Symbol *s, Rule r);
 void unwindToLastSync(int stmtDepth);
 bool startTokenStack();
-void freeStack(Stack *s);
+void freeStack();
 bool isSync(Symbol* s, TokenType lookahead);
 int getDepth();
+void closeAll();
 
 #endif

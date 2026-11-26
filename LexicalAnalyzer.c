@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
     validateAllKeywordsDFA(dst, stdout);
 
     // Optional single-word transition simulation mode: ./main.exe --simulate <word>
-    if (argc > 2 && strcmp(argv[1], "--simulate") == 0) {
+    if (argc > 2 && strcmp(argv[1], "--simulate-lexx") == 0) {
         simulateDFAInput(dst, argv[2], stdout);
         return 0;
     }

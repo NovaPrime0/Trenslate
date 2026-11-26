@@ -6,9 +6,6 @@
 #include <string.h>
 #include "enums.h"
 
-// Sync state file path (can be overridden at runtime)
-#define SYNC_FILE_PATH ".ppl_sync_state.txt"
-
 const char* ruleNames[] = {
     "NONE", "PROGRAM", "STMT", "DECL_STMT",
     "VAR_DECL", "CONST_DECL", "IMPORT",
@@ -61,7 +58,6 @@ bool expand(Stack *s){
     Entry *temp = realloc(s->data, sizeof(Entry)*newSize);
     if(!temp){
         printf("[perserUtils.c: %d]: Failed to allocate stack", __LINE__);
-        s->data = NULL;
         return false;
     }
     s->data = temp;
@@ -95,39 +91,39 @@ bool initStack(Stack *s){
 }
 
 //pop to an already-defined var
-bool pop(Stack *st, Entry* w){
-    if(!st){
-        printf("[parserUtils.c | %s: %d]: Stack not initialized \n", __func__, __LINE__);
-        return false;
-    }
-    if(st->curSize <= 0) {
-        printf("[parserUtils.c | %s: %d]: No entries in stack \n", __func__, __LINE__);
-        return false;
-    } else if (!w){
-        printf("[parserUtils.c | %s: %d]: Null entry, resetting top node instead \n", __func__, __LINE__);
-        resetEntry(&st->data[--st->curSize]);
-        return true;
-    }
-    printf("[parserUtils.c | %s: %d]: Attaching data to passed address \n", __func__, __LINE__);
+// bool pop(Stack *st, Entry* w){
+//     if(!st){
+//         printf("[parserUtils.c | %s: %d]: Stack not initialized \n", __func__, __LINE__);
+//         return false;
+//     }
+//     if(st->curSize <= 0) {
+//         printf("[parserUtils.c | %s: %d]: No entries in stack \n", __func__, __LINE__);
+//         return false;
+//     } else if (!w){
+//         printf("[parserUtils.c | %s: %d]: Null entry, resetting top node instead \n", __func__, __LINE__);
+//         resetEntry(&st->data[--st->curSize]);
+//         return true;
+//     }
+//     printf("[parserUtils.c | %s: %d]: Attaching data to passed address \n", __func__, __LINE__);
     
-    Entry *poppedNode = &st->data[--st->curSize];
-    w->sym = poppedNode->sym;
-    w->rule = poppedNode->rule;
-    w->depth = poppedNode->depth;
-    // w->parent = poppedNode -> parent;
-    // w->children = poppedNode -> children;
-    // w->childrenCount = poppedNode -> childrenCount;
-    // w->childrenMaxCount = poppedNode -> childrenMaxCount;
-    if(poppedNode->rule == END_RULE) curDepth++;
-    else if (poppedNode->rule != NONE) curDepth--;
-    printf("[parserUtils.c | %s: %d]: Popped Entry: [%s|%s], Rule: %sw\n",
-        __func__, __LINE__,
-         w->sym ? w->sym->lexeme : "<Rule", 
-         w->sym ? tokenNames[w->sym->token] : "Marker>",
-         getName(w->rule));
-    resetEntry(poppedNode);
-    return true;
-}
+//     Entry *poppedNode = &st->data[--st->curSize];
+//     w->sym = poppedNode->sym;
+//     w->rule = poppedNode->rule;
+//     w->depth = poppedNode->depth;
+//     // w->parent = poppedNode -> parent;
+//     // w->children = poppedNode -> children;
+//     // w->childrenCount = poppedNode -> childrenCount;
+//     // w->childrenMaxCount = poppedNode -> childrenMaxCount;
+//     if(poppedNode->rule == END_RULE) curDepth++;
+//     else if (poppedNode->rule != NONE) curDepth--;
+//     printf("[parserUtils.c | %s: %d]: Popped Entry: [%s|%s], Rule: %sw\n",
+//         __func__, __LINE__,
+//          w->sym ? w->sym->lexeme : "<Rule", 
+//          w->sym ? tokenNames[w->sym->token] : "Marker>",
+//          getName(w->rule));
+//     resetEntry(poppedNode);
+//     return true;
+// }
 
 bool push(Stack *st, Symbol *s, Rule r){
     if(st->curSize + 1 > st->maxSize && !expand(st)) {
@@ -143,9 +139,9 @@ bool push(Stack *st, Symbol *s, Rule r){
 
 
 //data is only a wrapper for symTBL symbol for AST, can free only the data without freeing the symbol inside
-void freeStack(Stack *s){
-    free(s->data);
-    free(s); 
+void freeStack(){
+    free(tokenStack->data);
+    free(tokenStack); 
 }
 
 //only valid delim sync tokens for fallback
@@ -220,7 +216,7 @@ void unwindToLastSync(int stmtDepth){
     
     if(cut < old){
         Entry* first = &tokenStack->data[cut];
-        curDepth = (first->rule == END_RULE)? first->depth + 1 : first->depth++;
+        curDepth = (first->rule == END_RULE)? first->depth + 1 : first->depth;
         for(int i = cut; i < old; i++) resetEntry(&tokenStack->data[i]);
         tokenStack->curSize = cut;
     }
@@ -232,6 +228,64 @@ void unwindToLastSync(int stmtDepth){
 int getDepth() {
     return curDepth;
 }
-bool closeAll(){
+void closeAll(){
     while(curDepth > 0) pushToken(NULL, END_RULE);
+}
+
+static void writeIndent(FILE *out, int depth) {
+    for (int j = 0; j < depth; j++) {
+        fprintf(out, "  ");
+    }
+}
+
+void printParseTree() {
+    FILE *pTree = fopen("Output/ptree.txt", "w+");
+    if (!pTree) return;
+
+    int depth = 0;
+    int atLineStart = 1;
+    int needSpace = 0;
+
+    for (int i = 0; i < tokenStack->curSize; i++) {
+        Entry *finalEntry = &tokenStack->data[i];
+
+        if (finalEntry->rule != NONE && finalEntry->rule != END_RULE) {
+            if (!atLineStart) {
+                fprintf(pTree, "\n");
+                atLineStart = 1;
+                needSpace = 0;
+            }
+            writeIndent(pTree, depth);
+            fprintf(pTree, "(%s", getName(finalEntry->rule));
+            depth++;
+            needSpace = 1;
+            atLineStart = 0;
+        }
+
+        if (finalEntry->sym) {
+            if (atLineStart) {
+                writeIndent(pTree, depth);
+                atLineStart = 0;
+                needSpace = 0;
+            } else if (needSpace) {
+                fprintf(pTree, " ");
+            }
+            fprintf(pTree, "%s", tokenNames[finalEntry->sym->token]);
+            needSpace = 1;
+        }
+
+        if (finalEntry->rule == END_RULE) {
+            if (!atLineStart) {
+                fprintf(pTree, "\n");
+                atLineStart = 1;
+                needSpace = 0;
+            }
+            if (depth > 0) depth--;
+            writeIndent(pTree, depth);
+            fprintf(pTree, ")\n");
+            atLineStart = 1;
+        }
+    }
+
+    fclose(pTree);
 }
